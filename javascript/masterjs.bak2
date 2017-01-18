@@ -1,0 +1,259 @@
+// TODO: Sanetize output
+
+var objecto = {
+    metadata: {uidPosition: 4},
+    elements: [
+        {element: "section", params: {uid: 0, class:"testClass"}, elements: [
+            {element: "section", params: {uid: 2}, elements: [
+                {element: "button", content: "click me", params: {uid: 3}},
+                {element: "input", params: {uid: 4, class:"inputClass", type: "text"}}
+            ]}
+        ]},
+        {element: "button", params: {uid: 1}, content: "click me"}
+    ]
+}
+
+// fakeAjax = function(){
+//     var tempStore = JSON.stringify(obj);
+//     document.getElementById("log").innerHTML = tempStore;
+//     console.log(tempStore);
+// }
+// 
+// var recreateElements = function(source){
+//     source.forEach(function(element){
+//         createElement(element["type"], false)
+//     })
+// };
+var elementBase = {
+    section : {
+        element: "section", params: {class: "testClass"}
+    },
+    button : {
+        element: "button", content: "click Me", params: {class: "buttonClass"}
+    },
+    input : {
+        element: "input", params: {class: "inputClass", type: "text"}
+    }
+};
+
+
+var elementEngine = {
+    createElement : function(elementObj, logBool, nodeTargetIdentifier){
+        // create base Element
+        var newElement = document.createElement(elementObj.element);
+        // set innerHTML 
+        if (elementObj.hasOwnProperty("content")) {
+            newElement.innerHTML = elementObj.content;
+        }
+        
+        // set params from object as html attributes
+        if (elementObj.hasOwnProperty("params")) {
+            for (key in elementObj.params) {
+                newElement.setAttribute(key, elementObj.params[key])
+            }
+        }
+        
+        // check if nodeTargetIdentifier is given (is child element) else default
+        if (typeof nodeTargetIdentifier == 'undefined') {
+            document.getElementsByClassName("contentArea")[0].appendChild(newElement);
+        } else {
+            document.querySelector('[uid="' +  nodeTargetIdentifier + '"]').appendChild(newElement);
+        }
+        // if the element has children, create those elements and add them to the parent
+        if (elementObj.hasOwnProperty("elements")) {
+            for (var i = 0; i < elementObj.elements.length; i++) {
+                this.createElement(elementObj.elements[i], false, elementObj.params.uid)
+            }
+        }
+        
+        
+        // Logging to data structure
+        if (logBool === true){
+            
+            // if (typeof nodeTargetIdentifier == 'undefined') {
+            //     document.getElementsByClassName("contentArea")[0].appendChild(newElement);
+            // } else {
+                // triggers if uid is defined
+                //
+            // }
+            // var searchUid = function(target){
+            //     for (var i = 0; i < target.elements.length; i++) {
+            //         if (typeof target.uid != 'undefined'){
+            //             
+            //         } else {
+            //             if (typeof target[i].elements != 'undefined') {
+            //                 searchUid(target[i]);
+            //             }
+            //         }
+            //     }
+            //     
+            //     
+            //     
+            //     target.forEach(function(e)) {
+            //         if (!typeof target.uid == 'undefined'){
+            //             
+            //         } else {
+            //             if (!typeof target.elements == 'undefined') {
+            //                 searchUid(target.e.elements)
+            //             }
+            //         }
+            //     }
+            // };
+            
+            var testObj = JSON.parse(localStorage.getItem("obj"));
+            // var testObj = objecto;
+            var currentUidPosition = testObj["metadata"]["uidPosition"];
+            
+            var newElementData = elementObj;
+            testObj.metadata.uidPosition += 1;
+            newElementData.params.uid = currentUidPosition + 1;
+            
+            if (typeof nodeTargetIdentifier == 'undefined') {
+                //if no uid is specified then add to outer layer
+                testObj.elements.push(newElementData);
+            } else  {
+                var searchUid = function(target){
+                    for (var i = 0; i < target.elements.length; i++) {
+                        if (target.elements[i].uid == nodeTargetIdentifier) {
+                            //SUCCESS CASE
+                            if  (typeof target.elements[i].elements == "undefined") {
+                                //if it has the matching uid but no elements key
+                                target.elements[i].elements = [newElementData];
+                            } else {
+                                //if it has the matching uid and already has an elements key
+                                target.elements[i].elements.push(newElementData);
+                            }
+                        } else {
+                            if (typeof target.elements[i].elements != "undefined") {
+                                //if it has no matching uid but an elements key
+                                this.searchUid(target.elements[i])
+                            }
+                        }
+                    }
+                }
+                
+                searchUid(testObj);
+            }
+                
+            //     //if uid IS specified then search for that uid in the data object
+            //     // all elements are stored in an array, 
+            //     // elements are objects, 
+            //     // elements can have child elements in their own "elements" 
+            //     
+            //     forEach(ARRAY ENTRY in OUTER ELEMENTS[], X ) 
+            //         if (UID === nodeTargetIdentifier){
+            //             add NEWELEMENTDATA to X.elements[]
+            //         } else {
+            //             if (this ARRAY ENTRY has elements then do forEach)
+            //         }
+                    
+                    
+                
+            }
+            // testObj["metadata"]["uidPosition"] += 1;
+            // testObj["elements"][uniqueKeyPosition + 1] = {element: elementType}
+            
+            localStorage.setItem("obj", JSON.stringify(testObj));
+            // console.log(JSON.stringify(testObj));
+            // obj["elements"].push({"type": elementType});
+            // this.saveToLocalStorage(JSON.stringify(testObj));
+        }
+        
+    },
+    recreateElements : function(source){
+        for (var i = 0; i < source.elements.length; i++) {
+            if (source.elements[i].hasOwnProperty("element")) {
+                this.createElement(source.elements[i], false)
+            }
+        }
+        
+    },
+    fakeAjax : function(){
+        console.log(JSON.stringify(obj));
+    },
+    saveToLocalStorage : function(value){
+        localStorage.setItem("obj", value)
+    }
+}
+document.getElementsByClassName("sectionBttn")[0].addEventListener("click", function(){
+    elementEngine.createElement(elementBase.section, true);
+});
+document.getElementsByClassName("inputBttn")[0].addEventListener("click", function(){
+    elementEngine.createElement(elementBase.input, true);
+});
+document.getElementsByClassName("buttonBttn")[0].addEventListener("click", function(){
+    elementEngine.createElement(elementBase.button, true);
+});
+
+
+document.getElementsByClassName("resetBttn")[0].addEventListener("click", function(){
+    resetData();
+});
+
+
+// elementEngine.recreateElements(jsonResult["elements"]);
+
+
+var testFunc = function(){
+    var text1 = {"type":"text", "value":"", "class":""}
+    var newElement = document.createElement("INPUT", text1);
+    for (var key in text1) {
+        if (text1.hasOwnProperty(key)) {
+            console.log("key = " + key + "; value = " + text1[key])
+        }
+        console.log(key);
+    }
+    document.body.appendChild(newElement);
+    
+}
+
+var makeDraggable = function(){
+    var elements = document.querySelectorAll("[uid]");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].setAttribute('draggable', 'true');
+    }
+}
+
+var makeUnDraggable = function(){
+    var elements = document.querySelectorAll("[uid]");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].setAttribute('draggable', 'false');
+    }
+}
+// window.
+
+elementEngine.recreateElements(JSON.parse(localStorage.getItem("obj")));
+// elementEngine.recreateElements(objecto);
+var resetData = function(){
+    localStorage.setItem("obj", JSON.stringify(objecto));
+    var myNode = document.getElementsByClassName("contentArea")[0];
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    elementEngine.recreateElements(JSON.parse(localStorage.getItem("obj")));
+};
+
+// var mouseDiv = function(){
+//     var newDiv = document.createElement("DIV");
+//     newDiv.innerHTML = "Hello World";
+//     newDiv.setAttribute("class", "mouseDiv");
+//     newDiv.style.position = "fixed";
+//     document.body.appendChild(newDiv);
+// }
+// mouseDiv();
+// 
+// window.onmousemove = function(e) {
+//     var x = e.pageX;
+//     var y = e.pageY;
+//     var mouseElement = document.getElementsByClassName('mouseDiv')[0];
+//     mouseElement.setAttribute('x', x);
+//     mouseElement.setAttribute('y', y);
+//     
+//     document.getElementsByClassName('mouseDiv')[0].style.top = y + "px";
+//     document.getElementsByClassName('mouseDiv')[0].style.left = x + "px";
+// }
+
+
+
+// var newItem = document.createElement("BUTTON");
+// document.querySelector('[uid="2"]').insertBefore(newItem, document.querySelector('[uid="4"]'));

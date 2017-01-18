@@ -1,0 +1,394 @@
+// TODO: Sanetize output
+
+var objecto = {
+    metadata: {uidPosition: 4},
+    elements: [
+        {element: "section", params: {uid: 0, class:"testClass"}, elements: [
+            {element: "section", params: {uid: 2}, elements: [
+                {element: "button", content: "click me", params: {uid: 3}},
+                {element: "input", params: {uid: 4, class:"inputClass", type: "text"}}
+            ]}
+        ]},
+        {element: "button", params: {uid: 1}, content: "click me"}
+    ]
+};
+var objectz = {
+    "metadata": {
+        "uidPosition": 3
+    },
+    "elements": [
+        {
+            "element": "section",
+            "params": {
+                "uid": 0,
+                "class": "testClass"
+            },
+            elements: [
+                {
+                    "element": "section",
+                    "params": {
+                        "uid": 2,
+                        "class": "testClass"
+                    }
+                },
+                {
+                    "element": "section",
+                    "params": {
+                        "uid": 3,
+                        "class": "testClass"
+                    }
+                }
+            ]
+        },
+        {
+            "element": "section",
+            "params": {
+                "uid": 1,
+                "class": "testClass"
+            }
+        }
+    ]
+}
+var elementBase = {
+    section : {
+        element: "section", params: {class: "testClass"}
+    },
+    button : {
+        element: "button", content: "click Me", params: {class: "buttonClass"}
+    },
+    input : {
+        element: "input", params: {class: "inputClass", type: "text"}
+    }
+};
+
+
+var elementEngine = {
+    itterationCount : 0,
+    // findUid : function(source, uid){
+    //     if (typeof source.params == 'undefined') {
+    //         if (typeof source.elements == 'undefiend') {
+    //             return;
+    //         } else {
+    //             if (Array.isArray(source.elements)) {
+    //                 this.itterationCount += 1;
+    //                 for (var i = 0; i < source.elements.length + 1; i++) {
+    //                     console.log("itterationCount: " + this.itterationCount + "; Target is: [" + i + "]");
+    //                     return this.findUid(source.elements[i], uid);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         return;
+    //     }
+    // },
+    createElement : function(elementObj, logBool, nodeTargetIdentifier){
+        // create base Element
+        var newElement = document.createElement(elementObj.element);
+        // set innerHTML 
+        if (elementObj.hasOwnProperty("content")) {
+            newElement.innerHTML = elementObj.content;
+        }
+        
+        // set params from object as html attributes
+        if (elementObj.hasOwnProperty("params")) {
+            for (key in elementObj.params) {
+                newElement.setAttribute(key, elementObj.params[key])
+            }
+        }
+        
+        // check if nodeTargetIdentifier is given (is child element) else default
+        if (typeof nodeTargetIdentifier == 'undefined') {
+            document.getElementsByClassName("contentArea")[0].appendChild(newElement);
+        } else {
+            document.querySelector('[uid="' +  nodeTargetIdentifier + '"]').appendChild(newElement);
+        }
+        // if the element has children, create those elements and add them to the parent
+        if (elementObj.hasOwnProperty("elements")) {
+            for (var i = 0; i < elementObj.elements.length; i++) {
+                this.createElement(elementObj.elements[i], false, elementObj.params.uid)
+            }
+        }
+        
+        // Logging to data structure
+        if (logBool === true){
+            var localStorageObjectName = "obj";
+            
+            // function findElementByUID(source, uid) {
+            // // if the object we've given has a params property,
+            // // and params.uid is the uid we want, then return it
+            // if (source.params && source.params.uid === uid) {
+            //     return source
+            // } else {
+            //     // otherwise, check if the `elements` property exists
+            //     if (Array.isArray(source.elements)) {
+            // // if so, loop through its children
+            //         for (var i = 0; i < source.elements.length; i++) {
+            //         var el = source.elements[i]
+            //         
+            //         // call the function on the child element
+            //             var result = findElementByUID(el, uid)
+            // 
+            //         // only return if there's a result
+            //                 if (result) return result
+            //             }
+            //         }
+            //     }
+            // };
+            
+            function findElementByUID(source, uid) {
+  // if the object we've given has a params property,
+  // and params.uid is the uid we want, then return it
+  if (source.params != null && source.params.uid === uid) {
+    return source
+  } else {
+    // otherwise, check if the `elements` property exists
+    if (Array.isArray(source.elements)) {
+      // if so, loop through its children
+      for (var i = 0; i < source.elements.length; i++) {
+        var el = source.elements[i]
+        
+        // call the function on the child element
+        var result = findElementByUID(el, uid)
+        
+        // only return if there's a result
+        if (result != null) return result
+      }
+    }
+  }
+}
+            
+            
+            
+            function findUid(source, uid) {
+                if (source.params != null && source.params.uid != null && source.params.uid === uid) {
+                    return source;
+                } else {
+                    if (Array.isArray(source.elements)) {
+                        for (var i = 0; i < source.elements.length; i++) {
+                            var newTarget = source.elements[i];
+                            var result = findUid(newTarget, uid)
+                            if (result != null) {
+                                return result;
+                            }
+                        }
+                    }
+                }
+            }
+            // var findUid = function(source, uid){
+            //     console.log(source);
+            //     if (typeof source.params != "undefined") {
+            //         if (typeof source.params.uid != "undefined") {
+            //             if (source.params.uid == uid) {
+            //                 // return source so it can be used in addElement()
+            //                 return source;
+            //             }
+            //              else if (typeof source["elements"] != "undefined") {
+            //                 for (var i = 0; i < source.elements.length; i++) {
+            //                     findUid(source.elements[i], uid);
+            //                 }
+            //             }
+            //         }
+            //     } else if (typeof source["elements"] != "undefined") {
+            //         for (var i = 0; i < source.elements.length; i++) {
+            //             findUid(source.elements[i], uid);
+            //         }
+            //     } else {
+            //         console.error("findUid() encountered an error")
+            //     }
+            // };
+            var addElement = function(target, element) {
+                if (typeof target !== "undefined") {
+                    if (typeof target.elements !== "undefined") {
+                        target.elements.push(element);
+                    } else {
+                        target.elements = [element];
+                    }
+                }
+            };
+            var dataObj = JSON.parse(localStorage.getItem(localStorageObjectName));
+            // var testObj = objecto;
+            var currentUidPosition = dataObj["metadata"]["uidPosition"];
+            var newUidPosition = currentUidPosition + 1;
+            
+            var newElementData = elementObj;
+            
+            dataObj.metadata.uidPosition = newUidPosition;
+            
+            newElementData.params.uid = newUidPosition;
+            
+            if (typeof nodeTargetIdentifier == 'undefined') {
+                console.log("nodeTargetIdentifier is not defined");
+                //if no uid is specified then add to outer layer
+                dataObj.elements.push(newElementData);
+            } else {
+                addElement(findUid(dataObj, nodeTargetIdentifier), newElementData);
+            }
+            console.log(dataObj);
+            localStorage.setItem("obj", JSON.stringify(dataObj));
+                    
+            // testObj["metadata"]["uidPosition"] += 1;
+            // testObj["elements"][uniqueKeyPosition + 1] = {element: elementType}
+            
+            
+            // console.log(JSON.stringify(testObj));
+            // obj["elements"].push({"type": elementType});
+            // this.saveToLocalStorage(JSON.stringify(testObj));
+        }
+        
+    },
+    recreateElements : function(source){
+        for (var i = 0; i < source.elements.length; i++) {
+            if (source.elements[i].hasOwnProperty("element")) {
+                this.createElement(source.elements[i], false)
+            }
+        }
+        
+    },
+    fakeAjax : function(){
+        console.log(JSON.stringify(obj));
+    },
+    saveToLocalStorage : function(value){
+        localStorage.setItem("obj", value)
+    }
+}
+
+
+var makeDraggable = function(){
+    var elements = document.querySelectorAll("[uid]");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].setAttribute('draggable', 'true');
+    }
+}
+
+var makeUnDraggable = function(){
+    var elements = document.querySelectorAll("[uid]");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].setAttribute('draggable', 'false');
+    }
+}
+
+elementEngine.recreateElements(JSON.parse(localStorage.getItem("obj")));
+// elementEngine.recreateElements(objecto);
+var resetData = function(){
+    localStorage.setItem("obj", JSON.stringify(objectz));
+    var myNode = document.getElementsByClassName("contentArea")[0];
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+    elementEngine.recreateElements(JSON.parse(localStorage.getItem("obj")));
+};
+
+
+
+
+
+
+document.getElementsByClassName("sectionBttn")[0].addEventListener("click", function(){
+    elementEngine.createElement(elementBase.section, true, 0);
+});
+document.getElementsByClassName("inputBttn")[0].addEventListener("click", function(){
+    elementEngine.createElement(elementBase.input, true, 0);
+});
+document.getElementsByClassName("buttonBttn")[0].addEventListener("click", function(){
+    elementEngine.createElement(elementBase.button, true, 0);
+});
+document.getElementsByClassName("resetBttn")[0].addEventListener("click", function(){
+    resetData();
+});
+document.getElementsByClassName("logBttn")[0].addEventListener("click", function(){
+    console.log(JSON.parse(localStorage.getItem("obj")));
+});
+
+
+// var findUid = function(source, uid){
+//     if (typeof source.params != "undefined") {
+//         if (typeof source.params.uid != "undefined") {
+//             if (source.params.uid == uid) {
+//                 // return source so it can be used in addElement()
+//                 console.log(source);
+//                 return source;
+//             } else if (typeof source["elements"] != "undefined") {
+//                 for (var i = 0; i < source.elements.length; i++) {
+//                     return findUid(source.elements[i], uid);
+//                 }
+//             }
+//         }
+//     } else if (typeof source["elements"] != "undefined") {
+//         for (var i = 0; i < source.elements.length; i++) {
+//             return findUid(source.elements[i], uid);
+//         }
+//     }
+// };
+// var addElement = function(target, element) {
+//     console.log(target);
+//     if (typeof target.elements != "undefined") {
+//         target.elements.push(element);
+//     } else {
+//         target.elements = [element];
+//     }
+// };
+// 
+// var newElement = {element: "input", test:"testtesttest"};
+// var findUid = function(uid, source){
+//     if (typeof source.params != "undefined") {
+//         if (typeof source.params.uid != "undefined") {
+//             if (source.params.uid == uid) {
+//                 // return source so it can be used in addElement()
+//                 // return source;
+//                 return source;
+//             } else if (typeof source["elements"] != "undefined") {
+//                 for (var i = 0; i < source.elements.length; i++) {
+//                     return findUid(uid, source.elements[i]);
+//                 }
+//             }
+//         }
+//     } else if (typeof source["elements"] != "undefined") {
+//         for (var i = 0; i < source.elements.length; i++) {
+//             return findUid(uid, source.elements[i]);
+//         }
+//     }
+// }
+// 
+// 
+// var addElement = function(element, target) {
+//     console.log(target);
+//     if (typeof target.elements != "undefined") {
+//         target.elements.push(element);
+//     } else {
+//         target.elements = [element];
+//     }
+// }
+
+
+var findUid = function(source, uid){
+    console.log(source);
+    if (typeof source.params != "undefined") {
+        if (typeof source.params.uid != "undefined") {
+            if (source.params.uid == uid) {
+                // return source so it can be used in addElement()
+                return source;
+            }
+             else if (typeof source["elements"] != "undefined") {
+                for (var i = 0; i < source.elements.length; i++) {
+                    findUid(source.elements[i], uid);
+                }
+            }
+        }
+    } else if (typeof source["elements"] != "undefined") {
+        for (var i = 0; i < source.elements.length; i++) {
+            findUid(source.elements[i], uid);
+        }
+    } else {
+        console.error("findUid() encountered an error")
+    }
+};
+var addElement = function(target, element) {
+    if (typeof target !== "undefined") {
+        if (typeof target.elements !== "undefined") {
+            target.elements.push(element);
+        } else {
+            target.elements = [element];
+        }
+    }
+};
+
