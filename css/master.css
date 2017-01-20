@@ -15,18 +15,13 @@ body {
   display: flex;
   flex-direction: column; }
 
+.spacer {
+  flex-grow: 1; }
+
 .mainContainer {
   flex: 1;
   display: flex;
   flex-direction: row; }
-
-.sidebarContainer {
-  display: flex;
-  width: 20.83333vw;
-  background-color: rgba(255, 255, 255, 0.67); }
-
-.spacer {
-  flex-grow: 1; }
 
 .contentAreaContainer {
   display: flex; }
@@ -39,8 +34,10 @@ body {
   width: 62.5vw;
   background-color: rgba(252, 252, 250, 0.68); }
 
-.drag {
-  background-color: red; }
+.sidebarContainer {
+  display: flex;
+  width: 20.83333vw;
+  background-color: rgba(255, 255, 255, 0.67); }
 
 .sectionClass {
   min-height: 3.7037vh;
@@ -53,11 +50,6 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
-
-.debug {
-  height: 4.44444vh;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
-  background-color: #0288D1; }
 
 .bttnClass {
   margin-top: 5px;
@@ -80,24 +72,6 @@ body {
   flex-direction: row;
   justify-content: space-between; }
 
-.contentArea::-webkit-scrollbar-track {
-  width: 30px; }
-
-.contentArea::-webkit-scrollbar-track {
-  background-color: #b46868; }
-
-/* the new scrollbar will have a flat appearance with the set background color */
-.contentArea::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2); }
-
-/* this will style the thumb, ignoring the track */
-.contentArea::-webkit-scrollbar-button {
-  background-color: #7c2929; }
-
-/* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
-.contentArea::-webkit-scrollbar-corner {
-  background-color: black; }
-
 .inputClass {
   border: none;
   margin-top: 1.11111vh;
@@ -108,6 +82,14 @@ body {
   text-align: center;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   align-self: flex-end; }
+
+.drag {
+  background-color: red; }
+
+.debug {
+  height: 4.44444vh;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+  background-color: #0288D1; }
 
 .pseudoEle {
   min-width: 0.83333vw;
@@ -123,58 +105,6 @@ body {
 
 .resetBttn {
   color: #ff5284; }
-
-.chat {
-  margin-top: 2.22222vh;
-  width: 18.33333vw;
-  display: flex;
-  flex-direction: column; }
-
-.chatTextWrapper {
-  display: flex;
-  flex: 1;
-  flex-direction: row; }
-
-.chatText {
-  width: 18.33333vw;
-  background-color: #ffffff;
-  margin-bottom: 0.74074vh; }
-
-.chatScrollbar {
-  width: 0.41667vw;
-  background-color: #ffffff;
-  margin-bottom: 8px; }
-
-.chatScrollHandle {
-  width: 0.41667vw;
-  height: 4.44444vh;
-  background-color: #FFC107; }
-
-.chatInteraction {
-  margin-bottom: 24px; }
-
-.chatInput {
-  outline: none;
-  resize: none;
-  display: inline-block;
-  box-sizing: border-box;
-  float: left;
-  border: none;
-  width: 16.45833vw;
-  height: 7.40741vh;
-  background-color: #ffffff;
-  align-self: flex-end; }
-
-.chatSend {
-  float: right;
-  width: 1.66667vw;
-  height: 7.40741vh;
-  font-size: 2.22222vh;
-  line-height: 7.40741vh;
-  color: black;
-  text-align: center;
-  background-color: #FFC107;
-  align-self: flex-end; }
 
 @media screen and (max-width: 1279px) {
   .sidebarContainer {

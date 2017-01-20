@@ -1,52 +1,15 @@
-// COLORS
-// color pallet
-$color-main-base:       #03A9F4;
-$color-main-dark:       #0288D1;
-$color-main-light:      #4FC3F7;
+// -----------------------------------------------------------------------------
+// # IMPORTS
+// -----------------------------------------------------------------------------
 
-$color-element-base:    #ffffff;
+@import "styleguide";
 
-$color-accent:          #FFC107;
-// ----
-
-// BASE Units
-$unit-base: 8px;
-$unit-base-width: 0.41666666666666666667vw;
-$unit-base-height: 0.74074074074074074074vh;
-$text-base: ;
-// ----
-
-// margin/padding
-$margin-separation: $unit-base * 3;
-$margin-relation: $unit-base;
-$margin-joint: 0px;
-
-$margin-separation-width: $unit-base-width * 3;
-$margin-separation-height: $unit-base-height * 3;
-
-$margin-relation-width: $unit-base-width;
-$margin-relation-height: $unit-base-height;
+// -----------------------------------------------------------------------------
 
 
-
-$padding-separation: $unit-base * 3;
-$padding-relation: $unit-base;
-$padding-joint: 0px;
-// ------
-
-// shadows
-$z-depth-0:;
-$z-depth-1: 0 2px   2px 0   rgba(0,0,0,0.14),0 1px  5px 0   rgba(0,0,0,0.12),0 3px  1px -2px rgba(0,0,0,0.2);
-$z-depth-2: 0 4px   5px 0   rgba(0,0,0,0.14),0 1px 10px 0   rgba(0,0,0,0.12),0 2px  4px -1px rgba(0,0,0,0.3);
-$z-depth-3: 0 6px  10px 0   rgba(0,0,0,0.14),0 1px 18px 0   rgba(0,0,0,0.12),0 3px  5px -1px rgba(0,0,0,0.3);
-$z-depth-4: 0 8px  10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px  5px -3px rgba(0,0,0,0.3);
-$z-depth-5: 0 16px 24px 2px rgba(0,0,0,0.14),0 6px 30px 5px rgba(0,0,0,0.12),0 8px 10px -5px rgba(0,0,0,0.3);
-
-// media
-$break-small-width: 1279px;
-// ------
-
-
+// -----------------------------------------------------------------------------
+// # BASE NORMALISATION AND STYLES
+// -----------------------------------------------------------------------------
 
 * {
     font-family: "Roboto";
@@ -61,33 +24,43 @@ body {
     background-size: cover;
     
 }
-// button {
-//     border-radius: 5px;
-//     border: 1px solid black;
-//     background-color: white;
-// }
+
 .appContainer {
     // background-color: rgba(252, 225, 153, 1);
     height: 100%;
     display: flex;
     flex-direction: column;
 }
+
+.spacer {
+    flex-grow: 1;
+}
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// TOP BAR
+// -----------------------------------------------------------------------------
+
+
+
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+// # MAIN CONTENT
+// -----------------------------------------------------------------------------
+
 .mainContainer {
     flex: 1;
     display: flex;
     flex-direction: row;
 }
-.sidebarContainer {
-    display: flex;
-    width: $unit-base-width * 50;
-    background-color: rgba(255, 255, 255, 0.67);
-}
-.spacer {
-    flex-grow: 1;
-}
+
 .contentAreaContainer {
     display: flex;
 }
+
 .contentArea {
     overflow-y: scroll;
     background-position: center;
@@ -107,16 +80,34 @@ body {
     // float: left;
     // flex: 1;
 }
-.drag {
-    background-color: red;
+
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+// # SIDE BAR
+// -----------------------------------------------------------------------------
+
+.sidebarContainer {
+    display: flex;
+    width: $unit-base-width * 50;
+    background-color: rgba(255, 255, 255, 0.67);
 }
 
-// .testClass {
-//     background-color: red;
+// -----------------------------------------------------------------------------
+
+
+// button {
+//     border-radius: 5px;
+//     border: 1px solid black;
+//     background-color: white;
 // }
 
+// -----------------------------------------------------------------------------
+// # CUSTOM ELEMENTS STYLES
+// -----------------------------------------------------------------------------
+
 .sectionClass {
-    
     // display: flex;
     // flex-grow: 1;
     // width: 900px;
@@ -134,18 +125,13 @@ body {
     flex-wrap: wrap;
     box-shadow: $z-depth-1;
 }
-.debug {
-    // width: 100%;
-    height: $unit-base-height * 6;
-    box-shadow: $z-depth-3;
-    // padding: 5px 0px 5px 0px;
-    background-color: $color-main-dark;
-}
+
 .bttnClass {
     margin-top: 5px;
     margin-left: 5px;
     margin-right: 30px;
 }
+
 .labelClass {
     flex-grow: 1;
     display: inline-block;
@@ -165,24 +151,6 @@ body {
     justify-content: space-between;
 }
 
-.contentArea::-webkit-scrollbar-track {
-    width: 30px;
-}
-.contentArea::-webkit-scrollbar-track {
-      background-color: #b46868;
-} /* the new scrollbar will have a flat appearance with the set background color */
- 
-.contentArea::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.2); 
-} /* this will style the thumb, ignoring the track */
- 
-.contentArea::-webkit-scrollbar-button {
-      background-color: #7c2929;
-} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
- 
-.contentArea::-webkit-scrollbar-corner {
-      background-color: black;
-}
 .inputClass {
     border: none;
     // border-bottom: 1px solid black;
@@ -201,6 +169,29 @@ body {
     box-shadow: $z-depth-1;
     align-self: flex-end;
 }
+
+
+
+// -----------------------------------------------------------------------------
+
+.drag {
+    background-color: red;
+}
+
+// .testClass {
+//     background-color: red;
+// }
+
+
+.debug {
+    // width: 100%;
+    height: $unit-base-height * 6;
+    box-shadow: $z-depth-3;
+    // padding: 5px 0px 5px 0px;
+    background-color: $color-main-dark;
+}
+
+
 .pseudoEle {
     min-width: $unit-base-width *2;
     max-width: 100%;
@@ -221,70 +212,7 @@ body {
     color: rgb(255, 82, 132);
 }
 
-.chat {
-    // float: right;
-    margin-top: $margin-separation-height;
-    width: $unit-base-width * 44;
-    // flex: 1;
-    // height: 100%;
-    // background-color: rgb(219, 163, 104);
-    // align-self: flex-end;
-    display: flex;
-    flex-direction: column;
-}
-.chatTextWrapper {
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-}
-.chatText {
-    width: $unit-base-width * 44;
-    // height: 100%;
-    // height: 420px;
-    // display: flex;
-    // height: 100%;
-    // flex: 1;
-    background-color: $color-element-base;
-    margin-bottom: $margin-relation-height;
-}
-.chatScrollbar {
-    width: $unit-base-width;
-    background-color: $color-element-base;
-    margin-bottom: 8px;
-    // flex: 1;
-}
-.chatScrollHandle {
-    width: $unit-base-width;
-    height: $unit-base-height * 6;
-    background-color: $color-accent;
-}
-.chatInteraction {
-    margin-bottom: $margin-separation;
-}
-.chatInput {
-    outline: none;
-    resize: none;
-    display: inline-block;
-    box-sizing: border-box;
-    float: left;
-    border: none;
-    width: $unit-base-width * 39.5;
-    height: $unit-base-height * 10;
-    // margin-right: 4px;
-    background-color: $color-element-base;
-    align-self: flex-end;
-}
-.chatSend {
-    float: right;
-    width: $unit-base-width * 4;
-    height: $unit-base-height * 10;
-    font-size: $unit-base-height * 3;
-    line-height: $unit-base-height * 10;
-    color: black;
-    text-align: center;
-    background-color: $color-accent;
-    align-self: flex-end;
-}
+
 
 @media screen and (max-width: $break-small-width) {
     .sidebarContainer {

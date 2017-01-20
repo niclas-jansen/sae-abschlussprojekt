@@ -1,0 +1,78 @@
+@import "styleguide";
+
+// -----------------------------------------------------------------------------
+// # SIDE BAR
+// -----------------------------------------------------------------------------
+
+.sidebarContainer {
+    display: flex;
+    width: $unit-base-width * 50;
+    background-color: rgba(255, 255, 255, 0.67);
+}
+
+.chat {
+    // float: right;
+    margin-top: $margin-separation-height;
+    width: $unit-base-width * 44;
+    // flex: 1;
+    // height: 100%;
+    // background-color: rgb(219, 163, 104);
+    // align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+.chatTextWrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+}
+.chatText {
+    width: $unit-base-width * 44;
+    // height: 100%;
+    // height: 420px;
+    // display: flex;
+    // height: 100%;
+    // flex: 1;
+    background-color: $color-element-base;
+    margin-bottom: $margin-relation-height;
+}
+.chatScrollbar {
+    width: $unit-base-width;
+    background-color: $color-element-base;
+    margin-bottom: 8px;
+    // flex: 1;
+}
+.chatScrollHandle {
+    width: $unit-base-width;
+    height: $unit-base-height * 6;
+    background-color: $color-accent;
+}
+.chatInteraction {
+    margin-bottom: $margin-separation;
+}
+.chatInput {
+    outline: none;
+    resize: none;
+    display: inline-block;
+    box-sizing: border-box;
+    float: left;
+    border: none;
+    width: $unit-base-width * 39.5;
+    height: $unit-base-height * 10;
+    // margin-right: 4px;
+    background-color: $color-element-base;
+    align-self: flex-end;
+}
+.chatSend {
+    float: right;
+    width: $unit-base-width * 4;
+    height: $unit-base-height * 10;
+    font-size: $unit-base-height * 3;
+    line-height: $unit-base-height * 10;
+    color: black;
+    text-align: center;
+    background-color: $color-accent;
+    align-self: flex-end;
+}
+
+// -----------------------------------------------------------------------------
