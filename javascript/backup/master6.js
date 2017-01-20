@@ -2,39 +2,13 @@
 // (function(){
 // TODO: Sanetize output
 
-// -----------------------------------------------------------------------------
-// Helper functions
-// -----------------------------------------------------------------------------
-
-/**
- * Creates deep copy of an Object so the data of that object can be worked on 
- * without changing anything in the original Object
- * @param  {Object} source The object you want a deep copy from
- * @return {Object}        Deep copy of the object
- */
+// helper functions
 let objDeepCopy = function(source) { 
-    return JSON.parse(JSON.stringify(source));
+    JSON.parse(JSON.stringify(source));
 }
-
-/**
- * Function to insert element after a Node instead of before it
- * @param  {Node} newNode       [description]
- * @param  {Node} referenceNode [description]
- */
 let insertAfter = function(newNode, referenceNode){
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
-
-/**
- * Left pads string
- * @param  {string | number} source    The string or number that is supposed to be left padded
- * @param  {number} padLength How big the padding is supposed to be
- * @param  {string} padType   What character is used for padding
- * @return {string}           Returns padded String
- * @example
- * // returns '  24'
- * leftPad(24, 4, ' ')
- */
 let leftPad = function(source, padLength, padType) {
     if (source.length != padLength) {
         let padding = ``;
@@ -44,6 +18,13 @@ let leftPad = function(source, padLength, padType) {
         let paddedString = padding + source;
         return paddedString;
     }
+    // if (source.length == 3) {
+    //     return source;
+    // } else if (source.length == 2) {
+    //     return ' ' + source;
+    // } else {
+    //     return '  ' + source;
+    // }
 }
 // app config
 let debugging = true;
@@ -51,9 +32,9 @@ let debugging = true;
 
 var lastElementCreated;
 
-// -----------------------------------------------------------------------------
+// ------------------------------------------------------------------
 // Objects / data
-// -----------------------------------------------------------------------------
+// ------------------------------------------------------------------
 // var objecto = {
 //     metadata: {uidPosition: 4},
 //     elements: [
@@ -129,37 +110,33 @@ var elementBase = {
 // ------------------------------------------------------------------
 
 /**
- * @type {Object} elementEngine
+ * elementEngine
+ * @type {Object}
  */
 var elementEngine = {
     localStorageObjectName: 'obj',
     localStorageTarget: 'obj',
-    getLocalStorage () {
-        return JSON.parse(localStorage.getItem(this.localStorageTarget));
+    getLocalS () {
+        console.log(JSON.parse(localStorage.getItem(this.localStorageTarget)));
     },
-    setLocalStorage (content) {
-        localStorage.setItem(this.localStorageTarget, JSON.stringify(content));
+    uid: {
+        find: function(source, uid){
+            
+        },
+        getPosition: function(source){
+            return source.metadata.uidPosition;
+        },
+        setNewPosition: function(source, newUidPosition) {
+            source.metadata.uidPosition = newUidPosition;
+            return newUidPosition;
+        },
+        incrementPosition: function(source){
+            return this.setNewPosition(source, this.getPosition(source) + 1);
+        },
     },
-    // uid: {
-    //     find: function(source, uid){
-    //         
-    //     },
-    //     getPosition: function(source){
-    //         return source.metadata.uidPosition;
-    //     },
-    //     setNewPosition: function(source, newUidPosition) {
-    //         source.metadata.uidPosition = newUidPosition;
-    //         return newUidPosition;
-    //     },
-    //     incrementPosition: function(source){
-    //         return this.setNewPosition(source, this.getPosition(source) + 1);
-    //     },
-    // },
-    
     /**
      * This function finds and returns a key refference in an object based on 
      * the given uid key value
-     * @memberof elementEngine
      * @param {Object} source Object to serach in
      * @param {number} uid number that is being searched for
      * @returns {Object} a refference of the position in the searched object where the uid was found
@@ -182,11 +159,10 @@ var elementEngine = {
     
     /**
      * [addElement description]
-     * @memberof elementEngine
      * @param {[type]} target  [description]
      * @param {[type]} element [description]
      */
-    addElement (target, element) {
+    addElement: function(target, element) {
         if (typeof target !== 'undefined') {
             if (typeof target.elements !== 'undefined') {
                 target.elements.push(element);
@@ -195,57 +171,79 @@ var elementEngine = {
             }
         }
     },
+    logToData: function(elementObj, nodeTarget) {
+        var dataObj = JSON.parse(localStorage.getItem(this.localStorageObjectName));
+        var currentUidPosition = dataObj['metadata']['uidPosition'];
+        var newUidPosition = currentUidPosition + 1;
+
+        var newElementData = elementObj;
+
+        dataObj.metadata.uidPosition = newUidPosition;
+
+        newElementData.params.uid = newUidPosition;
+
+        if (typeof nodeTarget == 'undefined') {
+            console.log('nodeTarget is not defined');
+            //if no uid is specified then add to outer layer
+            dataObj.elements.push(newElementData);
+        } else {
+            this.addElement(this.findUid(dataObj, nodeTarget), newElementData);
+        }
+
+        localStorage.setItem(this.localStorageObjectName, JSON.stringify(dataObj));
+    },
     /**
-     * Logs data
-     * 
+     * [logToDataV2 description]
      * @param  {Object} elementData The Object that is getting logged to the data target.
      * @param  {number} nodeTarget  Which node in the dataTarget the elementData is getting appended to.
-     * @param  {Object|string} dataTarget  Where the new data is getting put.
+     * @param  {[type]} dataTarget  Where the new data is getting put.
      * @param  {boolean} jsonBool    If the dataTarget is Json and needs to be parsed.
      * @return {number}             Returns the new uid that got assigned to the elementData
      */
     logToDataV2: function(elementData, nodeTarget, dataTarget, jsonBool) {
+        // var dataTargetValidated;
+        // 
+        // if (jsonBool) {
+        //     console.log(dataTarget);
+        //     dataTargetValidated = JSON.parse(dataTarget);
+        // } else {
+        //     dataTargetValidated = dataTarget;
+        // }
+        // debugger;
+        // var elementDataUid = this.incrementUidPosition(dataTarget);
+        // elementData.params.uid = elementDataUid;
+        // 
+        // if (typeof nodeTarget == 'undefined') {
+        //     console.log('nodeTarget is not defined');
+        //     dataTargetValidated.elements.push(newElementData);
+        // } else {
+        //     this.addElement(this.findUid(dataTargetValidated, nodeTarget), elementData);
+        // }
+        // if (jsonBool) {
+        //     elementDataJSONified = JSON.stringify(elementData);
+        //     localStorage.setItem(this.localStorageTarget, elementDataJSONified);
+        // }
+        // return elementDataUid;
+        // dataTarget = localStorage.getItem('obj');
+        // jsonBool = true;
         let dataTargetValidated = jsonBool === true
             ? JSON.parse(localStorage.getItem(dataTarget))
             // ? JSON.parse(dataTarget) 
             // : objdataTarget;
-            : objDeepCopy(objdataTarget);    
+            : objDeepCopy(objdataTarget);
+            
+        // let newUid = dataTargetValidated.metadata + 1;
+        // let newUid = this.setNewUidPosition(dataTargetValidated, this.getUidPosition(dataTargetValidated) + 1);
         let newUid = this.incrementUidPosition(dataTargetValidated);
         elementData.params.uid = newUid;
+        // dataTargetValidated.metadata += 1;
         this.addElement(this.findUid(dataTargetValidated, nodeTarget), elementData);
-        // TODO: make this part modular
+        // this.findUid(dataTargetValidated, nodeTarget).elements.push(elementData);
+        
         localStorage.setItem('obj', JSON.stringify(dataTargetValidated));
         return newUid;
-    },
-    updateData(uidTarget, value, key) {
-        // type == params || content
-        let object = this.getLocalStorage();
-        let element = this.findUid(object, uidTarget);
-    
-        if (key) {
-        element.params[key] = value;
-        } else {
-        element.content = value;
-        }
         
-        this.setLocalStorage(object);
     },
-    // parameter(target, key, value){
-    //     let element = this.findUid(this.getLocalStorage(), target);
-    //     element[key] = value;
-    // },
-    // content(target, value){
-    //     let element = this.findUid(this.getLocalStorage(), target);
-    // },
-    /**
-     * Turns a given object that contains data describing a html element into a
-     * HTML element, inserts it into the Webpage at a specified position and 
-     * logs it to a data target
-     * @memberof elementEngine
-     * @param  {Object} elementData Takes the Object that is getting turned into a html element
-     * @param  {boolean} logBool     If the object gets logged to data
-     * @param  {number} nodeTarget  Where the new HTML element gets inserted/appended
-     */
     htmlFromData (elementData, logBool, nodeTarget) {
         // make deep copy of elementData for further processing
         var deepElementData = JSON.parse(JSON.stringify(elementData));
@@ -297,41 +295,30 @@ var elementEngine = {
         }
         
         if (childElements != null) {
-            // if (logBool === true) {
-            //     for (var i = 0; i < childElements.length; i++) {
-            //         if (deepElementData.params != null && deepElementData.params.uid != null){
-            //             console.log(`logBool = ${logBool}`);
-            //             this.htmlFromData(childElements[i], true, deepElementData.params.uid)
-            //         } else {
-            //             console.log(`logBool = ${logBool}`);
-            //             this.htmlFromData(childElements[i], true, newElementUid)
-            //         }
-            //     }
-            // } else {
-            //     for (var i = 0; i < childElements.length; i++) {
-            //         if (deepElementData.params != null && deepElementData.params.uid != null){
-            //             console.log(`logBool = ${logBool}`);
-            //             this.htmlFromData(childElements[i], false, deepElementData.params.uid)
-            //         } else {
-            //             console.log(`logBool = ${logBool}`);
-            //             this.htmlFromData(childElements[i], false, newElementUid)
-            //         }
-            //     }
-            // }
+            // console.log(`childElements: ${childElements}`);
+            // console.log(`${deepElementData} has childElements: ${childElements} `);
             for (var i = 0; i < childElements.length; i++) {
                 if (deepElementData.params != null && deepElementData.params.uid != null){
-                    this.htmlFromData(
-                        childElements[i], 
-                        logBool?true:false,
-                        deepElementData.params.uid
-                    );
+                    this.htmlFromData(childElements[i], true, deepElementData.params.uid)
                 } else {
-                    this.htmlFromData(
-                        childElements[i], 
-                        logBool?true:false, 
-                        newElementUid
-                    );
+                    this.htmlFromData(childElements[i], true, newElementUid)
                 }
+                
+                // if (logBool === true) {
+                //     if(childElements[i].params.uid){
+                //         
+                //         this.createElement(childElements[i], true, elementObj.params.uid);
+                //     } else {
+                //         this.createElement(childElements[i], true, 0);
+                //     }
+                // } else {
+                //     if(childElements[i].params.uid){
+                //         this.createElement(childElements[i], false, elementObj.params.uid);
+                //     } else {
+                //         this.createElement(childElements[i], false, 0);
+                //     }
+                // }
+                
             }
         }
         
@@ -346,13 +333,6 @@ var elementEngine = {
     incrementUidPosition (source) {
         return this.setNewUidPosition(source, this.getUidPosition(source) + 1);
     },
-    changeParameter(target, key, value){
-        let element = this.findUid(this.getLocalStorage(), target);
-        element[key] = value;
-    },
-    // changeContent(target, value){
-    //     let element = this.findUid(this.getLocalStorage(), target);
-    // },
     buildHtml (source) {
         for (var i = 0; i < source.elements.length; i++) {
             if (source.elements[i].hasOwnProperty('element')) {
@@ -479,111 +459,3 @@ if (debugging) {
 }
 var lastCalledNode;
 // })();
-
-// document.getElementsByClassName("testThis")[0].addEventListener("click", function() {
-//     this.innerHTML = "I HAVE CHANGED";
-// })
-
-let chatEngine = {
-    
-}
-
-// let chat = "hi + 12 + 1";
-// let searchChat = function(target){
-//     let regex = /\d/;
-//     let s = '[description:"aoeu" uuid:"123sth"]';
-//     let match;
-// 
-//     do {
-//         match = regex.exec(target);
-//         if (match) {
-//             console.log(match[1], match[2]);
-//         }
-//     } while (match);
-// }
-// let searchChat = function(target){
-//     let nodeList = document.querySelectorAll('[class="labelClass"]');
-//     let stringArray = target.split('');
-//     let tempString = '';
-//     let varH = '';
-//     stringArray.forEach(function(e){
-//         if (e.match(/[a-zA-Z]/g)) {
-//             varH += e;
-//         } else {
-//             tempString += e; 
-//             if (varH) {
-//                 nodeList.forEach(function(e){
-//                     if(e.firstChild.nodeValue == varH) {
-//                         if (e.childNodes[1].value && !isNaN(e.childNodes[1].value)) {
-//                             tempString += e.childNodes[1].value + ' ';
-//                         }
-//                     }
-//                 });
-//                 varH = '';
-//             }
-//         }
-//         
-//     })
-//     // tempString = '3 + 12 + 1';
-//     console.log(tempString);
-//     let tempStringLastCharacter = tempString[tempString.length - 1];
-//     console.log(tempStringLastCharacter);
-//     if (isNaN(tempStringLastCharacter) || tempStringLastCharacter != ' ') {
-//         console.log('bad string');
-//     } else {
-//         console.log(math.eval(tempString))
-//     }
-//     
-// }
-// 
-// 
-let rollDice = function(sides) {
-    return Math.floor(Math.random() * sides + 1);
-}
-
-let rollTest = function(sides, times){
-    let diceRolls = {};
-    for (var i = 0; i < times; i++) {
-        
-        let rolled = rollDice(sides);
-        if (!diceRolls[rolled]) {
-            diceRolls[rolled] = 1;
-        } else {
-            diceRolls[rolled] += 1;
-        }
-    }
-    console.log(diceRolls);
-}
-
-
-let searchChat = function(target){
-    // TODO: does not work if variable is at end of string
-    let nodeList = document.querySelectorAll('[class="labelClass"]');
-    let stringArray = target;
-    let tempString = '';
-    let varH = '';
-    for (i = 0; i < stringArray.length; i++) {
-            if (stringArray[i].match(/[a-zA-Z]/g)) {
-                varH += stringArray[i];
-                if (i == stringArray.length - 1 && varH) {
-                    tempString += eval(varH);
-            }
-        } else {
-            if (varH) {
-                console.log(varH);
-                nodeList.forEach(function(e){
-                    if(e.firstChild.nodeValue == varH) {
-                        if (e.childNodes[1].value && !isNaN(e.childNodes[1].value)) {
-                            console.log('value:' + e.childNodes[1].value);
-                            tempString += e.childNodes[1].value;
-                        }
-                    }
-                });
-            }
-            tempString += stringArray[i];
-            varH = '';
-        }
-    }
-    console.log(tempString);
-    console.log(math.eval(tempString))
-}
