@@ -1,0 +1,28 @@
+@import "styleguide";
+
+.elementsList {
+    background-color: $color-element-base;
+}
+
+.testClassX {
+    background-color: pink;
+}
+
+// .sectionClass {
+//     // display: flex;
+//     // flex-grow: 1;
+//     // width: 900px;
+//     // min-width: 400px;
+//     // width: $unit-base-width * 100;
+//     min-height: $unit-base-height * 5;
+//     // height: auto;
+//     margin-top: $margin-separation-height;
+//     margin-bottom: $margin-separation-height;
+//     margin-left: $margin-separation-width;
+//     margin-right: $margin-separation-width;
+//     background-color: $color-element-base;
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: wrap;
+//     box-shadow: $z-depth-1;
+// }

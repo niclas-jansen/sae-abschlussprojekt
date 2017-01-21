@@ -12,3 +12,7 @@ document.querySelector('[uid="1"]').firstChild.nodeValue = "lol";
 document.querySelector('[uid="1"]').childNodes[0].nodeValue = "test";
 ```
 
+#### get position in node list
+```javascript
+Array.prototype.indexOf.call(nodelist, el)
+```

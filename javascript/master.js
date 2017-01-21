@@ -14,7 +14,7 @@
  */
 let objDeepCopy = function(source) { 
     return JSON.parse(JSON.stringify(source));
-}
+};
 
 /**
  * Function to insert element after a Node instead of before it
@@ -23,7 +23,7 @@ let objDeepCopy = function(source) {
  */
 let insertAfter = function(newNode, referenceNode){
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
+};
 
 /**
  * Left pads string
@@ -44,9 +44,9 @@ let leftPad = function(source, padLength, padType) {
         let paddedString = padding + source;
         return paddedString;
     }
-}
+};
 // app config
-let debugging = true;
+let debugging = false;
 
 
 var lastElementCreated;
@@ -88,7 +88,6 @@ let emptyData = {
     ]
 };
 
-// TODO: elements in elements don't have uid yet!!!!!!
 var elementBase = {
     section: {
         element: 'section',
@@ -140,22 +139,6 @@ var elementEngine = {
     setLocalStorage (content) {
         localStorage.setItem(this.localStorageTarget, JSON.stringify(content));
     },
-    // uid: {
-    //     find: function(source, uid){
-    //         
-    //     },
-    //     getPosition: function(source){
-    //         return source.metadata.uidPosition;
-    //     },
-    //     setNewPosition: function(source, newUidPosition) {
-    //         source.metadata.uidPosition = newUidPosition;
-    //         return newUidPosition;
-    //     },
-    //     incrementPosition: function(source){
-    //         return this.setNewPosition(source, this.getPosition(source) + 1);
-    //     },
-    // },
-    
     /**
      * This function finds and returns a key refference in an object based on 
      * the given uid key value
@@ -171,7 +154,7 @@ var elementEngine = {
             if (Array.isArray(source.elements)) {
                 for (var i = 0; i < source.elements.length; i++) {
                     var newTarget = source.elements[i];
-                    var result = this.findUid(newTarget, uid)
+                    var result = this.findUid(newTarget, uid);
                     if (result != null) {
                         return result;
                     }
@@ -205,10 +188,8 @@ var elementEngine = {
      * @return {number}             Returns the new uid that got assigned to the elementData
      */
     logToDataV2: function(elementData, nodeTarget, dataTarget, jsonBool) {
-        let dataTargetValidated = jsonBool === true
-            ? JSON.parse(localStorage.getItem(dataTarget))
-            // ? JSON.parse(dataTarget) 
-            // : objdataTarget;
+        let dataTargetValidated = jsonBool === true ?
+            JSON.parse(localStorage.getItem(dataTarget))
             : objDeepCopy(objdataTarget);    
         let newUid = this.incrementUidPosition(dataTargetValidated);
         elementData.params.uid = newUid;
@@ -253,6 +234,13 @@ var elementEngine = {
         var newElement;
         var childElements;
         // var childElements;
+        if (isNaN(nodeTarget)){
+            nodeTarget = document.getElementsByClassName(nodeTarget)[0];
+            if (logBool !== false) {
+                logBool = false;
+            }
+        }
+        
         
         if (deepElementData.elements) {
             childElements = deepElementData.elements;
@@ -291,7 +279,12 @@ var elementEngine = {
         }
         
         if (nodeTarget) {
-            document.querySelector('[uid="' + nodeTarget + '"]').appendChild(newElement);
+            if (isNaN(nodeTarget)) {
+                nodeTarget.appendChild(newElement);
+            } else {
+                document.querySelector('[uid="' + nodeTarget + '"]').appendChild(newElement);
+            }
+            
         } else {
             document.getElementsByClassName('contentArea')[0].appendChild(newElement);
         }
@@ -356,28 +349,57 @@ var elementEngine = {
     buildHtml (source) {
         for (var i = 0; i < source.elements.length; i++) {
             if (source.elements[i].hasOwnProperty('element')) {
-                this.htmlFromData(source.elements[i], false)
+                this.htmlFromData(source.elements[i], false);
             }
         }
 
     },
+    buildEditingInterface (source) {
+        let uidIdentifier = "edit";
+        let uidCounter = 0;
+        let elementsObj = objDeepCopy(elementBase);
+        for (let key in elementsObj) {
+            uidCounter += 1;
+            // elementsObj[key].params.data = JSON.stringify(elementsObj[key]);
+            console.log(key);
+            elementsObj[key].params.data = String(key);
+            elementsObj[key].params.uid = uidIdentifier + uidCounter;
+            elementsObj[key].params.draggable = 'true';
+            elementsObj[key].params.ondragstart = `elementEngine.pseudoElements.create('${elementsObj[key].params.class}')`;
+            // elementsObj[key].params.ondragstart = "console.log(this)";
+            elementsObj[key].params.ondragend = "elementEngine.pseudoElements.destroy()";
+            // elementsObj[key].params.disabled = "";
+            if (elementsObj[key].elements){
+                for (let childKey in elementsObj[key].elements) {
+                    uidCounter += 1;
+                     elementsObj[key].elements[childKey].params.uid = uidIdentifier + uidCounter;
+                }
+            }
+            console.log(elementsObj[key]);
+            this.htmlFromData(elementsObj[key], false, 'elementsList');
+        }        
+    },
     pseudoElements: {
-        create () {
-            let nodeList = document.querySelectorAll('[uid]');
+        create (cssClass) {
+            let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
+            let pseudoElementUid = 0;
             nodeList.forEach(function(e) {
-                // if (e.parentNode.childNodes.length < 1) {
-                //     console.log("has only one child");
-                // }
-                console.log(e.tagName);
+                // console.log(e.tagName);
                 if (e.tagName != 'INPUT' ) {
                     let pseudoElement = document.createElement('DIV');
                     pseudoElement.setAttribute('class', 'pseudoEle');
+                    pseudoElement.setAttribute('onclick', 'pE(this)');
+                    pseudoElement.setAttribute('ondrop', 'pE(this)');
+                    pseudoElement.setAttribute('ondragover', 'allowDrop(event)');
+                    if (cssClass) {
+                        pseudoElement.className += ` ${cssClass}`;
+                    }
                     let referenceNode = 
                         document.querySelector('[uid="' + e.getAttribute('uid') + '"]');
                     insertAfter(pseudoElement, referenceNode);
                 }
-                
-            })
+            });
+            // Array.prototype.indexOf.call(nodelist, el)
         },
         destroy () {
             if (document.getElementsByClassName('psuedoEle') 
@@ -390,24 +412,24 @@ var elementEngine = {
             }
         },
     },
-}
+};
 let elementEngingeConfig = {
     
-}
+};
 
 let makeDraggable = function() {
     var elements = document.querySelectorAll('[uid]');
     for (var i = 0; i < elements.length; i++) {
         elements[i].setAttribute('draggable', 'true');
     }
-}
+};
 
 let makeUnDraggable = function() {
     var elements = document.querySelectorAll('[uid]');
     for (var i = 0; i < elements.length; i++) {
         elements[i].setAttribute('draggable', 'false');
     }
-}
+};
 
 elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
 // elementEngine.recreateElements(objecto);
@@ -459,7 +481,7 @@ logBttn.addEventListener('click', function() {
     console.log(JSON.parse(localStorage.getItem('obj')));
 });
 if (debugging) {
-    let logClickedElement = function(){
+    let logClickedElement = function() {
         document.getElementsByClassName('contentArea')[0].addEventListener('click', function(e) {
             var nodeList = document.querySelectorAll(':hover');
             var lastNode = {
@@ -468,14 +490,18 @@ if (debugging) {
                     return leftPad(this.element.getAttribute('uid'), 3, ` `);
                 },
                 tagName: function() {
-                    return this.element.tagName
+                    return this.element.tagName;
                 }
             };
             lastCalledNode = lastNode.uid();
             console.table(`uid: ${lastNode.uid()} tagName: ${lastNode.tagName()}`);
-        })
-    }
+        });
+    };
     logClickedElement();
+}
+
+let getPositionInNodeList = function(source) {
+    
 }
 var lastCalledNode;
 // })();
@@ -486,7 +512,7 @@ var lastCalledNode;
 
 let chatEngine = {
     
-}
+};
 
 // let chat = "hi + 12 + 1";
 // let searchChat = function(target){
@@ -539,7 +565,7 @@ let chatEngine = {
 // 
 let rollDice = function(sides) {
     return Math.floor(Math.random() * sides + 1);
-}
+};
 
 let rollTest = function(sides, times){
     let diceRolls = {};
@@ -553,7 +579,7 @@ let rollTest = function(sides, times){
         }
     }
     console.log(diceRolls);
-}
+};
 
 
 let searchChat = function(target){
@@ -585,5 +611,52 @@ let searchChat = function(target){
         }
     }
     console.log(tempString);
-    console.log(math.eval(tempString))
+    console.log(math.eval(tempString));
+};
+
+elementEngine.buildEditingInterface(elementBase);
+// console.log(elementBase.lengt);
+
+let pseudoEve = function(){
+    let nodeList = document.getElementsByClassName('pseudoEle');
+    for (let i = 0; i < nodeList.length; i++) {
+        document.getElementsByClassName('pseudoEle')[i].addEventListener('click', function(e){
+            e.style.backgroundColor = 'red';
+        });
+    }
+};
+
+let pE = function(x){
+    // console.log(x);
+    var info = {};
+    info.parentNode = x.parentNode.getAttribute('uid');
+    info.index = Array.prototype.indexOf.call(x.parentNode.childNodes, x);
+    info.insertAfter = x.parentNode.childNodes[info.index - 1].getAttribute('uid');
+    // console.log(x.parentNode.childNodes[info.index - 1]);
+    console.log(info);
+    return info;
+};
+
+let dropEvent = function(e){
+    e.preventDefault();
+    console.log(e);
+};
+
+let dragEvent = function(e){
+    e.preventDefault();
+    let data = e.dataTransfer.getData("test");
+    console.log(data);
+};
+
+let allowDrop = function(e) {
+    e.preventDefault();
+};
+
+
+let insertAfterUid = function(info) {
+    let target;
+    
 }
+// document.getElementsByClassName('elementsList')[1].addEventListener('click', function(e){
+//     return false;
+// });
