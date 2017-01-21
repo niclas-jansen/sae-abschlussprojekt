@@ -362,10 +362,10 @@ var elementEngine = {
             uidCounter += 1;
             // elementsObj[key].params.data = JSON.stringify(elementsObj[key]);
             console.log(key);
-            elementsObj[key].params.data = String(key);
+            elementsObj[key].params.elementData = String(key);
             elementsObj[key].params.uid = uidIdentifier + uidCounter;
             elementsObj[key].params.draggable = 'true';
-            elementsObj[key].params.ondragstart = `elementEngine.pseudoElements.create('${elementsObj[key].params.class}')`;
+            elementsObj[key].params.ondragstart = `elementEngine.pseudoElements.create('${elementsObj[key].params.class}'), editingNewDataOnDrag(event, this)`;
             // elementsObj[key].params.ondragstart = "console.log(this)";
             elementsObj[key].params.ondragend = "elementEngine.pseudoElements.destroy()";
             // elementsObj[key].params.disabled = "";
@@ -375,7 +375,7 @@ var elementEngine = {
                      elementsObj[key].elements[childKey].params.uid = uidIdentifier + uidCounter;
                 }
             }
-            console.log(elementsObj[key]);
+            // console.log(elementsObj[key]);
             this.htmlFromData(elementsObj[key], false, 'elementsList');
         }        
     },
@@ -383,22 +383,48 @@ var elementEngine = {
         create (cssClass) {
             let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
             let pseudoElementUid = 0;
+            let createPElement = function(cssClass){
+                let pseudoElement = document.createElement('DIV');
+                pseudoElement.setAttribute('class', 'pseudoEle');
+                pseudoElement.setAttribute('onclick', 'pE(this)');
+                pseudoElement.setAttribute('ondrop', 'editingDropEvent(event, this)');
+                pseudoElement.setAttribute('ondragover', 'allowDrop(event)');
+                if (cssClass) {
+                    pseudoElement.className += ` ${cssClass}`;
+                }
+                return pseudoElement;
+            };
             nodeList.forEach(function(e) {
-                // console.log(e.tagName);
                 if (e.tagName != 'INPUT' ) {
-                    let pseudoElement = document.createElement('DIV');
-                    pseudoElement.setAttribute('class', 'pseudoEle');
-                    pseudoElement.setAttribute('onclick', 'pE(this)');
-                    pseudoElement.setAttribute('ondrop', 'pE(this)');
-                    pseudoElement.setAttribute('ondragover', 'allowDrop(event)');
-                    if (cssClass) {
-                        pseudoElement.className += ` ${cssClass}`;
-                    }
                     let referenceNode = 
                         document.querySelector('[uid="' + e.getAttribute('uid') + '"]');
+                    if (Array.prototype.indexOf.call(e.parentNode.childNodes, e) === 0) {
+                        firstPseudoElement = createPElement();
+                        e.parentNode.insertBefore(firstPseudoElement, referenceNode)
+                    }
+                    pseudoElement = createPElement();
+                    // let referenceNode = 
+                    //     document.querySelector('[uid="' + e.getAttribute('uid') + '"]');
                     insertAfter(pseudoElement, referenceNode);
                 }
             });
+            // nodeList.forEach(function(e) {
+            //     // console.log(e.tagName);
+            //     if (e.tagName != 'INPUT' ) {
+            //         let pseudoElement = document.createElement('DIV');
+            //         pseudoElement.setAttribute('class', 'pseudoEle');
+            //         pseudoElement.setAttribute('onclick', 'pE(this)');
+            //         // pseudoElement.setAttribute('ondrop', 'pE(this)');
+            //         pseudoElement.setAttribute('ondrop', 'editingDropEvent(event, this)');
+            //         pseudoElement.setAttribute('ondragover', 'allowDrop(event)');
+            //         if (cssClass) {
+            //             pseudoElement.className += ` ${cssClass}`;
+            //         }
+            //         let referenceNode = 
+            //             document.querySelector('[uid="' + e.getAttribute('uid') + '"]');
+            //         insertAfter(pseudoElement, referenceNode);
+            //     }
+            // });
             // Array.prototype.indexOf.call(nodelist, el)
         },
         destroy () {
@@ -639,12 +665,13 @@ let pE = function(x){
 
 let dropEvent = function(e){
     e.preventDefault();
+    
     console.log(e);
 };
 
 let dragEvent = function(e){
     e.preventDefault();
-    let data = e.dataTransfer.getData("test");
+    let data = e.dataTransfer.setData("test");
     console.log(data);
 };
 
@@ -660,3 +687,33 @@ let insertAfterUid = function(info) {
 // document.getElementsByClassName('elementsList')[1].addEventListener('click', function(e){
 //     return false;
 // });
+// 
+
+let editingNewDataOnDrag = function(e, element){
+    // e.preventDefault();
+    console.log(element.getAttribute('elementData'));
+    e.dataTransfer.setData('elementData', element.getAttribute('elementdata'));
+    // console.log(e));
+    // e.dataTransfer.setData('element', e.getAttribute('data'));
+    // console.log(e.getAttribute('data'));
+};
+
+let editingDropEvent = function(e, dropInfo) {
+    let elementData = e.dataTransfer.getData('elementData');
+    if (typeof elementData != 'object') {
+        elementData = elementBase[elementData];
+    }
+    console.log(elementData);
+    
+    var info = {};
+    info.parentNode = dropInfo.parentNode.getAttribute('uid');
+    info.index = Array.prototype.indexOf.call(dropInfo.parentNode.childNodes, dropInfo);
+    if (dropInfo.parentNode.childNodes[info.index - 1]) {
+        info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
+    } else {
+        info.insertAtFirstPosition = true;
+    }
+    // info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
+    
+    console.log(info);
+};
