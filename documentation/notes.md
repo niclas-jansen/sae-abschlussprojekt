@@ -16,3 +16,8 @@ document.querySelector('[uid="1"]').childNodes[0].nodeValue = "test";
 ```javascript
 Array.prototype.indexOf.call(nodelist, el)
 ```
+
+
+#### DO
+DO MORE TYPE CHECKS 
+especially for Number

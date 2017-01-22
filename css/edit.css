@@ -1,5 +1,19 @@
 .elementsList {
-  background-color: #ffffff; }
+  margin-top: 2.22222vh;
+  margin-bottom: 2.22222vh;
+  width: 18.33333vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; }
+
+.elementsList * {
+  max-width: 50%;
+  flex-grow: 0; }
 
 .testClassX {
   background-color: pink; }
+
+.inputEdit {
+  background-color: #FFC107;
+  color: white;
+  outline: none; }

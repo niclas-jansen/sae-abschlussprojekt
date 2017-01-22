@@ -79,6 +79,8 @@ body {
     // border-radius: 3px;
     // float: left;
     // flex: 1;
+    // display: flex;
+    // align-items: flex-start;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,32 +109,125 @@ body {
 // # CUSTOM ELEMENTS STYLES
 // -----------------------------------------------------------------------------
 
-.sectionClass {
-    // display: flex;
-    // flex-grow: 1;
-    // width: 900px;
-    // min-width: 400px;
-    // width: $unit-base-width * 100;
-    min-height: $unit-base-height * 5;
-    // height: auto;
-    margin-top: $margin-separation-height;
-    margin-bottom: $margin-separation-height;
-    margin-left: $margin-separation-width;
-    margin-right: $margin-separation-width;
-    background-color: $color-element-base;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    box-shadow: $z-depth-1;
-}
+// .sectionClass {
+//     // display: flex;
+//     // flex-grow: 1;
+//     // width: 900px;
+//     // min-width: 400px;
+//     // width: $unit-base-width * 100;
+//     min-height: $unit-base-height * 5;
+//     // height: auto;
+//     margin-top: $margin-separation-height;
+//     margin-bottom: $margin-separation-height;
+//     margin-left: $margin-separation-width;
+//     margin-right: $margin-separation-width;
+//     background-color: $color-element-base;
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: wrap;
+//     box-shadow: $z-depth-1;
+// }
 
 .bttnClass {
+    background-color: $color-accent;
+    border: none;
+    height: $unit-base-height * 4;
+    border-radius: 5px;
     margin-top: 5px;
     margin-left: 5px;
     margin-right: 30px;
+    box-shadow: $z-depth-1;
+    color: rgba(255, 255, 255, 0.8);
 }
-
-.labelClass {
+.bttnClass:hover {
+    color: white;
+    box-shadow: $z-depth-3;
+}
+.contentSpacer {
+    width: 100%;
+    content: '';
+}
+// .labelClass {
+//     flex-grow: 1;
+//     display: inline-block;
+//     // white-space: nowrap;
+//     margin: $margin-separation-height $margin-separation-width $margin-separation-height $margin-separation-width;
+//     background-color: white;
+//     // padding-top: $unit-base-height;
+//     padding-left: $unit-base-width;
+//     padding-right: $unit-base-width;
+//     box-shadow: $z-depth-1;
+//     line-height: $unit-base-height * 6;
+//     font-size: $unit-base-height * 2;
+//     height: $unit-base-height * 6;
+//     width: $unit-base-width * 20;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+// }
+.textSmall {
+    background-color: pink;
+    width: $unit-base-width * 10;
+    height: $unit-base-height * 4;
+}
+.textBig {
+    padding: $margin-separation-height $margin-separation-width $margin-separation-height $margin-separation-width;
+    width: 100%;
+    width: 75ch;
+    min-height: $unit-base-height * 3;
+    resize: none;
+    box-shadow: $z-depth-1;
+    border: none;
+    
+    
+}
+.sectionContainer {
+    
+    // flex-grow: -1;
+    display: inline-block;
+    // white-space: nowrap;
+    margin: $margin-separation-height $margin-separation-width $margin-separation-height $margin-separation-width;
+    // background-color: white;
+    // background-color: red;
+    // padding-top: $unit-base-height;
+    margin-left: $unit-base-width * 2;
+    margin-right: $unit-base-width;
+    box-shadow: $z-depth-1;
+    line-height: $unit-base-height * 6;
+    font-size: $unit-base-height * 2;
+    // height: $unit-base-height * 6;
+    // width: $unit-base-width * 80;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+    
+}
+.sectionTitle {
+    // margin-left: $unit-base-width * 2;
+    font-size: $unit-base-height * 3;
+    text-indent: $unit-base-width * 2;
+    background-color: $color-main-dark;
+    color: white;
+    // width: $unit-base-width * 10;
+    // width: 100%;
+}
+.sectionBody {
+    background-color: white;
+    // width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: $unit-base-height * 10;
+}
+.subSection {
+    margin-top: $margin-separation-height;
+    min-width: $unit-base-width * 3;
+    // height: $unit-base-height * 3;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+}
+.inputContainer {
     flex-grow: 1;
     display: inline-block;
     // white-space: nowrap;
@@ -145,13 +240,15 @@ body {
     line-height: $unit-base-height * 6;
     font-size: $unit-base-height * 2;
     height: $unit-base-height * 6;
-    width: $unit-base-width * 20;
+    // width: $unit-base-width * 20;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
 .inputClass {
+    flex-grow: 2;
+    background-color: rgba(255, 255, 255, 0);
     border: none;
     // border-bottom: 1px solid black;
     // margin-top: $margin-separation-height;
@@ -163,10 +260,11 @@ body {
     margin-left: $margin-relation-width;
     // margin-right: $margin-relation-width;
     margin-bottom: $unit-base-height * 1.5;
-    width: $unit-base-width * 8;
+    // width: $unit-base-width * 8;
     height: $unit-base-height * 3;
     text-align: center;
-    box-shadow: $z-depth-1;
+    // box-shadow: inset $z-depth-1;
+    border-bottom: 1px solid black;
     align-self: flex-end;
 }
 
@@ -185,7 +283,7 @@ body {
 
 .debug {
     // width: 100%;
-    height: $unit-base-height * 6;
+    height: $unit-base-height * 8;
     box-shadow: $z-depth-3;
     // padding: 5px 0px 5px 0px;
     background-color: $color-main-dark;
@@ -194,13 +292,21 @@ body {
 
 .pseudoEle {
     min-width: $unit-base-width *2;
-    max-width: 100%;
-    height: 20px;
-    margin: 5px;
-    background-color: rgba(255, 255, 255, 0.27);
+    max-width: $unit-base-width *2;
+    // max-width: 100%;
+    // height: 20px;
+    height: $unit-base-height * 6;
+    // margin: 5px;
+    // background-color: rgba(255, 255, 255, 0.27);
     border: 1px dashed black;
     border-radius: 5px;
-    @extend  .labelClass;
+    // @extend  .labelClass;
+    // margin-top: $unit-base-height * 1.5;
+    // margin-left: $margin-relation-width;
+    // margin: $margin-separation-height $margin-separation-width $margin-separation-height $margin-separation-width;
+    margin-top: $margin-separation-height;
+    margin-bottom: $margin-separation-height;
+    background-color: rgba($color-accent, .5);
 }
 
 .clearBttn {
