@@ -1,4 +1,7 @@
 .elementsList {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   margin-top: 2.22222vh;
   margin-bottom: 2.22222vh;
   width: 18.33333vw;
@@ -14,6 +17,28 @@
   background-color: pink; }
 
 .inputEdit {
+  margin-top: 1.11111vh;
+  margin-left: 0.41667vw;
+  margin-bottom: 1.11111vh;
+  height: 2.22222vh;
   background-color: #FFC107;
-  color: white;
-  outline: none; }
+  height: 2.22222vh; }
+
+.deleteButton {
+  background-color: #ff6363;
+  width: 15px;
+  height: 15px;
+  position: relative;
+  margin-bottom: -15px;
+  margin-right: -15px;
+  left: 97.5%;
+  top: 0.5%;
+  font-size: 20px;
+  font-weight: lighter;
+  line-height: 8px;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 50%;
+  color: black;
+  cursor: pointer;
+  cursor: hand; }

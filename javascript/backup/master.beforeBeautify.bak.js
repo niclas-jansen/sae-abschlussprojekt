@@ -1,6 +1,6 @@
-// jshint browser : true
-// jshint esversion: 6
 'use strict';
+// jshint esversion: 6
+
 // TODO: Sanetize output
 
 // -----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ let insertAfter = function(newNode, referenceNode) {
 let leftPad = function(source, padLength, padType) {
     if (source.length != padLength) {
         let padding = ``;
-        for (let i = source.length; i < padLength; i++) {
+        for(let i = source.length; i < padLength; i++) {
             padding += padType;
         }
         let paddedString = padding + source;
@@ -57,11 +57,11 @@ let leftPad = function(source, padLength, padType) {
 };
 
 
-let lastElementCreated;
+var lastElementCreated;
 // -----------------------------------------------------------------------------
 // Objects / data
 // -----------------------------------------------------------------------------
-// let objecto = {
+// var objecto = {
 //     metadata: {uidPosition: 4},
 //     elements: [
 //         {element: 'section', params: {uid: 0, class:'sectionClass'}, elements: [
@@ -73,28 +73,132 @@ let lastElementCreated;
 //         {element: 'button', params: {uid: 1, class:'bttnClass'}, content: 'click me'}
 //     ]
 // };
-// let objecto = {
+// var objecto = {
 //     metadata: {uidPosition: 0},
 //     elements: [
 //         {element: 'section', params: {uid: 0, class:'sectionClass'}},
 //     ]
 // };
-let objecto = {
+var objecto = {
+    metadata: {uidPosition: 3},
+    elements: [
+        {
+            element: 'section',
+            params: {
+                class: 'sectionContainer',
+                uid: 1,
+            },
+            elements: [
+                {
+                    element: 'div',
+                    content: 'SECTION',
+                    params: {
+                        class: 'sectionTitle',
+                        uid: 2,
+                    },
+                    events: {
+                        play: {
+                            click: {
+                                value: true,
+                            },
+                        },
+                    },
+                },
+                {
+                    element: 'div',
+                    params: {
+                        class: 'sectionBody',
+                        uid: 3,
+                    },
+                },
+            ],
+        }
+    ]
+};
+
+let emptyData = {
     metadata: {
-        uidPosition: 3,
+        uidPosition: 0
     },
-    elements: [{
+    elements: [
+        {
+            element: 'section',
+            params: {
+                uid: 0,
+                class: 'sectionClass'
+            }
+        }
+    ]
+};
+
+var elementBase = {
+    section: {
+        element: 'section',
+        params: {
+            class: 'sectionClass'
+        }
+    },
+    button: {
+        element: 'button',
+        content: 'click Me',
+        params: {
+            class: 'bttnClass'
+        }
+    },
+    
+    
+    
+    
+    
+    textSmall: {
+        element: 'INPUT',
+        params: {
+            type: 'text',
+            class: 'textSmall',
+        },
+    },
+    textBig: {
+        element: 'div',
+        params: {
+            class: 'textBigContainer',
+        },
+        elements: [
+            {
+                element: 'div',
+                params: {
+                    class: 'textBigTitle',
+                },
+                content: 'Title',
+            },
+            {
+                element: 'textarea',
+                params: {
+                    class: 'textBigContent',
+                },
+            }
+        ],
+    },
+    section2: {
         element: 'section',
         params: {
             class: 'sectionContainer',
-            uid: 1,
         },
-        elements: [{
+        events: {
+            edit: {
+                mouseover: {
+                    functions: {
+                        deleteButton: true,
+                        
+                    },
+                },
+            },
+        },
+        elements: [
+            {
                 element: 'div',
                 content: 'SECTION',
                 params: {
                     class: 'sectionTitle',
-                    uid: 2,
                 },
                 events: {
                     play: {
@@ -107,143 +211,7 @@ let objecto = {
             {
                 element: 'div',
                 params: {
-                    class: 'sectionBody',
-                    uid: 3,
-                },
-            },
-        ],
-    }],
-};
-
-const emptyData = {
-    metadata: {
-        uidPosition: 0,
-    },
-    elements: [{
-        element: 'section',
-        params: {
-            uid: 0,
-            class: 'sectionClass',
-        },
-    }],
-};
-
-const elementBase = {
-    section: {
-        element: 'section',
-        params: {
-            class: 'sectionClass',
-        },
-    },
-    button: {
-        element: 'button',
-        content: 'click Me',
-        params: {
-            class: 'bttnClass',
-        },
-        functions: {
-            edit: {
-                general: {
-                    makeDraggable: true,
-                },
-                evListener: {
-                    mouseover: {
-                        functions: {
-                            createDeleteButton: true,
-
-                        },
-                    },
-                },
-            },
-        },
-    },
-
-
-    textSmall: {
-        element: 'INPUT',
-        params: {
-            type: 'text',
-            class: 'textSmall',
-        },
-        events: {
-            edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
-
-                    },
-                },
-            },
-        },
-    },
-    textBig: {
-        element: 'div',
-        params: {
-            class: 'textBigContainer',
-        },
-        events: {
-            edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
-
-                    },
-                },
-            },
-        },
-        elements: [{
-                element: 'div',
-                params: {
-                    class: 'textBigTitle',
-                },
-                content: 'Title',
-            },
-            {
-                element: 'textarea',
-                params: {
-                    class: 'textBigContent',
-                },
-            },
-        ],
-    },
-    section2: {
-        element: 'section',
-        params: {
-            class: 'sectionContainer',
-        },
-        functions: {
-            edit: {
-                evListener: {
-                    mouseover: {
-                        functions: {
-                            createDeleteButton: true,
-                        },
-                    },
-                },
-            },
-        },
-        elements: [{
-                element: 'div',
-                content: 'SECTION',
-                params: {
-                    class: 'sectionTitle',
-                },
-                functions: {
-                    edit: {
-                        evListener: {
-                            click: {
-                                functions: {
-                                    turnElementIntoInput: true,
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-            {
-                element: 'div',
-                params: {
-                    class: 'sectionBody',
+                    class: 'sectionBody'
                 },
             },
         ],
@@ -251,66 +219,33 @@ const elementBase = {
     subSection: {
         element: 'section',
         params: {
-            class: 'subSection',
-        },
-        events: {
-            edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
-
-                    },
-                },
-            },
+            class: 'subSection'
         },
     },
     spacer: {
         element: 'div',
         params: {
             class: 'contentSpacer',
-        },
-        events: {
-            edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
-
-                    },
-                },
-            },
-        },
+        }
     },
-
-
+    
+    
     input: {
         element: 'div',
         params: {
-            class: 'inputContainer',
+            class: 'inputContainer'
         },
-        events: {
-            edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
-
-                    },
-                },
-            },
-        },
-        elements: [{
+        elements: [
+            {
                 element: 'DIV',
                 content: 'INPUT',
                 params: {
-                    class: 'labelClass',
+                    class: 'labelClass'
                 },
-                functions: {
-                    edit: {
-                        evListener: {
-                            click: {
-                                functions: {
-                                    turnElementIntoInput: true,
-                                },
-                            },
+                events: {
+                    play: {
+                        click: {
+                            value: true,
                         },
                     },
                 },
@@ -323,24 +258,18 @@ const elementBase = {
                     value: '',
                 },
                 metadata: {
-                    relation: 'label',
+                    relation: 'label'
                 },
-                functions: {
+                events: {
                     play: {
-                        evListener: {
-                            keypressEnter: {
-                                functions: {
-                                    blurThis: true,
-                                },
-                            },
-                            blur: {
-                                functions: {
-                                    saveInputToData: true,
-                                },
-                            },
-                        },
+                        // blur: 'elementEngine.updateData(Number(this.getAttribute("uid")), this.value)',
+                        blur: {
+                            value: true,
+                            key: 'value',
+                        }
                     },
-                },
+                    edit: {},
+                }
             },
         ],
     },
@@ -353,34 +282,31 @@ const elementBase = {
 /**
  * @type {Object} elementEngine
  */
-let elementEngine = {
+var elementEngine = {
     localStorageObjectName: 'obj',
     localStorageTarget: 'obj',
-    getLocalStorage() {
+    getLocalStorage () {
         return JSON.parse(localStorage.getItem(this.localStorageTarget));
     },
-    setLocalStorage(content) {
+    setLocalStorage (content) {
         localStorage.setItem(this.localStorageTarget, JSON.stringify(content));
     },
     /**
-     * This function finds and returns a key refference in an object based on
+     * This function finds and returns a key refference in an object based on 
      * the given uid key value
      * @memberof elementEngine
      * @param {Object} source Object to serach in
      * @param {number} uid number that is being searched for
-     * @return {Object} a refference of the position in
-     * the searched object where the uid was found
+     * @returns {Object} a refference of the position in the searched object where the uid was found
      */
-    findUid(source, uid) {
-        if (source.params != null
-            && source.params.uid != null
-            && source.params.uid === uid) {
+    findUid (source, uid) {
+        if (source.params != null && source.params.uid != null && source.params.uid === uid) {
             return source;
         } else {
             if (Array.isArray(source.elements)) {
-                for (let i = 0; i < source.elements.length; i++) {
-                    let newTarget = source.elements[i];
-                    let result = this.findUid(newTarget, uid);
+                for (var i = 0; i < source.elements.length; i++) {
+                    var newTarget = source.elements[i];
+                    var result = this.findUid(newTarget, uid);
                     if (result != null) {
                         return result;
                     }
@@ -388,15 +314,14 @@ let elementEngine = {
             }
         }
     },
-
+    
     /**
      * [addElement description]
      * @memberof elementEngine
      * @param {[type]} target  [description]
      * @param {[type]} element [description]
-     * @param {[number]} insertPosition [description]
      */
-    addElement(target, element, insertPosition) {
+    addElement (target, element, insertPosition) {
         if (typeof target !== 'undefined') {
             if (insertPosition) {
                 // console.log('insertPosition -------------');
@@ -414,34 +339,25 @@ let elementEngine = {
     },
     /**
      * Logs data
-     * @param  {Object} elementData
-     * The Object that is getting logged to the data target.
-     * @param  {number} nodeTarget
-     * Which node in the dataTarget the elementData is getting appended to.
-     * @param  {Object|string} dataTarget
-     * Where the new data is getting put.
-     * @param  {boolean} jsonBool
-     * If the dataTarget is Json and needs to be parsed.
-     * @param  {number} insertPosition
-     * If the dataTarget is Json and needs to be parsed.
-     * @return {number}
-     * Returns the new uid that got assigned to the elementData
+     * 
+     * @param  {Object} elementData The Object that is getting logged to the data target.
+     * @param  {number} nodeTarget  Which node in the dataTarget the elementData is getting appended to.
+     * @param  {Object|string} dataTarget  Where the new data is getting put.
+     * @param  {boolean} jsonBool    If the dataTarget is Json and needs to be parsed.
+     * @return {number}             Returns the new uid that got assigned to the elementData
      */
-    logToDataV2: function(
-        elementData, nodeTarget, dataTarget, jsonBool, insertPosition) {
+    logToDataV2: function(elementData, nodeTarget, dataTarget, jsonBool, insertPosition) {
         let dataTargetValidated = jsonBool === true ?
-            JSON.parse(localStorage.getItem(dataTarget)) :
-            objDeepCopy(objdataTarget);
+            JSON.parse(localStorage.getItem(dataTarget))
+            : objDeepCopy(objdataTarget);    
         let newUid = this.incrementUidPosition(dataTargetValidated);
         elementData.params.uid = newUid;
         if (isNaN(nodeTarget)) {
             this.addElement(dataTargetValidated, elementData, insertPosition);
         } else {
-            this.addElement(
-                this.findUid(dataTargetValidated, nodeTarget),
-                     elementData, insertPosition
-                );
+            this.addElement(this.findUid(dataTargetValidated, nodeTarget), elementData, insertPosition);
         }
+        // this.addElement(this.findUid(dataTargetValidated, nodeTarget), elementData, insertPosition);
         // TODO: make this part modular
         localStorage.setItem('obj', JSON.stringify(dataTargetValidated));
         return newUid;
@@ -450,13 +366,13 @@ let elementEngine = {
         // type == params || content
         let object = this.getLocalStorage();
         let element = this.findUid(object, uidTarget);
-
+    
         if (key) {
-            element.params[key] = value;
+        element.params[key] = value;
         } else {
-            element.content = value;
+        element.content = value;
         }
-
+        
         this.setLocalStorage(object);
     },
     // removeFromData(uid) {
@@ -468,7 +384,7 @@ let elementEngine = {
     removeFromData(uid) {
         let data = this.getLocalStorage();
         let result;
-        let filterUid = function(uid) {
+        let filterUid = function(uid){
             return function(element) {
                 if (element.elements) {
                     element.elements = element.elements.filter(
@@ -491,14 +407,14 @@ let elementEngine = {
     // removeId(object, uid) {
     //     return Object.keys(object).map(function (key) {
     //         if (Array.isArray(object[key])) {
-    //             let returnValue = {};
+    //             var returnValue = {};
     //             returnValue[key] =  object[key]
     //             .filter(function (item) {
     //                 return 'uid' in item && item.uid !== uid;
     //             })
     //             .map(item => removeId(item, uid));
     //         } else {
-    //             let returnValue = {};
+    //             var returnValue = {};
     //             returnValue[key] = object[key];
     //         }
     //         return returnValue;
@@ -507,41 +423,36 @@ let elementEngine = {
     //             return Object.assign(finalObject, currentObject);
     //         }, {});
     // },
-
+    
     /**
      * Turns a given object that contains data describing a html element into a
      * HTML element, inserts it into the Webpage at a specified position and 
      * logs it to a data target
      * @memberof elementEngine
-     * @param  {Object} elementData
-     * Takes the Object that is getting turned into a html element
-     * @param  {boolean} logBool
-     * If the object gets logged to data
-     * @param  {number} nodeTarget
-     * Where the new HTML element gets inserted/appended
+     * @param  {Object} elementData Takes the Object that is getting turned into a html element
+     * @param  {boolean} logBool     If the object gets logged to data
+     * @param  {number} nodeTarget  Where the new HTML element gets inserted/appended
      */
-    htmlFromData(elementData, logBool, nodeTarget, insertPosition, customUid) {
-        // TODO: check if further calls of htmlFromData
-        //  need insertPosition as an argument
-        // TODO: write logic to insert html elements at nodelist position
-        //  using insertPosition parameter
+    htmlFromData (elementData, logBool, nodeTarget, insertPosition, customUid) {
+        // TODO: check if further calls of htmlFromData need insertPosition as an argument
+        // TODO: write logic to insert html elements at nodelist position using insertPosition parameter
         // make deep copy of elementData for further processing
-        let deepElementData = JSON.parse(JSON.stringify(elementData));
+        var deepElementData = JSON.parse(JSON.stringify(elementData));
         if (logBool) {
             // console.log(deepElementData);
         }
-        let newElement;
-        let childElements;
-        let newElementUid;
-        // let childElements;
-        if (isNaN(nodeTarget)) {
+        var newElement;
+        var childElements;
+        var newElementUid;
+        // var childElements;
+        if (isNaN(nodeTarget)){
             nodeTarget = document.getElementsByClassName(nodeTarget)[0];
             // if (logBool !== false) {
             //     logBool = false;
             // }
         }
-
-
+        
+        
         if (deepElementData.elements) {
             childElements = deepElementData.elements;
             // potential child elements in the elementObj need to be
@@ -550,7 +461,7 @@ let elementEngine = {
             // incrementing the uidPosition
             delete deepElementData.elements;
         }
-
+        
         // create new element and asign values
         if (deepElementData.element) {
             newElement = document.createElement(deepElementData.element);
@@ -559,134 +470,91 @@ let elementEngine = {
             newElement.innerHTML = deepElementData.content;
         }
         if (deepElementData.params) {
-            for (let key in deepElementData.params) {
+            for (var key in deepElementData.params) {
                 newElement.setAttribute(key, deepElementData.params[key]);
             }
         }
-        if (deepElementData.functions) {
-            let eventFunctionsCheck = {
-                createDeleteButton: elementEngine.createDeleteButton,
-                turnElementIntoInput: turnElementIntoInput,
-                saveInputToData: saveInputToData,
-                blurThis: blurThis,
+        if (deepElementData.events) {
+            let eventFunctions = {
+                deleteButton: elementEngine.deleteButton,
             };
-            let keyPressTypes = {
-                keypressEnter: function(func){
-                    let key = event.which || event.keyCode;
-                    if (key === 13) {
-                        func;
+            if (deepElementData.events.play) {
+                for (let key in deepElementData.events.play) {
+                    if (deepElementData.events.play[key].key) {
+                        console.log(key);
+                        newElement.addEventListener(key, function(event){
+                            let thisUid = Number(this.getAttribute('uid'));
+                            let thisValue = this.value;
+                            elementEngine.updateData(thisUid, thisValue, deepElementData.events.play[key].key);
+                        });
+                    } else {
+                        if (deepElementData.events.play[key].value) {
+                            newElement.addEventListener(key, function(event){
+                                // let thisUid = Number(this.getAttribute('uid'));
+                                // let thisValue = this.innerHTML;
+                                // elementEngine.updateData(thisUid, thisValue);
+                                turnLabelIntoInput(this);
+                            });
+                        }
                     }
-                },
-            };
-            
-            let addEvListener = function(object) {
-                for (let evListener in object) {
-                    for (let func in object[evListener].functions) {
-                        // if (keyPressTypes.hasOwnProperty(evListener) && eventFunctionsCheck.hasOwnProperty(func)) {
-                        //     newElement.addEventListener('keypress', keyPressTypes[evListener](func));
-                        // }
-                        if (eventFunctionsCheck.hasOwnProperty(func)) {
-                            // newElement.addEventListener(evListener, function(){
-                            //     eventFunctionsCheck[func](this);
-                            //     // console.log(true);
-                            // });
-                            newElement.addEventListener(String(evListener), eventFunctionsCheck[func]);
+                    // newElement.addEventListener(deepElementData.events.play[key], function(event){
+                    //     
+                    //     let test = deepElementData.events.play[key];
+                        // eval(test);
+                // });
+                    // newElement.addEventListener('keypress', function(event){
+                    //     var key = event.which || event.keyCode;
+                    //     if (key === 13) {
+                    //         elementEngine.updateData(Number(this.getAttribute('uid')), this.value);
+                    //     }
+                    // });
+                }
+            }
+            if (editing) {
+                if (deepElementData.events.edit) {
+                    for (let evListener in deepElementData.events.edit) {
+                        for (let funcType in deepElementData.events.edit[evListener]) {
+                            for (let funcName in deepElementData.events.edit[evListener][funcType]) {
+                                for (let funcCheck in eventFunctions) {
+                                    if (funcCheck == funcName) {
+                                        newElement.addEventListener(evListener, function(){
+                                            // eventFunctions[funcCheck](this);
+                                            elementEngine.deleteButton(this);
+                                            // console.log(eventFunctions[funcCheck]);
+                                        })
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            };
-
-            if (deepElementData.functions.general) {
+            }
                 
-            }
-            if (deepElementData.functions.play) {
-                if (deepElementData.functions.play.general) {
-                    
-                }
-                if (deepElementData.functions.play.evListener) {
-                    addEvListener(deepElementData.functions.play.evListener);
-                }
-            }
-            let editing = true;
-            if (editing) {
-                if (deepElementData.functions.edit) {
-                    if (deepElementData.functions.edit.general) {
-                        
-                    }
-                    if (deepElementData.functions.edit.evListener) {
-                        addEvListener(deepElementData.functions.edit.evListener);
-                    }
-                }
-            }
-            // let eventFunctions = {
-            //     createDeleteButton: elementEngine.createDeleteButton,
-            // };
-            // if (deepElementData.events.play) {
-            //     for (let key in deepElementData.events.play) {
-            //         if (deepElementData.events.play[key].key) {
-            //             console.log(key);
-            //             newElement.addEventListener(key, function(event) {
-            //                 let thisUid = Number(this.getAttribute('uid'));
-            //                 let thisValue = this.value;
-            //                 elementEngine.updateData(
-            //                     thisUid, thisValue,
-            //                     deepElementData.events.play[key].key
-            //                 );
-            //             });
-            //         } else {
-            //             if (deepElementData.events.play[key].value) {
-            //                 newElement.addEventListener(key, function(event) {
-            //                     turnLabelIntoInput(this);
-            //                 });
-            //             }
-            //         }
-            //     }
-            // }
-            // if (editing) {
-            //     if (deepElementData.functions.events.edit) {
-            //         for (let evListener in deepElementData.functions.events.edit) {
-            //             for (let funcType in deepElementData.events.edit[evListener]) {
-            //                 for (let funcName in deepElementData.events.edit[evListener][funcType]) {
-            //                     for (let funcCheck in eventFunctions) {
-            //                         if (funcCheck == funcName) {
-            //                             newElement.addEventListener(evListener, function() {
-            //                                 // eventFunctions[funcCheck](this);
-            //                                 elementEngine.createDeleteButton(this);
-            //                                 // console.log(eventFunctions[funcCheck]);
-            //                             })
-            //                         }
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-
-
-
-
-
-
-
-            // for (let evListener in deepElementData.events.edit) {
-            //     for (let elementFuncKey in deepElementData.events.edit[evListener]) {
-            //         for (let functionKey in evListener.functions) {
-            //             
-            //         }
-            //         for (let checkKey in eventFunctions) {
-            //             
-            //         }
-            //     }
-            // newElement.addEventListener(key, function(event){
-            //     for (let eventsKey in eventFunctions) {
-            //         if key
-            //     }
-            //     if (deepElementData.events.edit[key] for (let key in deep)
-            // });
+                
+                
+                
+                
+                
+                
+                // for (let evListener in deepElementData.events.edit) {
+                //     for (let elementFuncKey in deepElementData.events.edit[evListener]) {
+                //         for (let functionKey in evListener.functions) {
+                //             
+                //         }
+                //         for (let checkKey in eventFunctions) {
+                //             
+                //         }
+                //     }
+                    // newElement.addEventListener(key, function(event){
+                    //     for (let eventsKey in eventFunctions) {
+                    //         if key
+                    //     }
+                    //     if (deepElementData.events.edit[key] for (let key in deep)
+                    // });
             //     }
             // }
         }
-
+        
         if (logBool === true) {
             if (!deepElementData.params.uid && isNaN(deepElementData.params.uid)) {
                 newElementUid = this.logToDataV2(deepElementData, nodeTarget, this.localStorageTarget, true, insertPosition);
@@ -696,13 +564,13 @@ let elementEngine = {
                 }
             }
         }
-
+        
         // if (customUidCounter) {
         //     customUid.uidPosition += 1;
         //     newElement.setAttribute("uid", customUid.uidPosition);
         //     
         //     if (childElements != null) {
-        //         for (let i = 0; i < childElements.length; i++) {
+        //         for (var i = 0; i < childElements.length; i++) {
         //             if (deepElementData.params != null && deepElementData.params.uid != null){
         //                 this.htmlFromData(
         //                     childElements[i], 
@@ -719,13 +587,13 @@ let elementEngine = {
         //         }
         //     }
         // }
-
+        
         if (nodeTarget) {
             // TODO: doesn't work, something is wrong with the position where i insert
             if (isNaN(nodeTarget)) {
                 if (insertPosition) {
-
-                } else {
+                    
+                } else {        
                     nodeTarget.appendChild(newElement);
                 }
             } else {
@@ -740,55 +608,55 @@ let elementEngine = {
                         insertAfter(newElement, nodeTargetElement.childNodes[insertPosition]);
                     }
                 } else {
-                    document.querySelector('[uid="' + nodeTarget + '"]').appendChild(newElement);
+                document.querySelector('[uid="' + nodeTarget + '"]').appendChild(newElement);
                 }
             }
-
+            
         } else {
             document.getElementsByClassName('contentArea')[0].appendChild(newElement);
         }
         if (childElements != null) {
-            for (let i = 0; i < childElements.length; i++) {
-                if (deepElementData.params != null && deepElementData.params.uid != null) {
+            for (var i = 0; i < childElements.length; i++) {
+                if (deepElementData.params != null && deepElementData.params.uid != null){
                     this.htmlFromData(
-                        childElements[i],
+                        childElements[i], 
                         logBool,
                         deepElementData.params.uid
                     );
                 } else {
                     this.htmlFromData(
-                        childElements[i],
-                        logBool,
+                        childElements[i], 
+                        logBool, 
                         newElementUid
                     );
                 }
             }
         }
-
+        
     },
-    getUidPosition(source) {
+    getUidPosition (source) {
         return source.metadata.uidPosition;
     },
-    setNewUidPosition(source, newUidPosition) {
+    setNewUidPosition (source, newUidPosition) {
         source.metadata.uidPosition = newUidPosition;
         return newUidPosition;
     },
-    incrementUidPosition(source) {
+    incrementUidPosition (source) {
         return this.setNewUidPosition(source, this.getUidPosition(source) + 1);
     },
-    changeParameter(target, key, value) {
+    changeParameter(target, key, value){
         let element = this.findUid(this.getLocalStorage(), target);
         element[key] = value;
     },
-    buildHtml(source) {
-        for (let i = 0; i < source.elements.length; i++) {
+    buildHtml (source) {
+        for (var i = 0; i < source.elements.length; i++) {
             if (source.elements[i].hasOwnProperty('element')) {
                 this.htmlFromData(source.elements[i], false, 'contentArea');
             }
         }
 
     },
-    buildEditingInterface(source) {
+    buildEditingInterface (source) {
         let uidIdentifier = "edit";
         let uidCounter = 0;
         let elementsObj = objDeepCopy(elementBase);
@@ -807,7 +675,7 @@ let elementEngine = {
             // }
             // console.log(elementsObj[key]);
             this.htmlFromData(elementsObj[key], false, 'elementsList');
-        }
+        }        
     },
     deleteButtonBack() {
         let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
@@ -816,12 +684,12 @@ let elementEngine = {
             checkList.push(elementBase[key].params.class);
         }
         console.log(checkList);
-        nodeList.forEach(function(e) {
+        nodeList.forEach(function(e){
             if (checkList.indexOf(e.className) > -1) {
                 let newElement = document.createElement('div');
                 newElement.className = 'deleteButton';
                 newElement.innerHTML = '&#10799';
-                newElement.addEventListener('click', function(e) {
+                newElement.addEventListener('click', function(e){
                     let parent = this.parentNode;
                     let parentUid = parent.getAttribute('uid');
                     if (confirm('This will delete this element and all the elements inside of it, are you sure you want to proceed')) {
@@ -831,7 +699,7 @@ let elementEngine = {
                         parent.parentNode.removeChild(parent);
                         elementEngine.removeFromData(Number(parentUid));
                     }
-
+                    
                 });
                 if (e.firstChild) {
                     e.insertBefore(newElement, e.firstChild);
@@ -859,24 +727,17 @@ let elementEngine = {
     //         });
     //         x.appendChild(newElement);
     // },
-    createDeleteButton(e) {
+    deleteButton(e) {
         // console.log(e.getElementsByClassName('deleteButton').length[0]);
-        let element = e.target;
-        let parent = element.parentNode;
-        let index = parent.getElementsByClassName('deleteButton').length;
-        // console.log('index: ' + index);
-        // console.log(parent);
-        // console.log(element.parentNode);
-        // console.log(parent.childNodes.length)
-        if (index == 0) {
+        let index = e.getElementsByClassName('deleteButton').length;
+        console.log(index);
+        if (index <= 0){
             let newElement = document.createElement('div');
             newElement.className = 'deleteButton';
             newElement.innerHTML = '&#10799';
-            let removeElement = function(e) {
-                let element = e.target;
-                let parent = element.parentNode;
+            newElement.addEventListener('click', function(e){
+                let parent = this.parentNode;
                 let parentUid = parent.getAttribute('uid');
-                // console.log(parent);
                 if (confirm('This will delete this element and all the elements inside of it, are you sure you want to proceed')) {
                     while (parent.firstChild) {
                         parent.removeChild(parent.firstChild);
@@ -884,33 +745,29 @@ let elementEngine = {
                     parent.parentNode.removeChild(parent);
                     elementEngine.removeFromData(Number(parentUid));
                 }
-            };
-            newElement.addEventListener('click', removeElement);
-            if (parent.childNodes.length > 0) {
-                parent.insertBefore(newElement, parent.firstChild);
+                
+            });
+            if (e.firstChild) {
+                e.insertBefore(newElement, e.firstChild);
             } else {
-                 parent.appendChild(newElement);
+                e.appendChild(newElement);
             }
         }
+            
+        // }
     },
     pseudoElements: {
-        create(cssClass) {
+        create (cssClass) {
             let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
             let pseudoElementUid = 0;
-            let createPElement = function(cssClass) {
+            let createPElement = function(cssClass){
                 let pseudoElement = document.createElement('DIV');
                 pseudoElement.setAttribute('class', 'pseudoEle');
-
-                pseudoElement.addEventListener('click', function() {
-                    pE(this);
-                });
-                pseudoElement.addEventListener('drop', function() {
-                    editingOnDrop(event, this);
-                });
-                pseudoElement.addEventListener('dragover', function() {
-                    allowDrop(event);
-                });
-
+                
+                pseudoElement.addEventListener('click', function(){pE(this);});
+                pseudoElement.addEventListener('drop', function(){editingOnDrop(event, this);});
+                pseudoElement.addEventListener('dragover', function(){allowDrop(event);});
+                                
                 // pseudoElement.setAttribute('onclick', 'pE(this)');
                 // pseudoElement.setAttribute('ondrop', 'editingOnDrop(event, this)');
                 // pseudoElement.setAttribute('ondragover', 'allowDrop(event)');
@@ -921,7 +778,7 @@ let elementEngine = {
                 return pseudoElement;
             };
             nodeList.forEach(function(e) {
-                let checkCssClass = function(cssClass) {
+                let checkCssClass = function(cssClass){
                     cssClass = cssClass.toLowerCase();
                     switch (cssClass) {
                         case 'inputclass':
@@ -936,7 +793,7 @@ let elementEngine = {
                 };
                 // if ((e.tagName != 'INPUT') && (e.className != 'labelClass') && ('')) {
                 if (checkCssClass(e.className)) {
-                    let referenceNode =
+                    let referenceNode = 
                         document.querySelector('[uid="' + e.getAttribute('uid') + '"]');
                     if (Array.prototype.indexOf.call(e.parentNode.childNodes, e) === 0) {
                         firstPseudoElement = createPElement(cssClass);
@@ -949,48 +806,49 @@ let elementEngine = {
                 }
             });
         },
-        destroy() {
-            if (document.getElementsByClassName('psuedoEle') &&
-                document.getElementsByClassName('pseudoEle')[0] &&
-                document.getElementsByClassName('pseudoEle')[0].parentNode) {
+        destroy () {
+            if (document.getElementsByClassName('psuedoEle') 
+                && document.getElementsByClassName('pseudoEle')[0] 
+                && document.getElementsByClassName('pseudoEle')[0].parentNode) 
+            {
                 document.getElementsByClassName('pseudoEle')[0].parentNode
-                    .removeChild(document.getElementsByClassName('pseudoEle')[0]);
+                .removeChild(document.getElementsByClassName('pseudoEle')[0]);
                 this.destroy();
             }
         },
     },
 };
 let elementEngingeConfig = {
-
+    
 };
 
 let makeDraggable = function() {
-    let elements = document.querySelectorAll('[uid]');
-    for (let i = 0; i < elements.length; i++) {
+    var elements = document.querySelectorAll('[uid]');
+    for (var i = 0; i < elements.length; i++) {
         elements[i].setAttribute('draggable', 'true');
     }
 };
 
 let makeUnDraggable = function() {
-    let elements = document.querySelectorAll('[uid]');
-    for (let i = 0; i < elements.length; i++) {
+    var elements = document.querySelectorAll('[uid]');
+    for (var i = 0; i < elements.length; i++) {
         elements[i].setAttribute('draggable', 'false');
     }
 };
 
 // elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
 // elementEngine.recreateElements(objecto);
-let resetData = function() {
+var resetData = function() {
     localStorage.setItem('obj', JSON.stringify(objecto));
-    let myNode = document.getElementsByClassName('contentArea')[0];
+    var myNode = document.getElementsByClassName('contentArea')[0];
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
     elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
 };
-let clearData = function() {
+var clearData = function() {
     localStorage.setItem('obj', JSON.stringify(emptyData));
-    let myNode = document.getElementsByClassName('contentArea')[0];
+    var myNode = document.getElementsByClassName('contentArea')[0];
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
@@ -1002,12 +860,12 @@ let clearData = function() {
 // ------------------------------------------------------------------
 
 if (debugging) {
-    let sectionBttn = document.getElementsByClassName('sectionBttn')[0];
-    let clearBttn = document.getElementsByClassName('clearBttn')[0];
-    let inputBttn = document.getElementsByClassName('inputBttn')[0];
-    let buttonBttn = document.getElementsByClassName('buttonBttn')[0];
-    let resetBttn = document.getElementsByClassName('resetBttn')[0];
-    let logBttn = document.getElementsByClassName('logBttn')[0];
+    var sectionBttn = document.getElementsByClassName('sectionBttn')[0];
+    var clearBttn = document.getElementsByClassName('clearBttn')[0];
+    var inputBttn = document.getElementsByClassName('inputBttn')[0];
+    var buttonBttn = document.getElementsByClassName('buttonBttn')[0];
+    var resetBttn = document.getElementsByClassName('resetBttn')[0];
+    var logBttn = document.getElementsByClassName('logBttn')[0];
 
     sectionBttn.addEventListener('click', function() {
         // lastElementCreated =
@@ -1028,11 +886,11 @@ if (debugging) {
     logBttn.addEventListener('click', function() {
         console.log(JSON.parse(localStorage.getItem('obj')));
     });
-
+    
     let logClickedElement = function() {
         document.getElementsByClassName('contentArea')[0].addEventListener('click', function(e) {
-            let nodeList = document.querySelectorAll(':hover');
-            let lastNode = {
+            var nodeList = document.querySelectorAll(':hover');
+            var lastNode = {
                 element: nodeList[nodeList.length - 1],
                 uid: function() {
                     return leftPad(this.element.getAttribute('uid'), 3, ` `);
@@ -1043,7 +901,7 @@ if (debugging) {
                 class: function() {
                     return this.element.className;
                 }
-
+                
             };
             lastCalledNode = lastNode.uid();
             // console.log(lastNode.uid());
@@ -1054,18 +912,18 @@ if (debugging) {
 }
 
 let getPositionInNodeList = function(source) {
-
+    
 }
-let lastCalledNode;
+var lastCalledNode;
 
 let rollDice = function(sides) {
     return Math.floor(Math.random() * sides + 1);
 };
 
-let rollTest = function(sides, times) {
+let rollTest = function(sides, times){
     let diceRolls = {};
-    for (let i = 0; i < times; i++) {
-
+    for (var i = 0; i < times; i++) {
+        
         let rolled = rollDice(sides);
         if (!diceRolls[rolled]) {
             diceRolls[rolled] = 1;
@@ -1077,23 +935,23 @@ let rollTest = function(sides, times) {
 };
 
 
-let searchChat = function(target) {
-    // TODO: does not work if letiable is at end of string
+let searchChat = function(target){
+    // TODO: does not work if variable is at end of string
     let nodeList = document.querySelectorAll('[class="labelClass"]');
     let stringArray = target;
     let tempString = '';
-    let letH = '';
+    let varH = '';
     for (i = 0; i < stringArray.length; i++) {
-        if (stringArray[i].match(/[a-zA-Z]/g)) {
-            letH += stringArray[i];
-            if (i == stringArray.length - 1 && letH) {
-                tempString += eval(letH);
+            if (stringArray[i].match(/[a-zA-Z]/g)) {
+                varH += stringArray[i];
+                if (i == stringArray.length - 1 && varH) {
+                    tempString += eval(varH);
             }
         } else {
-            if (letH) {
-                console.log(letH);
-                nodeList.forEach(function(e) {
-                    if (e.firstChild.nodeValue == letH) {
+            if (varH) {
+                console.log(varH);
+                nodeList.forEach(function(e){
+                    if(e.firstChild.nodeValue == varH) {
                         if (e.childNodes[1].value && !isNaN(e.childNodes[1].value)) {
                             console.log('value:' + e.childNodes[1].value);
                             tempString += e.childNodes[1].value;
@@ -1102,7 +960,7 @@ let searchChat = function(target) {
                 });
             }
             tempString += stringArray[i];
-            letH = '';
+            varH = '';
         }
     }
     console.log(tempString);
@@ -1110,18 +968,18 @@ let searchChat = function(target) {
 };
 // console.log(elementBase.lengt);
 
-let pseudoEve = function() {
+let pseudoEve = function(){
     let nodeList = document.getElementsByClassName('pseudoEle');
     for (let i = 0; i < nodeList.length; i++) {
-        document.getElementsByClassName('pseudoEle')[i].addEventListener('click', function(e) {
+        document.getElementsByClassName('pseudoEle')[i].addEventListener('click', function(e){
             e.style.backgroundColor = 'red';
         });
     }
 };
 
-let pE = function(x) {
+let pE = function(x){
     // console.log(x);
-    let info = {};
+    var info = {};
     info.parentNode = x.parentNode.getAttribute('uid');
     info.index = Array.prototype.indexOf.call(x.parentNode.childNodes, x);
     info.insertAfter = x.parentNode.childNodes[info.index - 1].getAttribute('uid');
@@ -1130,13 +988,13 @@ let pE = function(x) {
     return info;
 };
 
-let dropEvent = function(e) {
+let dropEvent = function(e){
     e.preventDefault();
-
+    
     console.log(e);
 };
 
-let dragEvent = function(e) {
+let dragEvent = function(e){
     e.preventDefault();
     let data = e.dataTransfer.setData("test");
     console.log(data);
@@ -1149,10 +1007,10 @@ let allowDrop = function(e) {
 
 let insertAfterUid = function(info) {
     let target;
-
+    
 };
 
-let editingOnDrag = function(e, element) {
+let editingOnDrag = function(e, element){
     // e.preventDefault();
     // console.log(element.getAttribute('elementData'));
     e.dataTransfer.setData('elementData', element.getAttribute('elementdata'));
@@ -1167,115 +1025,85 @@ let editingOnDrop = function(e, dropInfo) {
         elementData = elementBase[elementData];
     }
     // console.log(elementData);
-
-    let info = {};
+    
+    var info = {};
     // console.log('this.parentNode ----------------');
     // console.log(dropInfo.parentNode.getAttribute('uid'));
     info.parentNode = dropInfo.parentNode.getAttribute('uid');
     info.index = Array.prototype.indexOf.call(dropInfo.parentNode.childNodes, dropInfo);
     // console.log('insertAfter ----------------')
     // console.log((Number(info.index) / 2 ) - 1);
-    if (((Number(info.index)) / 2) > 0) {
+    if (((Number(info.index)) / 2 ) > 0) {
         // info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
-        info.insertAtPosition = (Number(info.index)) / 2;
+        info.insertAtPosition = (Number(info.index)) / 2 ;
     } else {
         info.insertAtFirstPosition = true;
     }
     // info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
-
+    
     // console.log(info);
     elementEngine.htmlFromData(elementData, true, Number(info.parentNode), Number(info.insertAtPosition));
 };
-let saveInputToData = function(e) {
-    let element = e.target;
-    let uid = element.getAttribute('uid');
-    let value = element.value;
-    
-    elementEngine.updateData(Number(uid), value, 'value');
-};
 
-let turnElementIntoInput = function(e) {
-    let element = e.target;
-    let parent = element.parentNode;
-    let parentLength = parent.length
-    let elementIndex = Array.prototype.indexOf.call(parent.childNodes, element);
-    let value = element.innerHTML;
-    let uid = element.getAttribute('uid');
-    let tempEle = document.createElement('input');
-    
-    let revertInfo = {
-        tagName: element.tagName,
-        cssClass: element.className,
-    };
-    
-    if (value == '&nbsp;') {
-        console.log('value is &nbsp;');
-    } else {
+let turnLabelIntoInput = function(e) {
+        let parent = e.parentNode;
+        // let tagName = e.tagName;
+        // let cssClass = e.className;
+        let value = e.innerHTML;
+        let uid = e.getAttribute('uid');
+        console.log(e.getAttribute('uid'));
+        let tempEle = document.createElement('input');
+        
+        let revertInfo = {
+            tagName : e.tagName,
+            cssClass: e.className,
+        };
+        
         tempEle.value = value;
-    }
-    
-    tempEle.setAttribute('uid', uid);
-    // tempEle.className = 'inputClass inputEdit';
-    tempEle.className = 'inputEdit' + ' ' + element.className;
-    tempEle.setAttribute('revertInfo', JSON.stringify(revertInfo));
-    // // tempEle.addEventListener('blur', function(event){
-    // //     elementEngine.updateData(Number(this.getAttribute('uid')), this.value);
-    // //     event.preventDefault();
-    // //     event.stopImmediatePropagation();
-    // //     event.stopPropagation();
-    // //     event.cancelBubble = true;
-    // //     turnInputIntoLabel(this);
-    // // });
-    tempEle.addEventListener('keypress', function(event) {
-        let key = event.which || event.keyCode;
-        if (key === 13) {
-            // elementEngine.updateData(Number(this.getAttribute('uid')), this.value);
-             // event.preventDefault();
-            // event.stopImmediatePropagation();
-            turnInputIntoElement(this);
-        }
-    });
-    parent.removeChild(element);
-    
-    if (parentLength == 'undefined') {
-        parent.appendChild(tempEle);
-    } else {
-        parent.insertBefore(tempEle, parent.childNodes[elementIndex]);
-    }
-    tempEle.focus();
+        tempEle.setAttribute('uid', uid);
+        // tempEle.className = 'inputClass inputEdit';
+        tempEle.className = 'inputEdit' + ' ' + e.className ;
+        tempEle.setAttribute('revertInfo', JSON.stringify(revertInfo));
+        // tempEle.addEventListener('blur', function(event){
+        //     elementEngine.updateData(Number(this.getAttribute('uid')), this.value);
+        //     event.preventDefault();
+        //     event.stopImmediatePropagation();
+        //     event.stopPropagation();
+        //     event.cancelBubble = true;
+        //     turnInputIntoLabel(this);
+        // });
+        tempEle.addEventListener('keypress', function(event){
+            var key = event.which || event.keyCode;
+            if (key === 13) {
+                elementEngine.updateData(Number(this.getAttribute('uid')), this.value);
+                // event.preventDefault();
+                // event.stopImmediatePropagation();
+                turnInputIntoLabel(this);
+            }
+        });
+        
+        
+        parent.removeChild(parent.firstChild);
+        parent.insertBefore(tempEle, parent.firstChild);
+        tempEle.focus();
 };
-let turnInputIntoElement = function(e) {
+let turnInputIntoLabel = function(e) {
     let revertInfo = JSON.parse(e.getAttribute('revertInfo'));
     let parent = e.parentNode;
-    let parentLength = parent.length;
-    let elementIndex = Array.prototype.indexOf.call(parent.childNodes, e);
     let value = e.value;
-    if (value === '') {
-        console.log('value is empty');
-        value = '&nbsp;';
-    }
     let uid = e.getAttribute('uid');
-    elementEngine.updateData(Number(uid), value);
     let tempEle = document.createElement(revertInfo.tagName);
-
+    
     tempEle.innerHTML = value;
     tempEle.setAttribute('uid', uid);
     tempEle.className = revertInfo.cssClass;
-    tempEle.addEventListener('click', turnElementIntoInput);
+    tempEle.addEventListener('click', function(){
+        turnLabelIntoInput(this);
+    });
     
-    parent.removeChild(e);
-    
-    if (parentLength == 'undefined') {
-        parent.appendChild(tempEle);
-    } else {
-        parent.insertBefore(tempEle, parent.childNodes[elementIndex]);
-    }
+    parent.removeChild(parent.firstChild);
+    parent.insertBefore(tempEle, parent.firstChild);    
 };
-
-let blurThis = function(e){
-    console.log('yo whattup dog');
-    e.target.blur();
-}
 // let turnLabelIntoInput = function() {
 //     let nodeList = document.getElementsByClassName('labelClass');
 //     // console.log(nodeList);
@@ -1294,11 +1122,11 @@ let blurThis = function(e){
 
 let makeInputEditable = function() {
     // let nodeList = document.getElementsByClassName('labelClass');
-
+    
     // let nodeList = document.querySelectorAll('.labelClass, .sectionTitle');
     let nodeList = document.getElementsByClassName('labelClass');
     for (let i = 0; i < nodeList.length; i++) {
-        nodeList[i].addEventListener('click', function() {
+        nodeList[i].addEventListener('click', function(){
             turnLabelIntoInput(this);
         });
     }
@@ -1313,6 +1141,9 @@ if (editingInterface) {
 // -----------------------------------------------------------------------------
 // TESTING
 // -----------------------------------------------------------------------------
+let testFunction = function(x){
+    console.log(this);
+}
 
 // -----------------------------------------------------------------------------
 
@@ -1321,7 +1152,7 @@ if (!localStorage.getItem('obj')) {
 }
 
 
-let playPage = function() {
+let playPage = function(){
     // document.getElementsByClassName('appContainer')[0].innerHTML = '';
     let node = document.getElementsByClassName('appContainer')[0];
     console.log(node);
@@ -1338,14 +1169,14 @@ let playPage = function() {
     contentAreaContainer.className = 'contentAreaContainer';
     let contentArea = document.createElement('div');
     contentArea.className = 'contentArea';
-
+    
     mainContainer.appendChild(spacer);
     contentAreaContainer.appendChild(contentArea);
     mainContainer.appendChild(contentAreaContainer);
     mainContainer.appendChild(spacer2);
-
+    
     node.appendChild(mainContainer);
-
+    
     elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
 };
 

@@ -14,11 +14,6 @@ var elementBase = {
             class: 'bttnClass'
         }
     },
-    
-    
-    
-    
-    
     textSmall: {
         element: 'INPUT',
         params: {
