@@ -1,0 +1,28 @@
+@import 'styleguide';
+* {
+	color: red;
+}
+.gamesOverview {
+	background-color: $color-element-transp;
+	display: flex;
+	flex-direction: column;
+}
+.gameRow {
+	display: flex;
+	flex-direction: row;
+	margin-top: $margin-relation-height;
+}
+.gameRow * {
+	// margin-left: $margin-relation-width;
+	background-color: $color-element-base;
+	padding-left: $margin-relation-width;
+	border-radius: 5px;
+}
+.gameId {
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+.gameName {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}

@@ -1,0 +1,277 @@
+@import "styleguide";
+.nav button {
+    border-radius: 5px;
+    /*height: 25px;*/
+    margin-right: 5px;
+}
+.homeBttn {
+    color: white;
+    background-color: rgb(134, 181, 0);
+}
+.homeBttn:hover {
+    background-color: rgb(91, 181, 0);
+}
+.homeContentWrapper {
+    // background-image: url('../images/Torment-Planes-of-Numenera-Offers-Details-on-Companions-Backer-Only-Store-2.jpg');
+    display: flex;
+    background-color: $color-element-transp;
+    // width: 900px;
+    margin-top: $margin-separation-height;
+    margin-bottom: $margin-separation-height;
+    border-radius: 5px;
+    box-shadow: $z-depth-3;
+}
+
+.login, .register{
+    // background-color: rgba(255, 255, 255, 0.70);
+    // background-color: white;
+    // width: 250px;
+}
+// .loginForm, .registerForm {
+//     display: flex;
+//     justify-content: space-between;
+//     flex-grow: 1;
+//     flex-direction: column;
+// }
+// .labelInputWrapper {
+//     // background-color: white;
+//     background-color: $color-element-transp;
+//     width: $unit-base-width * 44;
+//     display: flex;
+//     flex-direction: row;
+//     border-radius: 5px;
+//     box-shadow: $z-depth-3;
+//     margin-bottom: $margin-relation-height;
+// }
+// .portalLabels, .portalInputs {
+//     color: $color-text-base;
+//     display: flex;
+//     flex-wrap: wrap;
+//     flex-grow: 1;
+//     flex-direction: columns;
+//     margin-bottom: $margin-separation-height;
+//     margin-top: $margin-relation-height;
+// }
+// .portalFormItem {
+//     flex-grow: 1;
+// }
+// .portalLabels * {
+//     height: $unit-base-height * 3;
+//     border-top-left-radius: 5px;
+//     border-bottom-left-radius: 5px;
+//     background-color: white;
+//     margin-top: $margin-relation-height;
+//     padding-top: $margin-relation-height;
+//     padding-bottom: $margin-relation-height;
+//     margin-left: $margin-relation-width;
+//     margin-right: $unit-base-width;
+//     padding-right: $margin-separation-width;
+//     padding-left: $margin-relation-width;
+//     display: flex;
+//     flex-grow: 1;
+//     box-shadow: $z-depth-3;
+// }
+
+// .portalInputs * {
+//     height: $unit-base-height * 5;
+//     border-top-right-radius: 5px;
+//     border-bottom-right-radius: 5px;
+//     margin-top: $margin-relation-height;
+//     padding-top: $margin-relation-height;
+//     padding-bottom: $margin-relation-height;
+//     box-sizing: border-box;
+//     border-bottom: 1px solid $color-text-base;
+//     // min-width: 0px;
+//     // min-width: 30%;
+//     flex-grow: 1;
+//     margin-right: $margin-relation-width;
+//     // box-shadow: $z-depth-3;
+//     box-shadow: $z-depth-3;
+// }
+// label {
+//     margin-right: 10px;
+//     margin-left: 1px;
+//     // margin-left: $margin-separation-width;
+//     
+// }
+// input, label {
+//     margin-bottom: 10px;
+//     
+// }
+// input {
+//     border-bottom: 1px solid $color-text-base;
+// }
+
+
+// .testX {
+//     display: flex;
+//     flex-direction: column;
+//     flex-grow: 4;
+// }
+// .row {
+//     background-color: pink;
+//     display: flex;
+//     flex-direction: row;
+//     flex-grow: 1;
+//     // background-color: white;
+//     div {
+//         display: flex;
+//         flex-grow: 1;
+//     }
+//     input {
+//         display: flex;
+//         box-sizing: border-box;
+//         flex-grow: 1;
+//         background-color: rgba(255, 255, 255, 0);
+//     }
+// }
+// 
+.register {
+    display: none;
+}
+.login {
+    // display: none;
+}
+
+
+.portalLoginRegister {
+    // right: 8.5%;
+    // right: 0px;
+    // background-color: white;
+    // width: $unit-base-width * 44;
+    // display: block;
+    // top: 100px;
+    // width: 250px;
+    // flex-grow: 0;
+    // padding-top: $margin-separation-height;
+    padding-bottom: $margin-separation-height;
+    margin-top: $margin-separation-height;
+    // position: absolute;
+    border-radius: 5px;
+    // box-shadow: $z-depth-3;
+}
+
+
+.loginRegisterSwitch {
+    display: flex;
+    flex-direction: row;
+    margin-top: $margin-separation-height;
+    margin-bottom: $margin-relation-height;
+    border-radius: 5px;
+    box-shadow: $z-depth-3;
+}
+.loginSwitch, .registerSwitch {
+    color: $color-text-title;
+    flex-grow: 1;
+    height: $unit-base-height * 3;
+}
+.loginSwitch {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1px solid transparent;
+}
+.loginSwitch:hover, .registerSwitch:hover {
+    color: $color-text-base;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.loginRegisterSwitchActive {
+    background-color: $color-accent;
+    color: white;
+}
+.loginRegisterSwitchActive:hover {
+    color: white;
+    text-decoration: none;
+    cursor: default;
+}
+.registerSwitch {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0px;
+}
+
+.sidebarContainer {
+    transition: width 1.1s cubic-bezier(.23,.63,.45,.99);
+    // transition: display 1.1s;
+    // width: 0px;
+}
+
+.sidebarContainerZeroWidth {
+    // display: block;
+    // min-width: 0px;
+    transition: width 1.1s cubic-bezier(.23,.63,.45,.99);
+    width: 0px
+}
+
+.sidebarContainerZeroWidth * {
+    display: none;
+}
+
+.loginRegisterWrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding-left: $margin-separation-width;
+    padding-right: $margin-separation-width;
+    background-color: $color-element-transp;
+    background-color: white;
+    box-shadow: $z-depth-3;
+}
+.registerForm {
+    display: none;
+}
+.testX {
+    display: flex;
+    flex-direction: column;
+}
+.formRow {
+    display: flex;
+    height: $unit-base-height * 5;
+    line-height: $unit-base-height * 3;
+    border-radius: 5px;
+    background-color: white;
+    margin-top: $margin-relation-height;
+    box-shadow: $z-depth-3;
+    color: $color-text-title;
+    label {
+        margin-top: $margin-relation-height;
+        margin-bottom: $margin-relation-height;
+        margin-left: $margin-relation-width;
+        width: $unit-base-width * 15;
+        box-sizing: border-box;
+        flex-grow: 1;
+        // border-top-left-radius: 5px;
+        // border-bottom-left-radius: 5px;
+        // align-self: flex-start;
+        // border: 1px solid rgb(9, 136, 120);
+    }
+    input {
+        margin-top: $margin-relation-height;
+        margin-bottom: $margin-relation-height;
+        margin-right: $margin-relation-width;
+        min-width: $unit-base-width * 1;
+        box-sizing: border-box;
+        flex-grow: 4;
+        color: $color-text-base;
+        border-bottom: 1px solid $color-text-title;
+        // border: 1px solid pink;
+        // border-top-right-radius: 5px;
+        // border-bottom-right-radius: 5px;
+        // align-self: flex-end;
+    }
+}
+
+.loginSubmitBttn, .registerSubmitBttn {
+    width: 100%;
+    height: $unit-base-height * 3;
+    border-radius: 5px;
+    color: $color-text-title;
+    box-shadow: $z-depth-3;
+    margin-bottom: $margin-separation-height;
+    margin-top: $margin-separation-height;
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        color: $color-text-base;
+    }
+}
+

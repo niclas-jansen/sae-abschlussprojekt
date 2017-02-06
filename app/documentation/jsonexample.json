@@ -1,0 +1,46 @@
+{
+    "metadata": {
+        "uidPosition": 5
+    },
+    "elements": [
+        {
+            "element": "section",
+            "params": {
+                "uid": 0,
+                "class": "testClass"
+            },
+            "elements": [
+                {
+                    "element": "section",
+                    "params": {
+                        "uid": 2
+                    },
+                    "elements": [
+                        {
+                            "element": "button",
+                            "content": "click me",
+                            "params": {
+                                "uid": 3
+                            }
+                        },
+                        {
+                            "element": "input",
+                            "params": {
+                                "uid": 4,
+                                "class": "inputClass",
+                                "type": "text"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "element": "section",
+            "params": {
+                "uid": 5,
+                "class": "testClass"
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "name": "penAndPixels",
+    "description": "description_text",
+    "minimum=stability": "stabel",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Niclas Jansen",
+            "email": "niclas.jansen@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "penAndPixels\\": "domain/"
+        }
+    },
+    "require": {
+        "mongodb/mongodb": "^1.1"
+    }
+}
