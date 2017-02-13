@@ -603,7 +603,7 @@ let elementEngine = {
                 blurThis: blurThis,
                 baseElementsDragEnterBehaviour: baseElementsDragEnterBehaviour,
                 pseudoElementsDestroy: elementEngine.pseudoElements.destroy,
-                sectionDragLeaveCheck: sectionDragLeaveCheck,
+                // sectionDragLeaveCheck: sectionDragLeaveCheck,
             };
             let generalFunctionsCheck = {
                 makeDraggable: makeDraggable,
@@ -875,7 +875,18 @@ let elementEngine = {
             // console.log(className);
 
         });
+        document.getElementsByClassName('submitNewTemplate')[0].addEventListener('click', function(e){
+            let newTemplateName = document.getElementsByClassName('createTemplateNameInput')[0].value;
+            let newTemplateDescr = document.getElementsByClassName('createTemplateDescrInput')[0].value;
+            let newTemplateData = localStorage.getItem('obj');
+            let dataObj = {
+                name: newTemplateName,
+                description: newTemplateDescr,
+                templateData: newTemplateData,
+            };
 
+            ajaxRequest('createTemplate', dataObj);
+        });
 
     },
     deleteButtonBack() {
@@ -1677,7 +1688,10 @@ let checkUrlPath = function(){
             setTimeout(function(){ userSettings(); }, 1000);
             break;
         case '/app/play.html':
-            elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
+            // emptyAppContainer();
+            // fillAPPsettings();
+            // elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
+            playPage();
             break;
         case '/app/edit.html':
             editing = true;
@@ -1685,6 +1699,7 @@ let checkUrlPath = function(){
             debugging = true;
             elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
             break;
+        // case
         default:
             break;
     }
@@ -1775,6 +1790,7 @@ let userSettings = function() {
     // Target Declaration
     // ----------------------------------------------
     let myGamesBttn = document.getElementsByClassName('myGames')[0];
+    let joinGameBttn = document.getElementsByClassName('joinGameMenuBttn')[0];
     let createGameBttn = document.getElementsByClassName('createGame')[0];
     let myTemplatesBttn = document.getElementsByClassName('myTemplates')[0];
     let createTemplateBttn = document.getElementsByClassName('createTemplate')[0];
@@ -1782,6 +1798,7 @@ let userSettings = function() {
     let setProfileImageBttn = document.getElementsByClassName('setProfileImage')[0];
 
     let myGamesContent = document.getElementsByClassName('myGamesContent')[0];
+    let joinGameContent = document.getElementsByClassName('joinGameContent')[0];
     let createGameContent = document.getElementsByClassName('createGameContent')[0];
     let myTemplatesContent = document.getElementsByClassName('myTemplatesContent')[0];
     let createTemplateContent = document.getElementsByClassName('createTemplateContent')[0];
@@ -2033,6 +2050,11 @@ let userSettings = function() {
         } else {
             createTemplateContent.style.display = 'none';
         }
+        if (view == 'joinGameContent') {
+            joinGameContent.style.display = defaultDisplay;
+        } else {
+            joinGameContent.style.display = 'none';
+        }
         
         // myGamesContent.style.display = 'none';
         // createGameContent.style.height = '0px';
@@ -2045,6 +2067,7 @@ let userSettings = function() {
 
     myGamesBttn.addEventListener('click', getUserCharactersheets);
     myGamesBttn.addEventListener('click', function(){collapseOthers('myGamesContent')});
+    joinGameBttn.addEventListener('click', function(){collapseOthers('joinGameContent')})
     createGameBttn.addEventListener('click', function(){collapseOthers('createGameContent')});
     myTemplatesBttn.addEventListener('click', function(){collapseOthers('myTemplatesContent')});
     createTemplateBttn.addEventListener('click', createTemplate);
@@ -2059,6 +2082,23 @@ let userSettings = function() {
     let templateUseForm = document.getElementsByClassName('templateUseForm')[0];
     let createNewGameSubmitBttn = document.getElementsByClassName('createNewGameSubmitBttn')[0];
     // let  = document.getElementsByClassName('')[0];
+
+    let submitNewTemplateBttn = document.getElementsByClassName('submitNewTemplate')[0];
+    submitNewTemplateBttn.addEventListener('click', function(e){
+        let gameId = document.getElementsByClassName('enterGameIdInput')[0].value;
+        let dataObj = {
+            gameId: gameId,
+        };
+        ajaxRequest('joinGameViaId', dataObj)
+            .then((data) => {
+                ajaxRequest('getCharacterSheetFromUser', gameId)
+                    .then((data) => {
+                        localStorage.setItem('obj', data);
+                        playPage();
+                    });
+            });
+
+    });
     let searchTemplates = function() {
         let searchValue = document.getElementsByClassName('templateSearchInput')[0].value;
         let searchResultColumns = document.getElementsByClassName('templateSearchResultColumn');

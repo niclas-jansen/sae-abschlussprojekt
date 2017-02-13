@@ -71,8 +71,12 @@
 .myGamesContent {
 	display: flex;
 	flex-direction: column;
-	// border-radius: 5px;
-} 
+	border-radius: 5px;
+}
+// .joinGameContent {
+// 	display: flex;
+// 	flex-direction: column;
+// }
 .gameRow {
 	margin-left: $margin-relation-width;
 	margin-right: $margin-relation-width;

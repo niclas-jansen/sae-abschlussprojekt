@@ -83,11 +83,19 @@ if (!isset($requestType)) {
             if (!isset($requestData)) {
                 throw new Exception('ajax request was missing requestData');
             } else {
-                $description = 'huehuehue';
-                $s_templateData = $requestData;
-                $templateData = json_decode($requestData);
+                if (isset($requestData->name)) {
+                    $templateName = $requestData->name;
+                }
+                if (isset($requestData->description)) {
+                    $templateDescription = $requestData->description;
+                }
+                if (isset($requestData->templateData)) {
+                    $templateData = json_decode($requestData->templateData);
+                }
+//                $s_templateData = $requestData;
+//                $templateData = json_decode($requestData);
                 $characterSheets = new \penAndPixels\Repository\CharacterSheets($config);
-                $characterSheets->createCharacterSheetTemplate($requestData, $description);
+                $characterSheets->createCharacterSheetTemplate($templateName, $templateData, $templateDescription, $_SESSION['userMongoDocId']);
             }
             break;
         case 'searchTemplates':
@@ -115,6 +123,10 @@ if (!isset($requestType)) {
                 $template = $cs->getCharacterSheetTemplate($requestData->templateId);
                 print json_encode($template);
             }
+            break;
+        case 'joinGameViId':
+            $cs = new \penAndPixels\Repository\CharacterSheets($config);
+            $cs->joinGame($_SESSION['userMongoDocId'], $requestData->gameId, 'player');
             break;
         default:
             throw new Exception('bad ajax request type');

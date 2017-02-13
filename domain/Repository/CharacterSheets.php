@@ -15,10 +15,10 @@ class CharacterSheets extends Database
     {
         parent::__construct($config);
     }
-    public function createCharacterSheetTemplate($templateName, $templateData, $templateDescription, $templateVersionName) {
+    public function createCharacterSheetTemplate($templateName, $templateData, $templateDescription, $templateMongoDocAuthorId, $templateVersionName = 0) {
         // insert new character sheet into csTemplate
         $timestamp = new \MongoDB\BSON\UTCDatetime();
-        $author = $_SESSION['userMongoDocId'];
+        $author = $templateMongoDocAuthorId;
 //        $csObject = json_decode($templateData);
 
         $mongoQuery = [
@@ -39,7 +39,7 @@ class CharacterSheets extends Database
         $mongoTemplateDocId = (string)$mongoResult->getInsertedId();
 
         // save the id of the created document into the corresponding user document
-        $mongoDocId = $_SESSION['userMongoDocId'];
+        $mongoDocId = $templateMongoDocAuthorId;
         $id = new \MongoDB\BSON\ObjectID($mongoDocId);
         $mongoTarget = ['_id' => $id];
         $mongoQuery = ['$push' => ['templates' => $mongoTemplateDocId] ];

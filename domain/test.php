@@ -55,6 +55,6 @@
 //$db = new \penAndPixels\Repository\Database($config);
 //$db->clearGamesCollection();
 $cs = new \penAndPixels\Repository\CharacterSheets($config);
-$cs->joinGame($_SESSION['userMongoDocId'], '589dd9a95572be092f296121', 'player');
+$cs->joinGame($_SESSION['userMongoDocId'], '58a1c51f5572be07b357e745', 'player');
 //$users = new \penAndPixels\Repository\Users($config);
 //$users->getCharacterSheetFromUser('589dd9a95572be092f296121');
