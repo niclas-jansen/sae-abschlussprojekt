@@ -1,11 +1,11 @@
 .sidebarContainer {
   display: flex;
-  width: 20.83333vw;
+  width: 400px;
   background-color: rgba(255, 255, 255, 0.67); }
 
 .chat {
-  margin-top: 2.22222vh;
-  width: 18.33333vw;
+  margin-top: 24px;
+  width: 352px;
   display: flex;
   flex-direction: column; }
 
@@ -15,18 +15,18 @@
   flex-direction: row; }
 
 .chatText {
-  width: 18.33333vw;
+  width: 352px;
   background-color: #ffffff;
-  margin-bottom: 0.74074vh; }
+  margin-bottom: 8px; }
 
 .chatScrollbar {
-  width: 0.41667vw;
+  width: 8px;
   background-color: #ffffff;
   margin-bottom: 8px; }
 
 .chatScrollHandle {
-  width: 0.41667vw;
-  height: 4.44444vh;
+  width: 8px;
+  height: 48px;
   background-color: #FFDE53; }
 
 .chatInteraction {
@@ -39,17 +39,17 @@
   box-sizing: border-box;
   float: left;
   border: none;
-  width: 16.45833vw;
-  height: 7.40741vh;
+  width: 316px;
+  height: 80px;
   background-color: #ffffff;
   align-self: flex-end; }
 
 .chatSend {
   float: right;
-  width: 1.66667vw;
-  height: 7.40741vh;
-  font-size: 2.22222vh;
-  line-height: 7.40741vh;
+  width: 32px;
+  height: 80px;
+  font-size: 24px;
+  line-height: 80px;
   color: black;
   text-align: center;
   background-color: #FFDE53;

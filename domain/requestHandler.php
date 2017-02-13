@@ -102,6 +102,20 @@ if (!isset($requestType)) {
             $characterSheets = new \penAndPixels\Repository\CharacterSheets($config);
             $characterSheets->getPlayers($requestData->gameId);
             break;
+        case 'getHTML':
+            if ($requestData == 'settings') {
+                echo json_encode(file_get_contents(APP_PATH . "/userSettings.html"));
+            } else if ($requestData == 'edit') {
+                echo json_encode(file_get_contents(APP_PATH . "/edit.html"));
+            }
+            break;
+        case 'getTemplate':
+            if (isset($requestData->templateId)) {
+                $cs = new \penAndPixels\Repository\CharacterSheets($config);
+                $template = $cs->getCharacterSheetTemplate($requestData->templateId);
+                print json_encode($template);
+            }
+            break;
         default:
             throw new Exception('bad ajax request type');
     }

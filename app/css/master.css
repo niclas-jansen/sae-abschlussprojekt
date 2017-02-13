@@ -12,16 +12,17 @@ html, body {
 
 body {
   background-color: #79B9B4;
+  background-image: url("../images/54449_abstract_polygon_art.jpg");
   background-position: center;
   background-size: cover; }
 
 .appContainer {
-  height: 97.03704vh;
+  height: 90vh;
   display: flex;
   flex-direction: row; }
 
 .testContainer {
-  width: 20.83333vw;
+  width: 400px;
   background-color: red;
   height: 100%; }
 
@@ -63,7 +64,7 @@ button {
   display: flex;
   flex-direction: row;
   z-index: 10;
-  height: 2.96296vh;
+  height: 32px;
   height: 32px;
   box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
   background-color: white;
@@ -76,7 +77,7 @@ button {
   color: rgba(0, 0, 0, 0.7); }
   .navBttn:hover {
     color: red;
-    font-size: 2.22222vh;
+    font-size: 24px;
     text-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
 
 .userName {
@@ -84,7 +85,7 @@ button {
   line-height: 32px;
   text-align: center;
   vertical-align: middle;
-  margin-right: 0.41667vw; }
+  margin-right: 8px; }
 
 .lol {
   align-self: flex-end; }
@@ -112,16 +113,16 @@ button {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 62.5vw; }
+  width: 1200px; }
 
 .sidebarContainer {
   display: flex;
-  width: 20.83333vw; }
+  width: 400px; }
 
 .bttnClass {
   background-color: #FFDE53;
   border: none;
-  height: 2.96296vh;
+  height: 32px;
   border-radius: 5px;
   margin-top: 5px;
   margin-left: 5px;
@@ -139,13 +140,13 @@ button {
 
 .textSmall {
   background-color: pink;
-  width: 4.16667vw;
-  height: 2.96296vh; }
+  width: 80px;
+  height: 32px; }
 
 .textBigContainer {
   background-color: white;
   display: flex;
-  margin: 0.74074vh 1.25vw 0.74074vh 1.25vw;
+  margin: 8px 24px 8px 24px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   flex-grow: 1;
@@ -153,10 +154,10 @@ button {
 
 .textBigTitle {
   color: rgba(0, 0, 0, 0.5);
-  text-indent: 0.83333vw; }
+  text-indent: 16px; }
   .textBigTitle::after {
-    margin-left: 0.41667vw;
-    margin-right: 0.41667vw;
+    margin-left: 8px;
+    margin-right: 8px;
     display: block;
     content: "";
     background-color: rgba(0, 0, 0, 0.2);
@@ -166,10 +167,10 @@ button {
   color: rgba(0, 0, 0, 0.7);
   box-sizing: border-box;
   flex-grow: 1;
-  margin-top: 0.74074vh;
-  padding: 0.74074vh 0.41667vw 0.74074vh 0.41667vw;
-  margin: 0.74074vh 0.41667vw 0.74074vh 0.41667vw;
-  min-height: 14.81481vh;
+  margin-top: 8px;
+  padding: 8px 8px 8px 8px;
+  margin: 8px 8px 8px 8px;
+  min-height: 160px;
   height: 100%;
   max-width: 75ch;
   resize: none;
@@ -180,14 +181,15 @@ button {
 
 .sectionContainer {
   background-color: rgba(255, 255, 255, 0.43);
+  background-color: white;
   flex-grow: 1;
-  min-width: 20vw;
-  margin: 2.22222vh 1.25vw 2.22222vh 1.25vw;
-  margin-left: 0.83333vw;
-  margin-right: 0.83333vw;
+  min-width: 384px;
+  margin: 24px 24px 24px 24px;
+  margin-left: 16px;
+  margin-right: 16px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  line-height: 4.44444vh;
-  font-size: 1.48148vh;
+  line-height: 48px;
+  font-size: 16px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -196,12 +198,12 @@ button {
 .sectionTitle {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  font-size: 2.22222vh;
-  text-indent: 0.83333vw;
+  font-size: 24px;
+  text-indent: 16px;
   color: rgba(0, 0, 0, 0.5); }
   .sectionTitle::after {
-    margin-left: 0.41667vw;
-    margin-right: 0.41667vw;
+    margin-left: 8px;
+    margin-right: 8px;
     display: block;
     content: "";
     background-color: rgba(0, 0, 0, 0.2);
@@ -211,39 +213,36 @@ button {
   flex-grow: 1;
   display: flex;
   flex-direction: row;
-  min-height: 7.40741vh;
+  min-height: 80px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  padding-bottom: 2.22222vh;
+  padding-bottom: 24px;
   flex-wrap: wrap; }
 
 .subSection {
-  margin-top: 0.74074vh;
-  min-width: 5.83333vw;
-  min-height: 10.37037vh;
+  margin-top: 8px;
+  min-width: 112px;
+  min-height: 112px;
   flex-grow: 1;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px dashed rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap; }
 
-.sectionBody [class~='subSection']:last-of-type {
-  border: none; }
-
 .inputContainer {
   color: rgba(0, 0, 0, 0.5);
   display: inline-block;
-  margin: 0.74074vh 1.25vw 0.74074vh 1.25vw;
+  margin: 8px 24px 8px 24px;
   background-color: white;
-  padding-left: 0.41667vw;
-  padding-right: 0.41667vw;
+  padding-left: 8px;
+  padding-right: 8px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  line-height: 4.44444vh;
-  font-size: 1.48148vh;
-  height: 4.44444vh;
-  max-width: 13.33333vw;
+  line-height: 48px;
+  font-size: 16px;
+  height: 48px;
+  max-width: 256px;
   display: flex;
   flex-direction: row;
   justify-content: space-between; }
@@ -252,28 +251,28 @@ button {
   flex-grow: 2;
   color: rgba(0, 0, 0, 0.7);
   border: none;
-  line-height: 4.44444vh;
-  margin-top: 1.11111vh;
-  margin-left: 0.41667vw;
-  margin-bottom: 1.11111vh;
-  height: 2.22222vh;
+  line-height: 48px;
+  margin-top: 12px;
+  margin-left: 8px;
+  margin-bottom: 12px;
+  height: 24px;
   text-align: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   align-self: flex-end;
   min-width: 0px;
-  max-width: 10.83333vw; }
+  max-width: 208px; }
 
 .drag {
   background-color: red; }
 
 .pseudoEle {
-  min-width: 0.83333vw;
-  max-width: 0.83333vw;
-  height: 4.44444vh;
+  min-width: 16px;
+  max-width: 16px;
+  height: 48px;
   border: 1px dashed black;
   border-radius: 5px;
-  margin-top: 2.22222vh;
-  margin-bottom: 2.22222vh;
+  margin-top: 24px;
+  margin-bottom: 24px;
   background-color: rgba(255, 222, 83, 0.5); }
 
 .pseudoEle:only-child {

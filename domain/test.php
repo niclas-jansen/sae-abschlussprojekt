@@ -54,7 +54,7 @@
 //$cs->getPlayers('589bf7325572be09743c8b56');
 //$db = new \penAndPixels\Repository\Database($config);
 //$db->clearGamesCollection();
-//$cs = new \penAndPixels\Repository\CharacterSheets($config);
-//$cs->joinGame('589b89ad5572be092a728b3b', '589dd9a95572be092f296121', 'player');
+$cs = new \penAndPixels\Repository\CharacterSheets($config);
+$cs->joinGame($_SESSION['userMongoDocId'], '589dd9a95572be092f296121', 'player');
 //$users = new \penAndPixels\Repository\Users($config);
-//$users->getFriends($_SESSION['id']);
+//$users->getCharacterSheetFromUser('589dd9a95572be092f296121');

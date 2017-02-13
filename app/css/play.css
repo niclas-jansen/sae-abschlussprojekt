@@ -2,11 +2,11 @@
   height: 1000px; }
 
 .sidebarContainer {
-  width: 20.83333vw; }
+  width: 400px; }
 
 .chat {
-  margin-top: 2.22222vh;
-  width: 18.33333vw;
+  margin-top: 24px;
+  width: 352px;
   display: flex;
   flex-direction: column; }
 
@@ -18,22 +18,22 @@
 .chatText {
   overflow-y: scroll;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  width: 29.16667vw;
+  width: 560px;
   background-color: #ffffff;
-  margin-bottom: 0.74074vh;
+  margin-bottom: 8px;
   border-radius: 5px;
-  margin-right: 0.41667vw; }
+  margin-right: 8px; }
 
 .chatScrollbar {
-  width: 0.41667vw;
+  width: 8px;
   background-color: #ffffff;
   margin-bottom: 8px;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
 
 .chatScrollHandle {
-  width: 0.41667vw;
-  height: 4.44444vh;
+  width: 8px;
+  height: 48px;
   background-color: #FFDE53;
   border-radius: 5px; }
 
@@ -47,8 +47,8 @@
   box-sizing: border-box;
   float: left;
   border: none;
-  width: 16.45833vw;
-  height: 7.40741vh;
+  width: 316px;
+  height: 80px;
   background-color: #ffffff;
   align-self: flex-end;
   border-top-left-radius: 5px;
@@ -57,10 +57,10 @@
 
 .chatSend {
   float: right;
-  width: 1.66667vw;
-  height: 7.40741vh;
-  font-size: 2.22222vh;
-  line-height: 7.40741vh;
+  width: 32px;
+  height: 80px;
+  font-size: 24px;
+  line-height: 80px;
   color: black;
   text-align: center;
   background-color: #FFDE53;

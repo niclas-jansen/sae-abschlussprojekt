@@ -2,9 +2,9 @@
   background-color: rgba(255, 255, 255, 0.43);
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  margin-top: 2.22222vh;
-  margin-bottom: 2.22222vh;
-  width: 18.33333vw;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  width: 352px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll; }
@@ -16,12 +16,12 @@
   background-color: pink; }
 
 .inputEdit {
-  margin-top: 1.11111vh;
-  margin-left: 0.41667vw;
-  margin-bottom: 1.11111vh;
-  height: 2.22222vh;
+  margin-top: 12px;
+  margin-left: 8px;
+  margin-bottom: 12px;
+  height: 24px;
   background-color: #FFDE53;
-  height: 2.22222vh; }
+  height: 24px; }
 
 .deleteButton {
   background-color: #ff6363;
@@ -44,8 +44,7 @@
 
 .subSection {
   margin-left: 100px;
-  margin-right: 100px;
-  background-color: rgba(255, 193, 6, 0.3); }
+  margin-right: 100px; }
 
 .subSection:empty {
   border: 1px dashed #b3b8b3; }

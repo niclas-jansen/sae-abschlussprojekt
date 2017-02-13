@@ -275,3 +275,16 @@
     }
 }
 
+@media screen and (max-width: 1212px) {
+    .sidebarContainer {
+        display: block;
+        position: absolute;
+        width: 95%;
+        // height: 1200px;
+        // top: 0;
+        // left: 0;
+        right: 2.5%;
+
+    }
+}
+

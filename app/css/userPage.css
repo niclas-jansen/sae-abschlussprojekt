@@ -9,11 +9,11 @@
 .gameRow {
   display: flex;
   flex-direction: row;
-  margin-top: 0.74074vh; }
+  margin-top: 8px; }
 
 .gameRow * {
   background-color: #ffffff;
-  padding-left: 0.41667vw;
+  padding-left: 8px;
   border-radius: 5px; }
 
 .gameId {

@@ -1,45 +1,45 @@
 .menu {
-  width: 12.5vw;
+  width: 240px;
   display: flex;
   flex-direction: column;
-  margin-top: 2.22222vh;
-  padding-top: 2.22222vh;
-  padding-bottom: 2.22222vh;
-  padding-left: 0.41667vw;
-  padding-right: 0.41667vw;
-  margin-right: 1.25vw;
+  margin-top: 24px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 24px;
   border-radius: 5px; }
 
 .subMenu {
-  padding-bottom: 0.74074vh;
+  padding-bottom: 8px;
   background-color: #ffffff;
   box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
   border-radius: 5px;
-  margin-bottom: 2.22222vh; }
+  margin-bottom: 24px; }
 
 .subMenuTitle {
   color: rgba(0, 0, 0, 0.5);
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
-  height: 2.96296vh;
-  line-height: 2.96296vh;
+  height: 32px;
+  line-height: 32px;
   background-color: #FFDE53; }
 
 .subMenuItems * {
   color: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
-  padding-left: 0.41667vw;
-  padding-right: 0.41667vw;
-  margin-top: 0.74074vh;
-  margin-left: 0.41667vw;
-  margin-right: 0.41667vw;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
   background-color: #ffffff;
   box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16); }
 
 .menuContentContainer {
   border-radius: 5px;
-  margin-top: 2.22222vh;
+  margin-top: 24px;
   display: flex;
   background-color: red;
   flex-grow: 1;
@@ -51,17 +51,17 @@
   flex-direction: column; }
 
 .gameRow {
-  margin-left: 0.41667vw;
-  margin-right: 0.41667vw;
+  margin-left: 8px;
+  margin-right: 8px;
   border-radius: 5px;
   flex-grow: 1;
   display: flex;
   flex-direction: row;
-  margin-bottom: 2.22222vh; }
+  margin-bottom: 24px; }
 
 .gameName {
-  padding-top: 0.74074vh;
-  padding-bottom: 0.74074vh;
+  padding-top: 8px;
+  padding-bottom: 8px;
   flex-grow: 1;
   background-color: #ffffff; }
 
@@ -79,8 +79,8 @@
   flex-direction: row;
   background-color: #ffffff;
   border-radius: 5px;
-  padding-left: 0.41667vw;
-  padding-right: 0.41667vw; }
+  padding-left: 8px;
+  padding-right: 8px; }
 
 .templateSearchResult {
   display: flex;
@@ -98,8 +98,8 @@
 
 .templateSearchResultColumn * {
   background-color: white;
-  margin-top: 0.74074vh;
-  margin-bottom: 0.74074vh; }
+  margin-top: 8px;
+  margin-bottom: 8px; }
 
 .columnTitle {
   flex-grow: 0.5;

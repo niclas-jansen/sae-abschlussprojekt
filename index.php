@@ -4,6 +4,7 @@ define('LAYOUT_PATH', __DIR__ . '/domain/Layout');
 define('VIEW_PATH', __DIR__ . '/domain/View');
 define('CONTROLLER_PATH', __DIR__ . '/domain/Controller');
 define('ASSETS_PATH', __DIR__ . '/domain/assets');
+define('APP_PATH', __DIR__ . '/app');
 $config = include(ROOT_PATH . '/config/config.php');
 
 //$test = new \php\classes\Sqli();

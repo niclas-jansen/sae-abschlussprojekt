@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="css/master.css" media="screen" title="no title">
+        <link rel="stylesheet" href="css/play.css" media="screen" title="no title">
+        <style media="screen">
+            .login, .register{
+                background-color: rgba(255, 255, 255, 0.70);
+                width: 250px;
+            }
+            .loginForm, .registerForm {
+                display: flex;
+                flex-direction: column;
+            }
+            .labelInputWrapper {
+                display: flex;
+                flex-direction: row;
+            }
+            .labels, .inputs {
+                display: flex;
+                flex-direction: column;
+            }
+            label {
+                margin-right: 10px;
+                margin-left: 1px;
+            }
+            input, label {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="debug">
+            <button class="clearBttn" type="button" name="clearBttn" >CLEAR DATA</button>
+            <button class="resetBttn" type="button" name="resetBttn" >RESET DATA</button>
+            <button class="logBttn" type="button" name="logBttn" >LOG DATA</button>
+            <button class="sectionBttn" type="button" name="sectionBttn" >create Section</button>
+            <button class="inputBttn" type="button" name="inputBttn" >create Input</button>
+            <button class="buttonBttn" type="button" name="buttonBttn" >create Button</button>
+        </div>
+        <div class="appContainer">
+            
+            <!-- <div class="testContainer"> </div> -->
+            <div class="mainContainer">
+                <div class="spacer"> </div>
+                <div class="contentAreaContainer">
+                    <div class="contentArea">
+                        <div class="spacer"> </div>
+                        <div class="login">
+                            <form class="loginForm">
+                                <div class="labelInputWrapper">
+                                    <div class="labels">
+                                        <label for="loginUsername">username</label>
+                                        <label for="loginPassword">password</label>
+                                    </div>
+                                    <div class="inputs">
+                                        <input class="loginUsername"     type="text"     name="loginUsername" value="">
+                                        <input class="loginPassword"      type="password" name="loginPassword" value="">
+                                    </div>
+                                </div>
+                                <button    class="loginSubmitBttn"   type="button"   name="loginButton">Login</button>
+                            </form>
+                        </div> 
+                        <div class="spacer"> </div>
+                        <div class="sidebarContainer">
+                            <div class="spacer"> </div>
+                            <div class="register">
+                                <form class="registerForm">
+                                    <div class="labelInputWrapper">
+                                        <div class="labels">
+                                            <label for="registerUsername">username</label>
+                                            <label for="registerEmail">email</label>
+                                            <label for="registerPassword">password </label>
+                                        </div>
+                                        <div class="inputs">
+                                            <input class="registerUsername"  type="text" name="registerUsername" value="">
+                                            <input class="registerEmail"     type="email" name="registerEmail" value="">
+                                            <input class="registerPassword" type="password" name="registerPassword" value="">
+                                        </div>
+                                    </div>
+                                    <button class="registerSubmitBttn" type="button" name="registerButton">Register</button>
+                                </form>
+                            </div> 
+                            <div class="spacer"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="spacer"> </div>
+                </div>
+            </div>
+            
+        </div>
+        <script type="text/javascript" src="javascript/login.js"></script>
+    </body>
+</html>

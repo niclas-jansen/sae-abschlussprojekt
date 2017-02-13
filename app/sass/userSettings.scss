@@ -132,9 +132,24 @@
 }
 .templateSearchResult {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	// max-height: 50px;
 	overflow-y: scroll;
+}
+.resultRow {
+	display:flex;
+	flex-direction: row;
+	border-bottom: 1px solid $color-text-title;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.resultRow * {
+	display: flex;
+	// flex-grow: 1;
+	width: 14.28571428571428571429%;
+}
+.resultRow .templateName {
+	flex-grow: 1;
 }
 .templateSearchInput {
 	border-bottom: 1px solid $color-text-base;
@@ -196,4 +211,21 @@
 }
 .gamePlayersRow {
 	background-color: red;
+}
+
+.previewContainer {
+	position: fixed;
+
+	// width: 100%;
+	// height: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.3);
+}
+.previewContentArea {
+	width: 95%;
+	height: 95%;
+	background-color: white;
 }

@@ -8,9 +8,9 @@
 // App Config
 // -----------------------------------------------------------------------------
 
-let debugging = true;
-let editing = true;
-let editingInterface = true;
+let debugging = false;
+let editing = false;
+let editingInterface = false;
 
 // -----------------------------------------------------------------------------
 // Helper functions
@@ -65,36 +65,6 @@ let objecto = {
         uidPosition: 0,
     },
     elements: [
-    //     {
-    //     element: 'section',
-    //     params: {
-    //         class: 'sectionContainer',
-    //         uid: 1,
-    //     },
-    //     elements: [{
-    //             element: 'div',
-    //             content: 'SECTION',
-    //             params: {
-    //                 class: 'sectionTitle',
-    //                 uid: 2,
-    //             },
-    //             events: {
-    //                 play: {
-    //                     click: {
-    //                         value: true,
-    //                     },
-    //                 },
-    //             },
-    //         },
-    //         {
-    //             element: 'div',
-    //             params: {
-    //                 class: 'sectionBody',
-    //                 uid: 3,
-    //             },
-    //         },
-    //     ],
-    // },
     ],
 };
 let dragInfoThing;
@@ -112,12 +82,6 @@ const emptyData = {
 };
 
 const elementBase = {
-    // section: {
-    //     element: 'section',
-    //     params: {
-    //         class: 'sectionClass',
-    //     },
-    // },
     button: {
         element: 'button',
         content: 'click Me',
@@ -194,10 +158,9 @@ const elementBase = {
             },
         ],
     },
-    section2: {
+    section: {
         element: 'section',
         params: {
-            // uid: -6,
             class: 'sectionContainer',
         },
         functions: {
@@ -370,21 +333,8 @@ const elementBase = {
         ],
     },
 };
-let test10 = function() {
-    console.log('test10')
-}
-let removeEventListener =  function() {
-    console.log(this);
-    console.log('raaaaaah');
-    this.removeEventListener('dragenter', baseElementsDragEnterBehaviour);
-}
-let sectionDragLeaveCheck = function(e, dropInfo){
-    // console.log('-----------');
-    // // console.log(event);
-    // console.log(dragInfoThing);
-    // // console.log(dataTransfer);
-    // console.log('-----------');
-}
+const newTemplateBase = '{"metadata":{"uidPosition":3},"elements":[{"element":"section","params":{"class":"sectionContainer","uid":1},"functions":{"edit":{"evListener":{}}},"elements":[{"element":"div","content":"SECTION","params":{"class":"sectionTitle","uid":2},"functions":{"edit":{"evListener":{"click":{"functions":{"turnElementIntoInput":true}}}}}},{"element":"div","params":{"class":"sectionBody","uid":3},"functions":{"edit":{"evListener":{"dragenter":{"functions":{"baseElementsDragEnterBehaviour":true}}}}}}]}]}';
+
 let baseElementsDragEnterBehaviour = function(e, dropInfo){
     e.preventDefault();
     e.stopPropagation();
@@ -413,228 +363,6 @@ let baseElementsDragEnterBehaviour = function(e, dropInfo){
             targetNode.appendChild(pe);
         }
 }
-// const elementBase = {
-//     // section: {
-//     //     element: 'section',
-//     //     params: {
-//     //         class: 'sectionClass',
-//     //     },
-//     // },
-//     button: {
-//         element: 'button',
-//         content: 'click Me',
-//         params: {
-//             uid: 'edit1',
-//             class: 'bttnClass',
-//         },
-//         functions: {
-//             edit: {
-//                 general: {
-//                     makeDraggable: true,
-//                 },
-//                 evListener: {
-//                     mouseover: {
-//                         functions: {
-//                             createDeleteButton: true,
-// 
-//                         },
-//                     },
-//                 },
-//             },
-//         },
-//     },
-// 
-// 
-//     textSmall: {
-//         element: 'INPUT',
-//         params: {
-//             uid: 'edit2',
-//             type: 'text',
-//             class: 'textSmall',
-//         },
-//         events: {
-//             edit: {
-//                 mouseover: {
-//                     functions: {
-//                         createDeleteButton: true,
-// 
-//                     },
-//                 },
-//             },
-//         },
-//     },
-//     textBig: {
-//         element: 'div',
-//         params: {
-//             uid: 'edit3',
-//             class: 'textBigContainer',
-//         },
-//         events: {
-//             edit: {
-//                 mouseover: {
-//                     functions: {
-//                         createDeleteButton: true,
-// 
-//                     },
-//                 },
-//             },
-//         },
-//         elements: [{
-//                 element: 'div',
-//                 params: {
-//                     uid: 'edit4',
-//                     class: 'textBigTitle',
-//                 },
-//                 content: 'Title',
-//             },
-//             {
-//                 element: 'textarea',
-//                 params: {
-//                     uid: 'edit5',
-//                     class: 'textBigContent',
-//                 },
-//             },
-//         ],
-//     },
-//     section2: {
-//         element: 'section',
-//         params: {
-//             class: 'sectionContainer',
-//         },
-//         functions: {
-//             edit: {
-//                 evListener: {
-//                     mouseover: {
-//                         functions: {
-//                             createDeleteButton: true,
-//                         },
-//                     },
-//                 },
-//             },
-//         },
-//         elements: [{
-//                 element: 'div',
-//                 content: 'SECTION',
-//                 params: {
-//                     class: 'sectionTitle',
-//                 },
-//                 functions: {
-//                     edit: {
-//                         evListener: {
-//                             click: {
-//                                 functions: {
-//                                     turnElementIntoInput: true,
-//                                 },
-//                             },
-//                         },
-//                     },
-//                 },
-//             },
-//             {
-//                 element: 'div',
-//                 params: {
-//                     class: 'sectionBody',
-//                 },
-//             },
-//         ],
-//     },
-//     subSection: {
-//         element: 'section',
-//         params: {
-//             class: 'subSection',
-//         },
-//         events: {
-//             edit: {
-//                 mouseover: {
-//                     functions: {
-//                         createDeleteButton: true,
-// 
-//                     },
-//                 },
-//             },
-//         },
-//     },
-//     spacer: {
-//         element: 'div',
-//         params: {
-//             class: 'contentSpacer',
-//         },
-//         events: {
-//             edit: {
-//                 mouseover: {
-//                     functions: {
-//                         createDeleteButton: true,
-// 
-//                     },
-//                 },
-//             },
-//         },
-//     },
-// 
-// 
-//     input: {
-//         element: 'div',
-//         params: {
-//             class: 'inputContainer',
-//         },
-//         events: {
-//             edit: {
-//                 mouseover: {
-//                     functions: {
-//                         createDeleteButton: true,
-// 
-//                     },
-//                 },
-//             },
-//         },
-//         elements: [{
-//                 element: 'DIV',
-//                 content: 'INPUT',
-//                 params: {
-//                     class: 'labelClass',
-//                 },
-//                 functions: {
-//                     edit: {
-//                         evListener: {
-//                             click: {
-//                                 functions: {
-//                                     turnElementIntoInput: true,
-//                                 },
-//                             },
-//                         },
-//                     },
-//                 },
-//             },
-//             {
-//                 element: 'input',
-//                 params: {
-//                     class: 'inputClass',
-//                     type: 'text',
-//                     value: '',
-//                 },
-//                 metadata: {
-//                     relation: 'label',
-//                 },
-//                 functions: {
-//                     play: {
-//                         evListener: {
-//                             keypressEnter: {
-//                                 functions: {
-//                                     blurThis: true,
-//                                 },
-//                             },
-//                             blur: {
-//                                 functions: {
-//                                     saveInputToData: true,
-//                                 },
-//                             },
-//                         },
-//                     },
-//                 },
-//             },
-//         ],
-//     },
-// };
 
 // ------------------------------------------------------------------
 // ElementEngine
@@ -876,11 +604,9 @@ let elementEngine = {
                 baseElementsDragEnterBehaviour: baseElementsDragEnterBehaviour,
                 pseudoElementsDestroy: elementEngine.pseudoElements.destroy,
                 sectionDragLeaveCheck: sectionDragLeaveCheck,
-                removeEventListener: removeEventListener,
-                test10: test10,
             };
             let generalFunctionsCheck = {
-                makeDraggable: makeDraggable;
+                makeDraggable: makeDraggable,
             }
             let keyPressTypes = {
                 keypressEnter: function(func){
@@ -919,7 +645,7 @@ let elementEngine = {
                     addEvListener(deepElementData.functions.play.evListener);
                 }
             }
-            let editing = true;
+            // let editing = true;
             if (editing) {
                 if (deepElementData.functions.edit) {
                     if (deepElementData.functions.edit.general) {
@@ -976,7 +702,6 @@ let elementEngine = {
                 if (insertPosition) {
 
                 } else {
-                    console.log('????');
                     nodeTarget.appendChild(newElement);
                 }
             } else {
@@ -1101,16 +826,17 @@ let elementEngine = {
         };
         xhr.send(data);
     },
-    buildHtml(source) {
+    buildHtml(source, target = 'contentArea') {
         for (let i = 0; i < source.elements.length; i++) {
             if (source.elements[i].hasOwnProperty('element')) {
-                this.htmlFromData(source.elements[i], false, 'contentArea');
+                this.htmlFromData(source.elements[i], false, target);
             }
         }
 
     },
     buildEditingInterface(source) {
         // let uidIdentifier = "edit";
+        editing = true;
         let uidCounter = 0;
         let elementsObj = objDeepCopy(elementBase);
         for (let key in elementsObj) {
@@ -1130,6 +856,27 @@ let elementEngine = {
             // this.htmlFromData(elementsObj[key], false, 'elementsList');
             this.htmlFromData(elementsObj[key], false, 'elementsList');
         }
+        let templatesTitles = {
+            bttnClass: "Button",
+            textBigContainer: "Big Text Field",
+            sectionContainer: "Section",
+            subSection: "subSection",
+            input: "Input Field"
+        }
+        let editingTemplates = Array.from(document.getElementsByClassName('elementsList')[0].childNodes);
+        editingTemplates.forEach(function(e){
+            let className = e.className;
+            let titleElement = document.createElement('div');
+            titleElement.classNam = 'editingElementTitle';
+            if (templatesTitles.hasOwnProperty(className)) {
+                titleElement.innerHTML = templatesTitles[className];
+            }
+            e.parentNode.insertBefore(titleElement, e);
+            // console.log(className);
+
+        });
+
+
     },
     deleteButtonBack() {
         let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
@@ -1754,14 +1501,14 @@ let turnElementIntoInput = function(e) {
     // //     event.cancelBubble = true;
     // //     turnInputIntoLabel(this);
     // // });
-    tempEle.addEventListener('keypress', function(event) {
-        let key = event.which || event.keyCode;
-        if (key === 13) {
+    tempEle.addEventListener('change', function(event) {
+        // let key = event.which || event.keyCode;
+        // if (key === 13) {
             // elementEngine.updateData(Number(this.getAttribute('uid')), this.value);
              // event.preventDefault();
             // event.stopImmediatePropagation();
             turnInputIntoElement(this);
-        }
+        // }
     });
     parent.removeChild(element);
     
@@ -1924,6 +1671,11 @@ let getUrlPath = function() {
 let checkUrlPath = function(){
     let path = getUrlPath();
     switch (path) {
+        case '/app/userSettings.html':
+            emptyAppContainer();
+            fillAPPsettings();
+            setTimeout(function(){ userSettings(); }, 1000);
+            break;
         case '/app/play.html':
             elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')));
             break;
@@ -1993,3 +1745,550 @@ let teeeeet = Array.from(document.getElementsByClassName('subSection'));
 //         // });
 //     });
 // });
+let deleteMode = false;
+let deleteModeFunction = function(){
+
+}
+
+let emptyAppContainer = function(){
+    let appContainer = document.getElementsByClassName('appContainer')[0];
+    while(appContainer.firstChild){
+        appContainer.removeChild(appContainer.firstChild);
+    }
+}
+let fillAPPsettings = function(){
+    let appContainer = document.getElementsByClassName('appContainer')[0]
+    ajaxRequest('getHTML', 'settings')
+        .then((data) => {
+            appContainer.innerHTML = data;
+        })
+}
+
+
+
+
+
+
+
+let userSettings = function() {
+    // ----------------------------------------------
+    // Target Declaration
+    // ----------------------------------------------
+    let myGamesBttn = document.getElementsByClassName('myGames')[0];
+    let createGameBttn = document.getElementsByClassName('createGame')[0];
+    let myTemplatesBttn = document.getElementsByClassName('myTemplates')[0];
+    let createTemplateBttn = document.getElementsByClassName('createTemplate')[0];
+    let changeInfoBttn = document.getElementsByClassName('changeInfo')[0];
+    let setProfileImageBttn = document.getElementsByClassName('setProfileImage')[0];
+
+    let myGamesContent = document.getElementsByClassName('myGamesContent')[0];
+    let createGameContent = document.getElementsByClassName('createGameContent')[0];
+    let myTemplatesContent = document.getElementsByClassName('myTemplatesContent')[0];
+    let createTemplateContent = document.getElementsByClassName('createTemplateContent')[0];
+    let changeInfoContent = document.getElementsByClassName('changeInfoContent')[0];
+    let setProfileImageContent = document.getElementsByClassName('setProfileImageContent')[0];
+
+    let dataObj = {
+            username: 'username',
+            password: 'password',
+    };
+
+    let getUserCharactersheets = function(){
+        while (myGamesContent.firstChild){
+            myGamesContent.removeChild(myGamesContent.firstChild);
+        };
+
+        ajaxRequest('getGamesListFromUser', "")
+            .then((data) => {
+                let x = document.createElement('div');
+                    x.innerHTML = 'joined';
+                    myGamesContent.appendChild(x);
+                data.joined.forEach(function(element){
+                    myGamesContent.appendChild(createGameCollumn(element.id, element.name));
+                });
+                let y = document.createElement('div');
+                    y.innerHTML = 'owned';
+                    myGamesContent.appendChild(y);
+                data.owned.forEach(function(element){
+                    myGamesContent.appendChild(createGameCollumn(element.id, element.name));
+                });
+            });
+    };
+
+    let playGame = function(id) {
+        let requestType = 'getCharacterSheetFromUser'
+        ajaxRequest(requestType, id)
+            .then((data) => {
+                console.log(data);
+                localStorage.setItem('obj', JSON.stringify(data));
+                playPage();
+            });
+    }
+    let displayMyGames = function() {
+        let requestType = '';
+        ajaxRequest(requestType);
+    }
+    let createGameCollumn = (id, name) => {
+
+        let createResultRowCol = function(element, className, innerHTML, target,
+            name = false, type = false, value = false)
+        {
+            // if (element != false) {
+            let newElement = document.createElement(element);
+            // }
+            if (className != false) {
+                newElement.className = className;
+            }
+            if (innerHTML != false) {
+                newElement.innerHTML = innerHTML;
+            }
+            if (name != false) {
+                newElement.name = name
+            }
+            if (type != false) {
+                newElement.type = type;
+            }
+            if (value != false) {
+                newElement.value = value;
+            }
+            if (target != false) {
+                target.appendChild(newElement);
+            }
+            return newElement;
+        };
+        let testFunc = function(){
+            let body = document.getElementsByTagName('BODY')[0];
+            let testOverlay = createResultRowCol('div', 'testOverlay', false, body)
+            let testContent = createResultRowCol('div', 'testContent', false, testOverlay)
+            return testContent;
+        }
+
+
+
+        let newElement = document.createElement('div');
+        newElement.className = "gameRow";
+
+        let gameInfoRow = document.createElement('div');
+        gameInfoRow.className = 'gameInfoRow'
+        let gameEditRow = document.createElement('div');
+        gameEditRow.className = 'gameEditRow'
+
+        let settingsBttn = document.createElement('button');
+        settingsBttn.innerHTML = '&#9881';
+        settingsBttn.type = 'button';
+        settingsBttn.className = 'gameSettingsBttn'
+        // settingsBttn.addEventListener('click',function() {
+        //     this.parentNode.parentNode.getElementsByClassName('gameEditRow')[0].style.display = 'flex';
+        //     for (let i = 0; i < this.parentNode.parentNode.childNodes.length; i++) {
+        //         if (this.parentNode.parentNode.childNodes[i].className == 'gameEditRow') {
+
+        //         }
+        //     }
+        // })
+        let createPlayersList = () => {
+
+        }
+        settingsBttn.addEventListener('click', function(){
+            let editBox = testFunc();
+            let dataObj = {
+                gameId: id,
+            };
+            let getGamePlayers = ajaxRequest('getGamePlayers', dataObj)
+                .then((data) =>{
+                    let playersListWrapper = createResultRowCol('div', 'playersListWrapper', 'players', editBox)
+                    for (let i = 0; i < data.length; i++) {
+                        let player = createResultRowCol('div', 'player', data[i].username, playersListWrapper);
+                        console.log(data[i].username);
+                    }
+                });
+            // ajaxRequest('getGameMasters', 'dataObj')
+            //     .then((data) => {
+            //         console.log(data);
+            //     });
+            let getFriends = ajaxRequest('getFriends', '')
+                .then((data) =>{
+                    let friendsListWrapper = createResultRowCol('div', 'friendsListWrapper', 'friends', editBox)
+                    // for (let i = 0; i < data.length; i++) {
+                    data.forEach(function(e){
+                        let friendRow = createResultRowCol('div', 'friendRow', false, friendsListWrapper)
+                        let friendName = createResultRowCol('div', 'friendName', e.username, friendRow);
+                        let friendSelect = createResultRowCol('input', 'friendSelect', false, friendRow, 'friendSelect', 'radio', e.username);
+
+                        console.log(e.username);
+                    });
+                });
+            Promise.all([getGamePlayers, getFriends])
+                .then( () => {
+                    console.log('all finished')
+                });
+
+        });
+        
+        let col1 = document.createElement('div');
+        col1.innerHTML = id;
+        col1.className = "gameId";
+        
+        let col2 = document.createElement('div');
+        col2.innerHTML = name;
+        col2.className = "gameName";
+
+        let playButton = document.createElement('button');
+        playButton.innerHTML = 'Play';
+        playButton.type = 'button';
+        playButton.className = 'gamePlayBttn';
+        playButton.addEventListener('click', function() {
+            let dataObj = {
+                id: id,
+            }
+            console.log(id);
+            playGame(dataObj);
+            
+        });
+
+
+        // game settings
+        //leave game
+
+
+        // add player /add gamemaster
+        //  - get friends
+        
+        let addUserInterface = createResultRowCol('div', 'addUserInterface', false, gameEditRow);
+        let userTypeSelector = createResultRowCol('div', 'userTypeSelector', false, addUserInterface);
+        let userTypeTag = createResultRowCol('div', 'userTypeTag', 'Add User As', userTypeSelector);
+        let userTypePlayer = createResultRowCol('div', 'userTypePlayer', 'Player', userTypeSelector);
+        let userTypeGameMaster = createResultRowCol('div', 'userTypeGameMaster', 'GameMaster', userTypeSelector);
+        let searchFriendsInterface = createResultRowCol('div', 'searchFriendsInterface', false, addUserInterface);
+        let searchFriends = function(){
+            ajaxRequest('getFriends', '')
+                .then((data) => {
+                    for (let i = 0; i < data.friends.length; i++){
+                        createResultRowCol('div', 'friendName', data.friends[i], searchFriendsInterface);
+                    }
+                });
+        }
+        // 
+        // join as player
+        // join as gamemaster
+        // delete
+
+
+        // newElement.appendChild(col1);
+        gameInfoRow.appendChild(settingsBttn);
+        gameInfoRow.appendChild(col2);
+        gameInfoRow.appendChild(playButton);
+        newElement.appendChild(gameInfoRow);
+        newElement.appendChild(gameEditRow);
+        // newElement.appendChild(settingsBttn);
+        // newElement.appendChild(col2);
+        // newElement.appendChild(playButton);
+
+        return newElement;
+    }
+
+    let createGameInterface = function() {
+
+    }
+
+    // getUserCharactersheets();
+    // getUserCharactersheets()
+    //     .then((data) => {
+        //     console.log(data);
+        // });
+
+    let createTemplate = function(){
+        emptyAppContainer();
+        let getEdit = ajaxRequest('getHTML', 'edit')
+            .then((data) => {
+                // localStorage.setItem('obj', JSON.stringify(newTemplateBase));
+                localStorage.setItem('obj', newTemplateBase);
+                document.getElementsByClassName('appContainer')[0].innerHTML = data;
+                // let base = newTemplateBase;
+                elementEngine.buildHtml(JSON.parse(localStorage.getItem('obj')), 'contentArea');
+                elementEngine.buildEditingInterface(elementBase);
+            });
+
+    }
+
+
+    let collapseOthers = function(view){
+        let defaultDisplay = 'flex';
+        if (view == "myGamesContent") {
+            myGamesContent.style.display = defaultDisplay;
+        } else {
+            myGamesContent.style.display = 'none';
+        }
+        if (view == 'createGameContent') {
+            createGameContent.style.display = defaultDisplay;
+        } else {
+            createGameContent.style.display = 'none';
+        }
+        if (view == 'myTempaltesContent') {
+            myTemplatesContent.style.display = defaultDisplay;
+        } else {
+            myTemplatesContent.style.display = 'none';
+        }
+        if (view == 'createTemplateContent') {
+            createTemplateContent.style.display = defaultDisplay;
+        } else {
+            createTemplateContent.style.display = 'none';
+        }
+        
+        // myGamesContent.style.display = 'none';
+        // createGameContent.style.height = '0px';
+        // myTemplatesContent.style.height = '0px';
+        // createTemplateContent.style.height = '0px';
+        // changeInfoContent.style.height = '0px';
+        // setProfileImageContent.style.height = '0px';
+    };
+
+
+    myGamesBttn.addEventListener('click', getUserCharactersheets);
+    myGamesBttn.addEventListener('click', function(){collapseOthers('myGamesContent')});
+    createGameBttn.addEventListener('click', function(){collapseOthers('createGameContent')});
+    myTemplatesBttn.addEventListener('click', function(){collapseOthers('myTemplatesContent')});
+    createTemplateBttn.addEventListener('click', createTemplate);
+    createTemplateBttn.addEventListener('click', function(){collapseOthers('createTemplateBttn')});
+    let templateSearchInput = document.getElementsByClassName('templateSearchInput')[0];
+    let templateSearchResult = document.getElementsByClassName('templateSearchResult')[0];
+    let templateNameColumn = document.getElementsByClassName('templateNameColumn')[0];
+    let templateAuthorColumn = document.getElementsByClassName('templateAuthorColumn')[0];
+    let templateCreatedColumn = document.getElementsByClassName('templateCreatedColumn')[0];
+    let templateLastEditColumn = document.getElementsByClassName('templateLastEditColumn')[0];
+    let templateDescriptionColumn = document.getElementsByClassName('templateDescriptionColumn')[0];
+    let templateUseForm = document.getElementsByClassName('templateUseForm')[0];
+    let createNewGameSubmitBttn = document.getElementsByClassName('createNewGameSubmitBttn')[0];
+    // let  = document.getElementsByClassName('')[0];
+    let searchTemplates = function() {
+        let searchValue = document.getElementsByClassName('templateSearchInput')[0].value;
+        let searchResultColumns = document.getElementsByClassName('templateSearchResultColumn');
+        while (templateSearchResult.firstChild) {
+            templateSearchResult.removeChild(templateSearchResult.firstChild);
+        }
+        ajaxRequest('searchTemplates', searchValue)
+            .then((data) => {
+                for (let i = 0; i < data.templates.length; i++){
+                    let createResultRowCol = function(element, className, innerHTML, target, name = false, type = false, value = false){
+                        // if (element != false) {
+                        let newElement = document.createElement(element);
+                        // }
+                        if (className != false) {
+                            newElement.className = className;
+                        }
+                        if (innerHTML != false) {
+                            newElement.innerHTML = innerHTML;
+                        }
+                        if (name != false) {
+                            newElement.name = name
+                        }
+                        if (type != false) {
+                            newElement.type = type;
+                        }
+                        if (value != false) {
+                            newElement.value = value;
+                        }
+                        if (target != false) {
+                            target.appendChild(newElement);
+                        }
+                        return newElement;
+                    };
+                    let resultRow = createResultRowCol('div', 'resultRow', false, templateSearchResult);
+
+                    createResultRowCol('div', 'templateName', data.templates[i].name, resultRow);
+
+                    createResultRowCol('div', "templateAuthor", data.templates[i].author, resultRow);
+
+                    createResultRowCol('div', 'templateCreated', 
+                        (new Date(Number(data.templates[i].creationDate.$date.$numberLong))).toLocaleDateString('de-DE'), 
+                        resultRow
+                    );
+
+                    createResultRowCol('div', 'templateLastEdit',
+                        (new Date(Number(data.templates[i].lastEdit.$date.$numberLong))).toLocaleDateString('de-DE'),
+                        resultRow
+                    );
+                    let templateLastEdit = document.createElement('div');
+      
+                    createResultRowCol('div', 'templateDescription', data.templates[i].description, resultRow);
+
+                    createResultRowCol('input', 'radio', false, resultRow, 'templateId', 'radio', data.templates[i]['_id']['$oid'])
+
+                    let templatePreviewButton = createResultRowCol('button', 'templatePreview', 'Preview', resultRow, 'previewBttn', false, data.templates[i]['_id']['$oid']);
+                    let createPreview = function() {
+                        
+                        let previewContainer = createResultRowCol('div', 'previewContainer', false, document.getElementsByTagName('BODY')[0]);
+                        previewContainer.addEventListener('click', function(){
+                            while (this.firstChild) {
+                                this.removeChild(this.firstChild);
+                            }
+                            this.parentNode.removeChild(this);
+                        });
+                        let previewContentArea = createResultRowCol('div', 'previewContentArea', false, previewContainer);
+                        let templateId = this.value;
+                        // console.log(templateId);
+                        let requestData = {
+                            templateId: templateId,
+                        };
+                        ajaxRequest('getTemplate', requestData)
+                            .then((data) => {
+                                let template = data.versions[data.versions.length - 1].data;
+                                let buildPreview = function(template, target) {
+                                    for (let i = 0; i < template.elements.length; i++) {
+                                        if (template.elements[i].hasOwnProperty('element')) {
+                                            elementEngine.htmlFromData(template.elements[i], false, target);
+                                        }
+                                    }
+                                }
+                                buildPreview(template, 'previewContentArea')
+                                // elementEngine.buildHtml(template, previewContentArea);
+                            });
+                    }
+                    templatePreviewButton.addEventListener('click', createPreview);
+                }
+            });
+    }
+
+    templateSearchInput.addEventListener('change', searchTemplates);
+
+
+    let getTemplateId = function() {
+        // console.log(templateUseForm.value);
+        let target = Array.from(document.getElementsByName('templateId'));
+        // console.log(target);
+        // let target = document.getElementsByClassName('templateUseForm')[0];
+        // let children = target.childNodes;
+        for (let i = 0; i < target.length; i++) {
+            if (target[i].checked) {
+                return target[i].value;
+            }
+        }
+    }
+// templateUseForm.addEventListener('change', getTemplateId);
+// templateUseForm.addEventListener('change', getTemplateId);
+
+    let createNewGame = function(){
+        let gameName = document.getElementsByClassName('newGameNameValue')[0].value;
+        let templateId = getTemplateId();
+        // console.log(templateId);
+        let requestData = {
+            gameName: gameName,
+            templateId: templateId,
+        }
+        ajaxRequest('createGame', requestData);
+            // .then((data) => {
+            //     console.log('finished');
+            // });
+    };
+    createNewGameSubmitBttn.addEventListener('click', createNewGame);
+
+
+    // testFunc();
+}
+let loginPage = function() {
+    let loginRegisterBttn = document.getElementsByClassName('loginRegisterBttn')[0];
+
+let loginSwitchBttn = document.getElementsByClassName('loginSwitch')[0];
+let registerSwitchBttn = document.getElementsByClassName('registerSwitch')[0];
+
+let loginSubmitBttn = document.getElementsByClassName('loginSubmitBttn')[0];
+let registerSubmitBttn =
+    document.getElementsByClassName('registerSubmitBttn')[0];
+
+
+// loginSubmitBttn.addEventListener('click', function() {
+//     let username = document.getElementsByClassName('loginUsername')[0].value;
+//     let password = document.getElementsByClassName('loginPassword')[0].value;
+
+//     let dataObj = {
+//         username: username,
+//         password: password,
+//     };
+//     // let dataJson = JSON.stringify(data);
+
+//     let xhr = new XMLHttpRequest();
+//     xhr.open('POST', 'http://saeap.dev', true);
+//     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+//     xhr.onreadystatechange = function() {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//             let response = JSON.parse(xhr.responseText);
+//             window.location.href = response.location;
+//             // console.log(xhr.responseText);
+//         } else {
+//         }
+//     };
+//     let data = JSON.stringify(dataObj);
+//     // let string = 'test='
+//     xhr.send('requestType=login' + '&requestData='+ data );
+// });
+
+let loginFunc = function() {
+    let username = document.getElementsByClassName('loginUsername')[0].value;
+    let password = document.getElementsByClassName('loginPassword')[0].value;
+    let dataObj = {
+        username: username,
+        password: password,
+    };
+    ajaxRequest('login', dataObj)
+        .then((data) => {
+            if (data == 'loginSuccess') {
+                // window.location.pathname = 'app/userSettings.html';
+                emptyAppContainer();
+                fillAPPsettings();
+                setTimeout(function(){ userSettings(); }, 1000);
+                // userSettings();
+            }
+        });
+}
+loginSubmitBttn.addEventListener('click', loginFunc);
+
+
+
+
+registerSubmitBttn.addEventListener('click', function() {
+    let username = document.getElementsByClassName('registerUsername')[0].value;
+    let email = document.getElementsByClassName('registerEmail')[0].value;
+    let password = document.getElementsByClassName('registerPassword')[0].value;
+
+    let dataObj = {
+        username: username,
+        email: email,
+        password: password,
+    };
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://saeap.dev', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        } else {
+        }
+    };
+    let data = JSON.stringify(dataObj);
+    xhr.send('requestType=register' + '&requestData='+ data );
+});
+
+loginRegisterBttn.addEventListener('click', function() {
+    if (document.getElementsByClassName(
+        'sidebarContainer sidebarContainerZeroWidth')[0]) {
+            document.getElementsByClassName('sidebarContainer')[0]
+            .className = 'sidebarContainer';
+    } else {
+        document.getElementsByClassName('sidebarContainer')[0].className =
+        'sidebarContainer sidebarContainerZeroWidth';
+    }
+});
+
+registerSwitchBttn.addEventListener('click', function() {
+    document.getElementsByClassName('loginSwitch')[0].className = 'loginSwitch';
+    document.getElementsByClassName('registerSwitch')[0].className = 'registerSwitch loginRegisterSwitchActive';
+    document.getElementsByClassName('loginForm')[0].style.display = 'none';
+    document.getElementsByClassName('registerForm')[0].style.display = 'block';
+});
+loginSwitchBttn.addEventListener('click', function() {
+    document.getElementsByClassName('registerSwitch')[0].className = 'registerSwitch';
+    document.getElementsByClassName('loginSwitch')[0].className = 'loginSwitch  loginRegisterSwitchActive';
+    document.getElementsByClassName('registerForm')[0].style.display = 'none';
+    document.getElementsByClassName('loginForm')[0].style.display = 'block';
+});
+}
+loginPage();

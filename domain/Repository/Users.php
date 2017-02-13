@@ -138,9 +138,11 @@ class Users extends Database
             ],
         ];
         $mongoGameResult = $this->mongoGamesCollection->findOne($mongoTarget, $mongoProjection)->players;
-
+        $testVar = false;
+        $playerCharacterSheet = [];
         foreach ($mongoGameResult as $player) {
             if ($player->playerId == $_SESSION['userMongoDocId']) {
+                $testVar = true;
                 $playerCharacterSheet = $player->characterSheet;
             }
         }

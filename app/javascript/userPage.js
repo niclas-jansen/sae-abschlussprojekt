@@ -276,10 +276,13 @@ let searchTemplates = function() {
     let searchValue = document.getElementsByClassName('templateSearchInput')[0].value;
     let searchResultColumns = document.getElementsByClassName('templateSearchResultColumn');
     // let l = searchResultColumns.length
-    for (let i = 0; i < searchResultColumns.length; i++) {
-        while (searchResultColumns[i].childNodes[2]) {
-            searchResultColumns[i].removeChild(searchResultColumns[i].childNodes[2]);
-        }
+    // for (let i = 0; i < searchResultColumns.length; i++) {
+    //     while (searchResultColumns[i].childNodes[2]) {
+    //         searchResultColumns[i].removeChild(searchResultColumns[i].childNodes[2]);
+    //     }
+    // }
+    while (templateSearchResult.firstChild) {
+        templateSearchResult.removeChild(templateSearchResult.firstChild);
     }
     ajaxRequest('searchTemplates', searchValue)
         .then((data) => {
@@ -313,52 +316,47 @@ let searchTemplates = function() {
                     if (target != false) {
                         target.appendChild(newElement);
                     }
+                    return newElement;
                 };
+                let resultRow = createResultRowCol('div', 'resultRow', false, templateSearchResult);
 
-                createResultRowCol('div', 'templateName', data.templates[i].name, templateNameColumn);
-                // let templateName = document.createElement('div');
-                // templateName.className = 'templateName';
-                // templateName.innerHTML = data.templates[i].name;
-                // templateNameColumn.appendChild(templateName);
+                createResultRowCol('div', 'templateName', data.templates[i].name, resultRow);
 
-                createResultRowCol('div', "templateAuthor", data.templates[i].author, templateAuthorColumn)
-                // let templateAuthor = document.createElement('div');
-                // templateAuthor.className = 'templateAuthor';
-                // templateAuthor.innerHTML = data.templates[i].author;
-                // templateAuthorColumn.appendChild(templateAuthor);
+                createResultRowCol('div', "templateAuthor", data.templates[i].author, resultRow);
 
                 createResultRowCol('div', 'templateCreated', 
                     (new Date(Number(data.templates[i].creationDate.$date.$numberLong))).toLocaleDateString('de-DE'), 
-                    templateCreatedColumn
+                    resultRow
                 );
-                // let templateCreated = document.createElement('div');
-                // templateCreated.className = 'templateCreated';
-                // templateCreated.innerHTML = (new Date(Number(data.templates[i].creationDate.$date.$numberLong))).toLocaleDateString('de-DE');
-                // templateCreatedColumn.appendChild(templateCreated);
+
                 createResultRowCol('div', 'templateLastEdit',
                     (new Date(Number(data.templates[i].lastEdit.$date.$numberLong))).toLocaleDateString('de-DE'),
-                    templateLastEditColumn
+                    resultRow
                 );
                 let templateLastEdit = document.createElement('div');
-                // templateLastEdit.className = 'templateLastEdit';
-                // // TODO: get Local time format by ip check
-                // templateLastEdit.innerHTML = (new Date(Number(data.templates[i].lastEdit.$date.$numberLong))).toLocaleDateString('de-DE');
-                // templateLastEditColumn.appendChild(templateLastEdit);
-                // let mili = data.templates[i].lastEdit['$date']['$numberLong'];
-                // console.log(new Date(Number(mili)));
-                // console.log((new Date(Number(data.templates[i].lastEdit.$date.$numberLong))).toLocaleDateString('en-US'))
-                createResultRowCol('div', 'templateDescription', data.templates[i].description, templateDescriptionColumn);
-                // let templateDescription = document.createElement('div');
-                // templateDescription.className = 'templateDescription';
-                // templateDescription.innerHTML = data.templates[i].description;
-                // templateDescriptionColumn.appendChild(templateDescription);
+  
+                createResultRowCol('div', 'templateDescription', data.templates[i].description, resultRow);
 
-                createResultRowCol('input', 'radio', false, templateUseForm, 'templateId', 'radio', data.templates[i]['_id']['$oid'])
-                // let useTemplate = document.createElement('input');
-                // useTemplate.type = "radio";
-                // useTemplate.name = "templateId";
-                // useTemplate.value = data.templates[i]['_id']['$oid'];
-                // templateUseForm.appendChild(useTemplate);
+                createResultRowCol('input', 'radio', false, resultRow, 'templateId', 'radio', data.templates[i]['_id']['$oid'])
+                // createResultRowCol('div', 'templateName', data.templates[i].name, templateNameColumn);
+
+                // createResultRowCol('div', "templateAuthor", data.templates[i].author, templateAuthorColumn)
+
+                // createResultRowCol('div', 'templateCreated', 
+                //     (new Date(Number(data.templates[i].creationDate.$date.$numberLong))).toLocaleDateString('de-DE'), 
+                //     templateCreatedColumn
+                // );
+
+                // createResultRowCol('div', 'templateLastEdit',
+                //     (new Date(Number(data.templates[i].lastEdit.$date.$numberLong))).toLocaleDateString('de-DE'),
+                //     templateLastEditColumn
+                // );
+                // let templateLastEdit = document.createElement('div');
+  
+                // createResultRowCol('div', 'templateDescription', data.templates[i].description, templateDescriptionColumn);
+
+                // createResultRowCol('input', 'radio', false, templateUseForm, 'templateId', 'radio', data.templates[i]['_id']['$oid'])
+
 
 
 
