@@ -55,7 +55,15 @@ class CharacterSheets extends Database
 
         $mongoResult = $this->mongoTemplatesCollection->updateOne($mongoTarget, $mongoQuery);
     }
-    public function createGame($gameName, $templateId, $templateVersionName)
+
+    /**
+     * @param      $gameName
+     * @param      $owner
+     * @param      $templateId
+     * @param bool $templateVersionName
+     */
+
+    public function createGame($gameName, $owner, $templateId, $templateVersionName = false)
     {
         $mongoTimestamp = new \MongoDB\BSON\UTCDatetime();
         $mongoTemplateId = new \MongoDB\BSON\ObjectID($templateId);
@@ -70,16 +78,20 @@ class CharacterSheets extends Database
         $templateName = $mongoTemplateData->name;
         $templateVersions = $mongoTemplateData->versions;
 
-        foreach ($mongoTemplateData->versions as $versionKey) {
-            if ($versionKey->versionName == $templateVersionName) {
-                $versionTest = true;
-                $testssdss = 1;
-                $gameTemplateData = $versionKey->data;
-            }
-        };
-
+        if ($templateVersionName != false) {
+            foreach ($mongoTemplateData->versions as $versionKey) {
+                if ($versionKey->versionName == $templateVersionName) {
+                    $gameTemplateData = $versionKey->data;
+                }
+            };
+        } else {
+            $gameTemplateData = $templateVersions[(count($templateVersions) - 1)]->data;
+            $templateVersionName =  $templateVersions[(count($templateVersions) - 1)]->versionName;
+        }
+        //TODO: add owner as field
         $mongoQuery = [
             'name'          => $gameName,
+            'owner'         => $owner,
             'creationDate'  => $mongoTimestamp,
             'status'        => 'active',
             'template'      => [
@@ -93,6 +105,21 @@ class CharacterSheets extends Database
             'chat'          => []
         ];
         $mongoResult = $this->mongoGamesCollection->insertOne($mongoQuery);
+        $mongoGameDocId = (string)$mongoResult->getInsertedId();
+
+        $mongoTargetId = new \MongoDB\BSON\ObjectID($owner);
+        $mongoTarget = ['_id' => $mongoTargetId];
+        $mongoQuery = [
+            '$push' => [
+                'games.owned' => [
+                    'name' => $gameName,
+                    'id' => $mongoGameDocId
+                ],
+            ]
+        ];
+
+        $mongoUserResult = $this->mongoUserCollection->updateOne($mongoTarget, $mongoQuery);
+//        echo ;
     }
     public function getCharacterSheetTemplate($templateId)
     {
@@ -101,7 +128,7 @@ class CharacterSheets extends Database
         $mongoResult = $this->mongoTemplatesCollection->findOne($mongoQuery);
         return $mongoResult;
     }
-    public function joinGame($gameId)
+    public function joinGame($userId, $gameId, $type)
     {
         /*
          * Get GameInfo
@@ -110,7 +137,9 @@ class CharacterSheets extends Database
          * insert new player into game->players
          * add game->id to users games array
          * */
-
+        if ($type != 'player') {
+            throw new \Exception('type was wrong');
+        }
         $mongoGameDocId = new \MongoDB\BSON\ObjectID($gameId);
         $mongoTarget = ['_id' => $mongoGameDocId];
 
@@ -118,7 +147,7 @@ class CharacterSheets extends Database
         $gameName = $mongoGameData->name;
 
         $joinedDate = new \MongoDB\BSON\UTCDatetime();
-        $playerId = $_SESSION['userMongoDocId'];
+        $playerId = $userId;
 
 
 //        $mongoProjection = ['$projection' => ['template' => 1 , '_id' => 0] ];
@@ -142,28 +171,38 @@ class CharacterSheets extends Database
 //        $templateData =
 
 
+        if ($type == 'player') {
+            $mongoInsertData = [
+                'playerId' => $playerId,
+                'joinedDate' => $joinedDate,
+                'status' => 'active',
+                'characterSheet' => $mongoGameData->template->templateData,
+            ];
+            $mongoQuery = ['$push' => ['players' => $mongoInsertData]];
+        } else if ($type == 'gameMaster') {
+            $mongoInsertData = [
+                'playerId' => $playerId,
+                'joinedDate' => $joinedDate,
+                'status' => 'active',
+            ];
+            $mongoQuery = ['$push' => ['gameMasters' => $mongoInsertData]];
+        }
 
-        $mongoInsertData = [
-            'playerId' => $playerId,
-            'joinedDate' => $joinedDate,
-            'status' => 'active',
-            'characterSheet' => $mongoGameData->template->templateData,
 
-        ];
-
-        $mongoQuery = ['$push' => ['players' => $mongoInsertData]];
         $mongoResult = $this->mongoGamesCollection->updateOne($mongoTarget, $mongoQuery);
 
         $mongoUserDocId = new \MongoDB\BSON\ObjectID($_SESSION['userMongoDocId']);
         $mongoTarget = ['_id' => $mongoUserDocId];
         $mongoQuery = [
             '$push' => [
-                'games' => [
-                    'name' => $gameName,
-                 'id' => $gameId,
+                'games.joined' => [
+                        'name' => $gameName,
+                        'id' => $gameId,
+                        'type' => $type,
+                    ],
                 ],
-            ],
         ];
+//        $test = $this->mongoUserCollection->updateOne($mongoTarget);
         $mongoResult = $this->mongoUserCollection->updateOne($mongoTarget, $mongoQuery);
     }
     public function getGameById($id) {
@@ -172,5 +211,106 @@ class CharacterSheets extends Database
         $mongoResult = $this->mongoGamesCollection->findOne($mongoGameDocId);
         return $mongoResult;
 
+    }
+
+    public function getPublicTemplates($searchValue = false, $resultLimit = false)
+    {
+        //TODO: Enhancement write function to search by username
+//        $mongoQuery = ['status' => 'public'];
+        if ($searchValue != false) {
+//            $mongoRegex = new \MongoDB\BSON\Regex("/^$searchValue/", 'i');
+//            $where = array('name' => array('$regex' => new MongoRegex("/^$searchValue/i")));
+//            $mongoTarget = ['name' => ['$regex' => $mongoRegex]];
+            $mongoTarget = [
+                '$or' => [
+                    ['name' => new \MongoDB\BSON\Regex("$searchValue", "i")],
+                    ['description' => new \MongoDB\BSON\Regex("$searchValue", "i")],
+                ],
+            ];
+        } else {
+            $mongoTarget = [];
+        }
+        $mongoBaseProjection = [
+            'projection' => [
+                'name' => 1,
+                'author' => 1,
+                'creationDate' => 1,
+                'lastEdit' => 1,
+                'description' => 1,
+            ]
+        ];
+        if ($resultLimit == false) {
+            $mongoProjection = $mongoBaseProjection;
+        } else {
+            $mongoProjection = [
+                'limit' => $resultLimit,
+                $mongoBaseProjection,
+            ];
+        }
+        $mongoResult = $this->mongoTemplatesCollection->find($mongoTarget, $mongoProjection);
+        $templatesCollection = [];
+        foreach ($mongoResult as $template) {
+            $templatesCollection[] = $template;
+        }
+        for ($i = 0; $i< count($templatesCollection); $i++) {
+            if (property_exists($templatesCollection[$i], 'lastEdit')) {
+//                print $templatesCollection[$i]->lastEdit->toDateTime();
+//                var_dump($templatesCollection[$i]->lastEdit);
+//                print new \MongoDB\BSON\UTCDatetime($templatesCollection[$i]->lastEdit);
+            }
+            if (property_exists($templatesCollection[$i], 'author')) {
+                $authorId = new \MongoDB\BSON\ObjectID($templatesCollection[$i]->author);
+                $mongoAuthorTarget = ['_id' => $authorId];
+                $mongoAuthorNameProjection = ['$projection' => ['username' => 1, '_id' => 0]];
+                $mongoAuthorNameResult = $this->mongoUserCollection->find($mongoAuthorTarget, $mongoAuthorNameProjection);
+                foreach($mongoAuthorNameResult as $authorKey) {
+                    $templatesCollection[$i]->author = $authorKey->username;
+                }
+            }
+        }
+
+
+        if (empty($templatesCollection)) {
+            $output = ['results' => false];
+        } else {
+            $output = (object)["templates" => $templatesCollection];
+            if ($resultLimit != false) {
+                $mongoCountResult = $this->mongoTemplatesCollection->count($mongoTarget);
+                if ($mongoCountResult > $resultLimit){
+                    $output = (object)['results' => true, "templates" => $templatesCollection, 'moreResults' => true];
+                } else {
+                    $output = (object)['results' => true, "templates" => $templatesCollection, 'moreResults' => false];
+                }
+            } else {
+                $output = (object)['results' => true, "templates" => $templatesCollection, 'moreResults' => false];
+            }
+        }
+        echo json_encode($output);
+
+    }
+
+    public function getUsernameByMongoId($id){
+        $mongoId = new \MongoDB\BSON\ObjectID($id);
+        $mongoTarget = ['_id' => $mongoId];
+        $projection = ['projection' => ['_id' => 0,'username'=> 1]];
+        $mongoResult = $this->mongoUserCollection->findOne($mongoTarget, $projection);
+        return ($mongoResult);
+    }
+    public function getPlayers($gameId)
+    {
+        $mongoGameId = new \MongoDB\BSON\ObjectID($gameId);
+        $mongoQuery = ['_id' => $mongoGameId];
+        $mongoProjection = ['projection' =>[ '_id' => 0, 'players.playerId' => 1] ];
+        $cursor = $this->mongoGamesCollection->find($mongoQuery, $mongoProjection);
+        $playersTemp = [];
+        foreach ($cursor as $player) {
+            $playersTemp[] = $player;
+        }
+        $players = $playersTemp[0]->players;
+        $playersFound = [];
+        foreach ($players as $player) {
+            $playersFound[] = $this->getUsernameByMongoId($player->playerId);
+        }
+        echo json_encode($playersFound);
     }
 }

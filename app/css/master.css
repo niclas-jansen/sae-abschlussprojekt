@@ -11,7 +11,7 @@ html, body {
   padding: 0; }
 
 body {
-  background-image: url("../images/54449_abstract_polygon_art.jpg");
+  background-color: #79B9B4;
   background-position: center;
   background-size: cover; }
 
@@ -65,7 +65,7 @@ button {
   z-index: 10;
   height: 2.96296vh;
   height: 32px;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
   background-color: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5); }
 
@@ -119,7 +119,7 @@ button {
   width: 20.83333vw; }
 
 .bttnClass {
-  background-color: #FFC107;
+  background-color: #FFDE53;
   border: none;
   height: 2.96296vh;
   border-radius: 5px;
@@ -131,7 +131,7 @@ button {
 
 .bttnClass:hover {
   color: white;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16); }
 
 .contentSpacer {
   width: 100%;
@@ -176,7 +176,7 @@ button {
   border: none; }
   .textBigContent:focus {
     outline: none;
-    box-shadow: 0 0 5px #FFC107; }
+    box-shadow: 0 0 5px #FFDE53; }
 
 .sectionContainer {
   background-color: rgba(255, 255, 255, 0.43);
@@ -274,7 +274,7 @@ button {
   border-radius: 5px;
   margin-top: 2.22222vh;
   margin-bottom: 2.22222vh;
-  background-color: rgba(255, 193, 7, 0.5); }
+  background-color: rgba(255, 222, 83, 0.5); }
 
 .pseudoEle:only-child {
   background-color: red; }

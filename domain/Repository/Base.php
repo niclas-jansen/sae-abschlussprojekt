@@ -29,4 +29,11 @@ class Base
         return $new;
         }
     }
+    public function mongoResultToRows($data) {
+        $result = [];
+        foreach ($data as $row) {
+            $result[] = $row;
+        }
+        return $result;
+    }
 }

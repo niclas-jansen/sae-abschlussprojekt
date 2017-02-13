@@ -2,14 +2,15 @@
 // jshint esversion: 6
 'use strict';
 // TODO: Sanetize output
+// TODO: change on enter and stuff like that to change
 
 // -----------------------------------------------------------------------------
 // App Config
 // -----------------------------------------------------------------------------
 
-let debugging = false;
-let editing = false;
-let editingInterface;
+let debugging = true;
+let editing = true;
+let editingInterface = true;
 
 // -----------------------------------------------------------------------------
 // Helper functions
@@ -96,7 +97,7 @@ let objecto = {
     // },
     ],
 };
-
+let dragInfoThing;
 const emptyData = {
     metadata: {
         uidPosition: 0,
@@ -130,12 +131,12 @@ const elementBase = {
                     makeDraggable: true,
                 },
                 evListener: {
-                    mouseover: {
-                        functions: {
-                            createDeleteButton: true,
+                    // mouseover: {
+                    //     functions: {
+                    //         createDeleteButton: true,
 
-                        },
-                    },
+                    //     },
+                    // },
                 },
             },
         },
@@ -202,11 +203,11 @@ const elementBase = {
         functions: {
             edit: {
                 evListener: {
-                    mouseover: {
-                        functions: {
-                            createDeleteButton: true,
-                        },
-                    },
+                    // mouseover: {
+                    //     functions: {
+                    //         createDeleteButton: true,
+                    //     },
+                    // },
                 },
             },
         },
@@ -230,12 +231,34 @@ const elementBase = {
                 },
             },
             {
-                element: 'div',
-                params: {
+            element: 'div',
+            params: {
                     // uid: -8,
-                    class: 'sectionBody',
-                },
+                class: 'sectionBody',
             },
+            functions: {
+                edit: {
+                    evListener: {
+                        dragenter: {
+                            functions: {
+                                baseElementsDragEnterBehaviour: true,
+                            },
+                        },
+                        // dragleave: {
+                        //     functions: {
+                        //         sectionDragLeaveCheck: true,
+                        //     },
+                        // },
+                    },
+                },
+                // mouseover: {
+                //     functions: {
+                //         createDeleteButton: true,
+                //     },
+                // },
+            },
+        },
+            // },
         ],
     },
     subSection: {
@@ -243,13 +266,25 @@ const elementBase = {
         params: {
             class: 'subSection',
         },
-        events: {
+        functions: {
             edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
-
+                evListener: {
+                    mouseover: {
+                        // functions: {
+                        //     createDeleteButton: true,
+                        //     // removeEventListener: true,
+                        // },
                     },
+                    dragenter: {
+                        functions: {
+                            baseElementsDragEnterBehaviour: true,
+                        },
+                    },
+                    // dragleave: {
+                    //     functions: {
+                    //         pseudoElementsDestroy: true,
+                    //     },
+                    // },
                 },
             },
         },
@@ -261,12 +296,12 @@ const elementBase = {
         },
         events: {
             edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
+                // mouseover: {
+                //     functions: {
+                //         createDeleteButton: true,
 
-                    },
-                },
+                //     },
+                // },
             },
         },
     },
@@ -279,12 +314,12 @@ const elementBase = {
         },
         events: {
             edit: {
-                mouseover: {
-                    functions: {
-                        createDeleteButton: true,
+                // mouseover: {
+                //     functions: {
+                //         createDeleteButton: true,
 
-                    },
-                },
+                //     },
+                // },
             },
         },
         elements: [{
@@ -335,6 +370,49 @@ const elementBase = {
         ],
     },
 };
+let test10 = function() {
+    console.log('test10')
+}
+let removeEventListener =  function() {
+    console.log(this);
+    console.log('raaaaaah');
+    this.removeEventListener('dragenter', baseElementsDragEnterBehaviour);
+}
+let sectionDragLeaveCheck = function(e, dropInfo){
+    // console.log('-----------');
+    // // console.log(event);
+    // console.log(dragInfoThing);
+    // // console.log(dataTransfer);
+    // console.log('-----------');
+}
+let baseElementsDragEnterBehaviour = function(e, dropInfo){
+    e.preventDefault();
+    e.stopPropagation();
+
+    e.cancelBubble = true;
+    let targetNode = this;
+    console.log(this);
+    console.log(dropInfo);
+        let nodeList = Array.from(targetNode.childNodes);
+        let deleteButtonFilter = function(element){
+            return element.className != 'deleteButton';
+        }
+        nodeList = nodeList.filter(deleteButtonFilter);
+        if (targetNode.getElementsByClassName('pseudoEle')[0]) {
+
+        } else if (targetNode.childNodes.length > 0){
+            let cssClass = 'something';
+            for (let i = 0; i < nodeList.length; i++) {
+                let pe = createPElement(cssClass);
+                targetNode.insertBefore(pe, nodeList[i])
+            }
+            insertAfter(createPElement(cssClass), nodeList[nodeList.length - 1])
+        } else {
+            let cssClass = 'something';
+            let pe = createPElement(cssClass);
+            targetNode.appendChild(pe);
+        }
+}
 // const elementBase = {
 //     // section: {
 //     //     element: 'section',
@@ -616,12 +694,13 @@ let elementEngine = {
 
     addElement(target, element, insertPosition) {
         if (typeof target !== 'undefined') {
-            if (insertPosition) {
+            if (typeof insertPosition == 'number') {
                 // console.log('insertPosition -------------');
                 // console.log(insertPosition);
                 // console.log('target -------------');
                 // console.log(target);
                 // console.log('target -------------');
+                console.log('addElement' + insertPosition);
                 target.elements.splice(insertPosition, 0, element);
             } else if (typeof target.elements !== 'undefined') {
                 target.elements.push(element);
@@ -790,11 +869,19 @@ let elementEngine = {
         }
         if (deepElementData.functions) {
             let eventFunctionsCheck = {
-                createDeleteButton: elementEngine.createDeleteButton,
+                // createDeleteButton: elementEngine.createDeleteButton,
                 turnElementIntoInput: turnElementIntoInput,
                 saveInputToData: saveInputToData,
                 blurThis: blurThis,
+                baseElementsDragEnterBehaviour: baseElementsDragEnterBehaviour,
+                pseudoElementsDestroy: elementEngine.pseudoElements.destroy,
+                sectionDragLeaveCheck: sectionDragLeaveCheck,
+                removeEventListener: removeEventListener,
+                test10: test10,
             };
+            let generalFunctionsCheck = {
+                makeDraggable: makeDraggable;
+            }
             let keyPressTypes = {
                 keypressEnter: function(func){
                     let key = event.which || event.keyCode;
@@ -815,7 +902,7 @@ let elementEngine = {
                             //     eventFunctionsCheck[func](this);
                             //     // console.log(true);
                             // });
-                            newElement.addEventListener(String(evListener), eventFunctionsCheck[func]);
+                            newElement.addEventListener(String(evListener), eventFunctionsCheck[func], false);
                         }
                     }
                 }
@@ -826,7 +913,7 @@ let elementEngine = {
             }
             if (deepElementData.functions.play) {
                 if (deepElementData.functions.play.general) {
-                    
+                    // makeDraggable
                 }
                 if (deepElementData.functions.play.evListener) {
                     addEvListener(deepElementData.functions.play.evListener);
@@ -836,12 +923,12 @@ let elementEngine = {
             if (editing) {
                 if (deepElementData.functions.edit) {
                     if (deepElementData.functions.edit.general) {
-
+                        // for (let generalFunction in deepEleementsData.functions.edit.gerneral) {
+                        //     if (general)
+                        // }
                     }
                     if (deepElementData.functions.edit.evListener) {
-                        addEvListener(
-                            deepElementData.functions.edit.evListener
-                        );
+                        addEvListener(deepElementData.functions.edit.evListener);
                     }
                 }
             }
@@ -889,19 +976,36 @@ let elementEngine = {
                 if (insertPosition) {
 
                 } else {
+                    console.log('????');
                     nodeTarget.appendChild(newElement);
                 }
             } else {
                 // if (insertPosition !== 0) {
                 let nodeTargetElement = document.querySelector('[uid="' + nodeTarget + '"]');
-                if (insertPosition) {
+                if (typeof insertPosition == 'number') {
                     // insertAfter(newElement, document.querySelector('[uid="' + nodeTarget + '"]'));
-                    console.log('insertPosition: ' + insertPosition)
-                    if (insertPosition) {
+                    // console.log('insertPosition: ' + insertPosition)
+                    // if (insertPosition) {
                         // console.log('insertPosition is bigger than 0');
-                        console.log(nodeTargetElement.childNodes[insertPosition]);
-                        insertAfter(newElement, nodeTargetElement.childNodes[insertPosition]);
-                    }
+                        // console.log("insertAfter:" + insertPosition);
+                        // console.log(nodeTargetElement.childNodes[insertPosition]);
+                        // console.log(nodeTargetElement.childNodes);
+                        console.log(insertPosition);
+                        console.log('wtf');
+                        if (insertPosition <= 0) {
+                            if (nodeTargetElement.childNodes) {
+                                nodeTargetElement.insertBefore(newElement, nodeTargetElement.childNodes[0]);
+                            } else {
+                                nodeTargetElement.parentNode.appendChild(newElement);
+                            }
+                            console.log('boom');
+                            // nodeTargetElement.insertBefore(newElement, nodeTargetElement.childNodes[0]);
+                        } else {
+                            console.log('leeeel');
+                            insertAfter(newElement, nodeTargetElement.childNodes[insertPosition * 2]);
+                        } 
+                        
+                    // }
                 } else {
                     document.querySelector('[uid="' + nodeTarget + '"]').appendChild(newElement);
                 }
@@ -1113,67 +1217,133 @@ let elementEngine = {
     },
     pseudoElements: {
         create(cssClass) {
-            // let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
-            // let pseudoElementUid = 0;
-            // let createPElement = function(cssClass) {
-            //     let pseudoElement = document.createElement('DIV');
-            //     pseudoElement.setAttribute('class', 'pseudoEle');
-            //     pseudoElement.addEventListener('click', function() {
-            //         pE(this);
-            //     });
-            //     pseudoElement.addEventListener('drop', function() {
-            //         editingOnDrop(event, this);
-            //     });
-            //     pseudoElement.addEventListener('dragover', function() {
-            //         allowDrop(event);
-            //     });
+            console.log(cssClass);
+            let pseudoElementUid = 0;
+            let createPElement = function(cssClass) {
+                let pseudoElement = document.createElement('DIV');
+                pseudoElement.setAttribute('class', 'pseudoEle');
+                pseudoElement.addEventListener('click', function() {
+                    pE(this);
+                });
+                pseudoElement.addEventListener('drop', function() {
+                    editingOnDrop(event, this);
+                });
+                pseudoElement.addEventListener('dragover', function() {
+                    allowDrop(event);
+                });
                 
-            //     if (cssClass) {
-            //         pseudoElement.className += ` ${cssClass}`;
+                if (cssClass) {
+                    pseudoElement.className += ` ${cssClass}`;
+                }
+                return pseudoElement;
+            };
+            let container = ['sectionContainer', 'subSection'];
+            let items = ['textBigContainer', 'inputContainer', 'bttnClass'];
+            if (container.includes(cssClass)) {
+                let parentNode = document.getElementsByClassName('contentArea')[0]
+                let nodeList = parentNode.childNodes;
+                nodeList = Array.from(nodeList);
+                console.log(nodeList);
+                parentNode.insertBefore(createPElement(cssClass), nodeList[0]);
+                nodeList.forEach(function(e) {
+                    let pe = createPElement(cssClass);
+                    insertAfter(pe, e)
+                });
+            }  else {
+
+            }
+            // if (container.includes(cssClass) || items.includes(cssClass)) {
+            //     let nodeList = document.getElementsByClassName('contentArea')[0];
+            //     for (let i = 0; i < nodeList.length; i++) {
+            //         insertAfter(createPElement(cssClass), nodeList[i]);
             //     }
-            //     return pseudoElement;
-            // };
-            // console.log(nodeList);
-            // let nodeArray = Array.from(nodeList);
-            // function filterClass(class) {
-            //     if ()
+            // } else if (items.includes(cssClass)) {
+
             // }
-            // console.log(nodeArray);
-            // nodeArray.filter
-            nodeList.forEach(function(e) {
-                let checkCssClass = function(cssClass) {
-                    cssClass = cssClass.toLowerCase();
-                    switch (cssClass) {
-                        case 'sectionbody':
-                        case 'inputcontainer':
-                        case 'textbigcontainer':
-                        case 'subsection':
-                            return true;
-                        default:
-                            return false;
-                    }
-                };
-                
-                if (!e.firstChild) {
-                    console.log(e);
-                    console.log('has no children');
-                }
-                if (checkCssClass(e.className)) {
-                    let referenceNode =
-                        document.querySelector(
-                            '[uid="' + e.getAttribute('uid') + '"]'
-                        );
-                    if (Array.prototype.indexOf.call(e.parentNode.childNodes, e) === 0) {
-                        let firstPseudoElement = createPElement(cssClass);
-                        e.parentNode.insertBefore(firstPseudoElement, referenceNode);
-                    }
-                    let pseudoElement = createPElement(cssClass);
-                    // let referenceNode = 
-                    //     document.querySelector('[uid="' + e.getAttribute('uid') + '"]');
-                    insertAfter(pseudoElement, referenceNode);
-                }
-            });
         },
+        // create(cssClass) {
+        //     let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
+        //     // console.log(nodeList);
+        //     // let filterFunc = function(input) {
+        //         // return input.className == 'sectionBody' && 'subSection';
+        //     // }
+        //     // let filteredNodeList = Array.from(nodeList);
+        //     // let filteredNodeList = Array.from(nodeList).filter(filterFunc);
+        //     // filteredNodeList.forEach(function(e){
+        //     //     console.log(e.className);
+        //     // });
+        //     // console.log(filteredNodeList);
+        //     let pseudoElementUid = 0;
+        //     let createPElement = function(cssClass) {
+        //         let pseudoElement = document.createElement('DIV');
+        //         pseudoElement.setAttribute('class', 'pseudoEle');
+        //         pseudoElement.addEventListener('click', function() {
+        //             pE(this);
+        //         });
+        //         pseudoElement.addEventListener('drop', function() {
+        //             editingOnDrop(event, this);
+        //         });
+        //         pseudoElement.addEventListener('dragover', function() {
+        //             allowDrop(event);
+        //         });
+                
+        //         if (cssClass) {
+        //             pseudoElement.className += ` ${cssClass}`;
+        //         }
+        //         return pseudoElement;
+        //     };
+        //     // console.log(nodeList);
+        //     // let nodeArray = Array.from(nodeList);
+        //     // function filterClass(class) {
+        //     //     if ()
+        //     // }
+        //     // console.log(nodeArray);
+        //     // nodeArray.filter
+
+        //     nodeList.forEach(function(e) {
+        //         let checkCssClass = function(cssClass) {
+        //             cssClass = cssClass.toLowerCase();
+        //             switch (cssClass) {
+        //                 case 'sectionbody':
+        //                 case 'inputcontainer':
+        //                 case 'textbigcontainer':
+        //                 case 'subsection':
+        //                     return true;
+        //                 default:
+        //                     return false;
+        //             }
+        //         };
+                
+        //         if (!e.firstChild) {
+        //             console.log(e);
+        //             console.log('has no children');
+        //         }
+        //         if (checkCssClass(e.className)) {
+        //             let referenceNode =
+        //                 document.querySelector(
+        //                     '[uid="' + e.getAttribute('uid') + '"]'
+        //                 );
+        //             if (Array.prototype.indexOf.call(e.parentNode.childNodes, e) === 0) {
+        //                 let firstPseudoElement = createPElement(cssClass);
+        //                 e.parentNode.insertBefore(firstPseudoElement, referenceNode);
+        //             }
+        //             let pseudoElement = createPElement(cssClass);
+        //             // let referenceNode = 
+        //             //     document.querySelector('[uid="' + e.getAttribute('uid') + '"]');
+        //             insertAfter(pseudoElement, referenceNode);
+        //         }
+        //     });
+        // },
+        // create(cssClass) {
+        //     let nodeList;
+        //     if (cssClass == 'sectionContainer') {
+        //         nodeList = document.getElementsByClassName('contentArea')[0];
+        //     } else {
+        //         nodeList = document.getElementsByClassName('contentArea')[0].getElementsByClassName('sectionBody');
+        //     }
+        //     console.log(nodeList);
+
+        // },
         // create(cssClass) {
         //     let nodeList = document.getElementsByClassName('contentArea')[0].querySelectorAll('[uid]');
         //     let pseudoElementUid = 0;
@@ -1443,7 +1613,7 @@ let dropEvent = function(e) {
 let dragEvent = function(e) {
     e.preventDefault();
     let data = e.dataTransfer.setData("test");
-    console.log(data);
+    // console.log(data);
 };
 
 let allowDrop = function(e) {
@@ -1460,35 +1630,89 @@ let editingOnDrag = function(e, element) {
     // e.preventDefault();
     // console.log(element.getAttribute('elementData'));
     e.dataTransfer.setData('elementData', element.getAttribute('elementdata'));
+    dragInfoThing = element.className;
     // console.log(e));
     // e.dataTransfer.setData('element', e.getAttribute('data'));
     // console.log(e.getAttribute('data'));
 };
 
 let editingOnDrop = function(e, dropInfo) {
+    // let elementData = e.dataTransfer.getData('elementData');
+    // if (typeof elementData != 'object') {
+    //     elementData = elementBase[elementData];
+    // }
+    // // console.log(elementData);
+
+    // let info = {};
+    // // console.log('this.parentNode ----------------');
+    // // console.log(dropInfo.parentNode.getAttribute('uid'));
+    // info.parentNode = dropInfo.parentNode.getAttribute('uid');
+    // info.index = Array.prototype.indexOf.call(dropInfo.parentNode.childNodes, dropInfo);
+    // // console.log('insertAfter ----------------')
+    // // console.log((Number(info.index) / 2 ) - 1);
+    // if (((Number(info.index)) / 2) > 0) {
+    //     // info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
+    //     info.insertAtPosition = (Number(info.index)) / 2;
+    // } else {
+    //     info.insertAtFirstPosition = true;
+    // }
+    // // info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
+
+    // // console.log(info);
+    // elementEngine.htmlFromData(elementData, true, Number(info.parentNode), Number(info.insertAtPosition));
+
+
     let elementData = e.dataTransfer.getData('elementData');
     if (typeof elementData != 'object') {
         elementData = elementBase[elementData];
     }
-    // console.log(elementData);
-
     let info = {};
-    // console.log('this.parentNode ----------------');
-    // console.log(dropInfo.parentNode.getAttribute('uid'));
-    info.parentNode = dropInfo.parentNode.getAttribute('uid');
-    info.index = Array.prototype.indexOf.call(dropInfo.parentNode.childNodes, dropInfo);
-    // console.log('insertAfter ----------------')
-    // console.log((Number(info.index) / 2 ) - 1);
-    if (((Number(info.index)) / 2) > 0) {
-        // info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
-        info.insertAtPosition = (Number(info.index)) / 2;
+    let parentNode;
+    let parentNodeUid;
+    console.log(dropInfo);
+    console.log('dropInfo.parentNode');
+    console.log(dropInfo.parentNode);
+    if (dropInfo.parentNode.className == 'contentArea') {
+        // let targetNode = dropInfo.parentNode;
+        parentNode = 'contentArea';
     } else {
-        info.insertAtFirstPosition = true;
+        // console.log('here we go')
+        parentNode = dropInfo.parentNode;
+        parentNodeUid = Number(dropInfo.parentNode.getAttribute('uid'));
+        // info.parentNode = dropInfo.parentNode.getAttribute('uid');
+        // console.log(dropInfo);
+        // console.log(this);
+        // let targetNode = document.querySelector('[uid="' + info.parentNode + '"]');
+        // let x = targetNode.childNodes.length;
+        console.log('parent uid ' + parentNodeUid);
     }
-    // info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
-
-    // console.log(info);
-    elementEngine.htmlFromData(elementData, true, Number(info.parentNode), Number(info.insertAtPosition));
+    // console.log('wulwwueli' + info.parentNode);
+    // console.log('typeOf' + typeof targetNode);
+    console.log('--------------');
+    // console.log(parentNode.childNodes.length);
+    console.log('--------------');
+    if ((typeof parentNodeUid == 'number') && (parentNode.childNodes.length > 1)) {
+        let index = Array.prototype.indexOf.call(parentNode.childNodes, dropInfo);
+        let insertAfter = ((index)/ 2 - 1);
+        let insertAtPosition = (Number(index)) / 2;
+        console.table([['parentNodeUid', 'insertAtPosition', 'elementData'], [parentNodeUid, insertAtPosition, elementData]]);
+        elementEngine.htmlFromData(elementData, true, Number(parentNodeUid), Number(insertAtPosition));
+    } else {
+        if (parentNode == 'contentArea') {
+            elementEngine.htmlFromData(elementData, true, parentNode);
+        } else {
+            elementEngine.htmlFromData(elementData, true, Number(parentNodeUid));
+        }
+        
+    }
+    // console.log(`length: ${x}`)
+    
+    // if (((Number(info.index)) / 2) > 0) {
+    //     info.insertAfterUid = dropInfo.parentNode.childNodes[info.index - 1].getAttribute('uid');
+    //     info.insertAtPosition = (Number(info.index)) / 2;
+    // } else {
+    //     info.insertAtFirstPosition = true;
+    // }
 };
 let saveInputToData = function(e) {
     let element = e.target;
@@ -1715,3 +1939,57 @@ let checkUrlPath = function(){
 }
 
 checkUrlPath();
+let pseudoElementUid = 0;
+let createPElement = function(cssClass) {
+                let pseudoElement = document.createElement('DIV');
+                pseudoElement.setAttribute('class', 'pseudoEle');
+                pseudoElement.addEventListener('click', function() {
+                    pE(this);
+                });
+                pseudoElement.addEventListener('drop', function() {
+                    editingOnDrop(event, this);
+                });
+                pseudoElement.addEventListener('dragover', function() {
+                    allowDrop(event);
+                });
+                
+                if (cssClass) {
+                    pseudoElement.className += ` ${cssClass}`;
+                }
+                return pseudoElement;
+            };
+let teeeeet = Array.from(document.getElementsByClassName('subSection'));
+
+// teeeeet.push(Array.from(document.getElementsByClassName('subSection')));
+// teeeeet.forEach(function(e) {
+//     e.addEventListener('dragenter', function() {
+//         let targetNode = this;
+//         let nodeList = Array.from(targetNode.childNodes);
+//         if (targetNode.getElementsByClassName('pseudoEle')[0]) {
+
+//         } else if (targetNode.childNodes.length > 0){
+//             let cssClass = 'something';
+//             for (let i = 0; i < nodeList.length; i++) {
+//                 let pe = createPElement(cssClass);
+//                 targetNode.insertBefore(pe, nodeList[i])
+//             }
+//             insertAfter(createPElement(cssClass), nodeList[nodeList.length - 1])
+//         } else {
+//             let cssClass = 'something';
+//             let pe = createPElement(cssClass);
+//             targetNode.appendChild(pe);
+//         }
+//         // console.log('hi');
+        
+//         // let pe = createPElement(cssClass);
+//         // console.log(this);
+//         // insertAfter(pe, teeeeet[0].childNodes[0]);
+
+//         // this.childNodes.forEach(function(e) {
+//             // let cssClass = 'something'
+//             // let pe = createPElement(cssClass);
+//             // insertAfter(pe, e)
+//             // console.log(e)
+//         // });
+//     });
+// });

@@ -79,7 +79,13 @@ class Users extends Database
             ];
             print json_encode($error);
         } else {
-            $mongoQuery   = ['username' => $username, 'games' => array()];
+            $mongoQuery   = [
+                'username' => $username,
+                'games' => (object)[
+                    'owned' => [], 'joined' => []
+                ],
+                'templates' => [],
+            ];
             $mongoDb        = $this->config->mongo->db->characterSheets->dbName;
             $mongoDocument  = $this->config->mongo->db->characterSheets->collections->player;
             $mongoResult    = $this->mongoClient->$mongoDb->$mongoDocument->insertOne($mongoQuery);
@@ -120,17 +126,39 @@ class Users extends Database
 //            else $new = $obj;
 //            return $new;
 //        }
-        $mongoDocId = $_SESSION['userMongoDocId'];
-        $id = new \MongoDB\BSON\ObjectID($mongoDocId);
-        $mongoTarget =  ['_id' => $id];
-        $mongoProjection = ['projection' => ['games' => 1, '_id' => 0] ];
-        $mongoResult = $this->mongoUserCollection->findOne($mongoTarget, $mongoProjection);
-        foreach ($mongoResult->games as $game) {
-            if ($game->id == $gameId) {
-                $ttt = $this->objectToArray($game);
-                echo json_encode($ttt);
+        // get game, search game->players for userid, return charactersheet data from that
+        $mongoGameId = new \MongoDB\BSON\ObjectID($gameId);
+        $mongoPlayerId = new \MongoDB\BSON\ObjectID($_SESSION['userMongoDocId']);
+
+        $mongoTarget = ['_id' => $mongoGameId];
+        $mongoProjection = [
+            'projection' => [
+                'players' => 1,
+                '_id' => 0,
+            ],
+        ];
+        $mongoGameResult = $this->mongoGamesCollection->findOne($mongoTarget, $mongoProjection)->players;
+
+        foreach ($mongoGameResult as $player) {
+            if ($player->playerId == $_SESSION['userMongoDocId']) {
+                $playerCharacterSheet = $player->characterSheet;
             }
         }
+
+        print json_encode($playerCharacterSheet);
+
+
+//        $mongoDocId = $_SESSION['userMongoDocId'];
+//        $id = new \MongoDB\BSON\ObjectID($mongoDocId);
+//        $mongoTarget =  ['_id' => $id];
+//        $mongoProjection = ['projection' => ['games' => 1, '_id' => 0] ];
+//        $mongoResult = $this->mongoUserCollection->findOne($mongoTarget, $mongoProjection);
+//        foreach ($mongoResult->games as $game) {
+//            if ($game->id == $gameId) {
+//                $ttt = $this->objectToArray($game);
+//                echo json_encode($ttt);
+//            }
+//        }
     }
     public function testGetGame(){
         $id = new \MongoDB\BSON\ObjectID('589692ef5572be69a71ad546');
@@ -142,7 +170,8 @@ class Users extends Database
         $lastVersion = $versions[$length - 1];
         return $lastVersion;
     }
-    public function testSetGame() {
+    public function testSetGame()
+    {
         $testGame = $this->testGetGame();
         $userMongoDocId = new \MongoDB\BSON\ObjectID($_SESSION['userMongoDocId']);
         $mongoTarget = ['_id' => $userMongoDocId];
@@ -153,8 +182,62 @@ class Users extends Database
                                'data' => $testGame,
                            ]]
         ];
-        $tt2 = '1';
         $mongoResult = $this->mongoUserCollection->updateOne($mongoTarget, $mongoQuery);
-        $tt = '2';
     }
+    public function getUsers()
+    {
+        $sql = "SELECT username FROM users";
+        $sqlResult = $this->sqlQuery($sql)->sqlToArray();
+        echo json_encode($sqlResult);
+    }
+
+    public function sendFriendRequest($userInitId, $userReceiveId)
+    {
+        if ($userInitId < $userReceiveId) {
+            $userOneId = $userInitId;
+            $userTwoId = $userReceiveId;
+        } else {
+            $userOneId = $userReceiveId;
+            $userTwoId = $userInitId;
+        }
+
+        $sql = "INSERT INTO `relationships` (`userOneId`, `userTwoId`, `status`, `actionUserId`)
+        VALUES ($userOneId, $userTwoId, '0', $userInitId)";
+
+        $sqlResult = $this->sqlQuery($sql);
+    }
+    public function getFriends($userId)
+    {
+        $sql = "
+          SELECT username
+          FROM relationships
+          INNER JOIN users
+          ON userOneId = id OR userTwoId = id
+          WHERE (userOneId= $userId OR userTwoId = $userId)
+          AND id != $userId";
+
+        $sqlResult = $this->sqlQuery($sql)->sqlToArray();
+        echo json_encode($sqlResult);
+    }
+    public function acceptFriendRequest($actionUserId, $targetUserId)
+    {
+        if ($actionUserId < $targetUserId) {
+            $userOneId = $actionUserId;
+            $userTwoId = $targetUserId;
+        } else {
+            $userOneId = $targetUserId;
+            $userTwoId = $actionUserId;
+        }
+        $sql = "UPDATE relationships
+                SET status= '1', actionUserId = $actionUserId
+                WHERE userOneId= $userOneId AND userTwoId= $userTwoId";
+
+        $sqlResult = $this->sqlQuery($sql);
+    }
+    public function getUserIdByUsername($username){
+        $sql = "SELECT id FROM users WHERE username = '$username'";
+        $sqlResult = $this->sqlQuery($sql)->sqlToArray();
+        return $sqlResult[0]['id'];
+    }
+
 }

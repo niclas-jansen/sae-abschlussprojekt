@@ -10,7 +10,11 @@ $color-element-base:    #ffffff;
 $color-element-transp:  rgba(255, 255, 255, 0.43);
 
 
-$color-accent:          #FFC107;
+// $color-accent:          #FFEE93;
+// $color-accent:          #FDDF78;
+// $color-accent:          #FDE668;
+// $color-accent:          #FFC107;
+$color-accent:          #FFDE53;
 
 $color-warning:        rgb(255, 99, 99);
 
@@ -68,6 +72,8 @@ $z-depth-3: 0 6px  10px 0   rgba(0,0,0,0.14),0 1px 18px 0   rgba(0,0,0,0.12),0 3
 $z-depth-4: 0 8px  10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px  5px -3px rgba(0,0,0,0.3);
 $z-depth-5: 0 16px 24px 2px rgba(0,0,0,0.14),0 6px 30px 5px rgba(0,0,0,0.12),0 8px 10px -5px rgba(0,0,0,0.3);
 
+
+$z-depth-3: 0 3px 16px rgba(0,0,0,0.16);
 // -----------------------------------------------------------------------------
 
 

@@ -1,0 +1,106 @@
+.menu {
+  width: 12.5vw;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.22222vh;
+  padding-top: 2.22222vh;
+  padding-bottom: 2.22222vh;
+  padding-left: 0.41667vw;
+  padding-right: 0.41667vw;
+  margin-right: 1.25vw;
+  border-radius: 5px; }
+
+.subMenu {
+  padding-bottom: 0.74074vh;
+  background-color: #ffffff;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
+  border-radius: 5px;
+  margin-bottom: 2.22222vh; }
+
+.subMenuTitle {
+  color: rgba(0, 0, 0, 0.5);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
+  height: 2.96296vh;
+  line-height: 2.96296vh;
+  background-color: #FFDE53; }
+
+.subMenuItems * {
+  color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  padding-left: 0.41667vw;
+  padding-right: 0.41667vw;
+  margin-top: 0.74074vh;
+  margin-left: 0.41667vw;
+  margin-right: 0.41667vw;
+  background-color: #ffffff;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16); }
+
+.menuContentContainer {
+  border-radius: 5px;
+  margin-top: 2.22222vh;
+  display: flex;
+  background-color: red;
+  flex-grow: 1;
+  background-color: rgba(255, 255, 255, 0.43);
+  flex-direction: column; }
+
+.myGamesContent {
+  display: flex;
+  flex-direction: column; }
+
+.gameRow {
+  margin-left: 0.41667vw;
+  margin-right: 0.41667vw;
+  border-radius: 5px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2.22222vh; }
+
+.gameName {
+  padding-top: 0.74074vh;
+  padding-bottom: 0.74074vh;
+  flex-grow: 1;
+  background-color: #ffffff; }
+
+.gamePlayBttn {
+  flex-grow: 1;
+  background-color: #FFDE53; }
+
+.createGameContent {
+  background-color: rgba(255, 255, 255, 0.43);
+  display: flex;
+  flex-direction: column; }
+
+.newGameNameContainer {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding-left: 0.41667vw;
+  padding-right: 0.41667vw; }
+
+.templateSearchResult {
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll; }
+
+.templateSearchContainer {
+  display: flex;
+  flex-direction: row; }
+
+.templateSearchResultColumn {
+  display: flex;
+  flex-direction: column;
+  width: 14.28571428571428571429%; }
+
+.templateSearchResultColumn * {
+  background-color: white;
+  margin-top: 0.74074vh;
+  margin-bottom: 0.74074vh; }
+
+.columnTitle {
+  flex-grow: 0.5;
+  background-color: white; }

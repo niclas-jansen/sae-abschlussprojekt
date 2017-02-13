@@ -98,4 +98,8 @@ class Database extends Base
 //    private function setMongoResutl(){
 //
 //    }
+    public function clearGamesCollection()
+    {
+        $this->mongoGamesCollection->deleteMany([]);
+    }
 }

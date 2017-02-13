@@ -1,0 +1,137 @@
+@import "styleguide";
+.menuContainer {
+	// background-color: $color-element-transp;
+}
+.menu {
+	width: $unit-base-width * 30;
+	// background-color: white;
+	display: flex;
+	flex-direction: column;
+	margin-top: $margin-separation-height;
+	padding-top: $margin-separation-height;
+	padding-bottom: $margin-separation-height;
+	padding-left: $margin-relation-width;
+	padding-right: $margin-relation-width;
+	// margin-left: $margin-separation-width;
+	margin-right: $margin-separation-width;
+	// background-color: $color-element-transp;
+	border-radius: 5px;
+	// box-shadow: $z-depth-3;
+	// background-color: white;
+}
+.subMenu {
+	// background-color: red;
+	padding-bottom: $margin-relation-height;
+	background-color: $color-element-base;
+	box-shadow: $z-depth-3;
+	// background-color: $color-element-transp;
+	border-radius: 5px;
+	margin-bottom: $margin-separation-height;
+}
+.subMenuTitle {
+	color: $color-text-title;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	box-shadow: $z-depth-3;
+	height: $unit-base-height * 4;
+	line-height: $unit-base-height * 4;
+	background-color: $color-accent;
+}
+.subMenuItems {
+}
+.subMenuItems * {
+	color: $color-text-base;
+	border-radius: 5px;
+	padding-left: $margin-relation-width;
+	padding-right: $margin-relation-width;
+	margin-top: $margin-relation-height;
+	margin-left: $margin-relation-width;
+	margin-right: $margin-relation-width;
+	background-color: $color-element-base;
+	box-shadow: $z-depth-3;
+}
+
+.menuContentContainer {
+	border-radius: 5px;
+	margin-top: $margin-separation-height;
+	display: flex;
+	background-color: red;
+	flex-grow: 1;
+	background-color: $color-element-transp;
+	flex-direction: column;
+}
+.myGamesContent {
+	display: flex;
+	flex-direction: column;
+	// border-radius: 5px;
+} 
+.gameRow {
+	margin-left: $margin-relation-width;
+	margin-right: $margin-relation-width;
+	border-radius: 5px;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	// background-color: $color-element-base;
+	margin-bottom: $margin-separation-height;
+}
+.gameName {
+	padding-top: $margin-relation-height;
+	padding-bottom: $margin-relation-height;
+	flex-grow: 1;
+	background-color: $color-element-base;
+}
+
+.gamePlayBttn {
+	flex-grow: 1;
+	background-color: $color-accent;
+}
+// ---------------------------------------
+.createGameContent {
+	background-color: $color-element-transp;
+	display: flex;
+	flex-direction: column;
+}
+.newGameNameContainer {
+	display: flex;
+	flex-direction: row;
+	background-color: $color-element-base;
+	border-radius: 5px;
+	padding-left: $margin-relation-width;
+	padding-right: $margin-relation-width;
+}
+.templateSearchResult {
+	display: flex;
+	flex-direction: row;
+	// max-height: 50px;
+	overflow-y: scroll;
+}
+.templateSearchContainer {
+	display: flex;
+	flex-direction: row;
+}
+.templateSearchResultColumn {
+	display: flex;
+	flex-direction: column;
+	width: 14.28571428571428571429%;
+	// flex-grow: 1;
+	// flex-grow: 1;
+}
+.templateSearchResultColumn * {
+	background-color: white;
+	// border-left: 1px solid black;
+	margin-top: $margin-relation-height;
+	margin-bottom: $margin-relation-height;
+	// background-color: pink;
+}
+
+.columnTitle {
+	flex-grow: 0.5;
+	background-color: white;
+}
+.templateUseForm {
+	// flex-grow: 0;
+}
+.templatePreview {
+	// flex-grow: 0;
+}

@@ -66,6 +66,19 @@ if (!isset($requestType)) {
                 }
             }
             break;
+        case 'createGame':
+            if (!isset($requestData, $_SESSION['userMongoDocId'])) {
+
+            } else {
+                if (!isset($requestData->gameName, $requestData->templateId)) {
+
+                } else {
+                    $cs = new \penAndPixels\Repository\CharacterSheets($config);
+
+                    $cs->createGame($requestData->gameName, $_SESSION['userMongoDocId'], $requestData->templateId);
+                }
+            }
+            break;
         case 'createTemplate':
             if (!isset($requestData)) {
                 throw new Exception('ajax request was missing requestData');
@@ -76,6 +89,18 @@ if (!isset($requestType)) {
                 $characterSheets = new \penAndPixels\Repository\CharacterSheets($config);
                 $characterSheets->createCharacterSheetTemplate($requestData, $description);
             }
+            break;
+        case 'searchTemplates':
+            $characterSheets = new \penAndPixels\Repository\CharacterSheets($config);
+            $characterSheets->getPublicTemplates($requestData);
+            break;
+        case 'getFriends':
+            $users = new \penAndPixels\Repository\Users($config);
+            $users->getFriends($_SESSION['id']);
+            break;
+        case 'getGamePlayers':
+            $characterSheets = new \penAndPixels\Repository\CharacterSheets($config);
+            $characterSheets->getPlayers($requestData->gameId);
             break;
         default:
             throw new Exception('bad ajax request type');

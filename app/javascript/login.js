@@ -44,7 +44,7 @@ let loginFunc = function() {
     ajaxRequest('login', dataObj)
         .then((data) => {
             if (data == 'loginSuccess') {
-                window.location.pathname = 'app/userPage.html';
+                window.location.pathname = 'app/userSettings.html';
             }
         });
 }

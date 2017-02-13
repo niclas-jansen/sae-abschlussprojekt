@@ -16,7 +16,7 @@
   margin-top: 2.22222vh;
   margin-bottom: 2.22222vh;
   border-radius: 5px;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16); }
 
 .register {
   display: none; }
@@ -32,7 +32,7 @@
   margin-top: 2.22222vh;
   margin-bottom: 0.74074vh;
   border-radius: 5px;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16); }
 
 .loginSwitch, .registerSwitch {
   color: rgba(0, 0, 0, 0.5);
@@ -50,7 +50,7 @@
   cursor: pointer; }
 
 .loginRegisterSwitchActive {
-  background-color: #FFC107;
+  background-color: #FFDE53;
   color: white; }
 
 .loginRegisterSwitchActive:hover {
@@ -80,7 +80,7 @@
   padding-right: 1.25vw;
   background-color: rgba(255, 255, 255, 0.43);
   background-color: white;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16); }
 
 .registerForm {
   display: none; }
@@ -96,7 +96,7 @@
   border-radius: 5px;
   background-color: white;
   margin-top: 0.74074vh;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
   color: rgba(0, 0, 0, 0.5); }
   .formRow label {
     margin-top: 0.74074vh;
@@ -120,7 +120,7 @@
   height: 2.22222vh;
   border-radius: 5px;
   color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.16);
   margin-bottom: 2.22222vh;
   margin-top: 2.22222vh; }
   .loginSubmitBttn:hover, .registerSubmitBttn:hover {

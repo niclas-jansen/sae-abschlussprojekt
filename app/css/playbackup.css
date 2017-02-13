@@ -27,7 +27,7 @@
 .chatScrollHandle {
   width: 0.41667vw;
   height: 4.44444vh;
-  background-color: #FFC107; }
+  background-color: #FFDE53; }
 
 .chatInteraction {
   margin-bottom: 24px; }
@@ -52,5 +52,5 @@
   line-height: 7.40741vh;
   color: black;
   text-align: center;
-  background-color: #FFC107;
+  background-color: #FFDE53;
   align-self: flex-end; }
